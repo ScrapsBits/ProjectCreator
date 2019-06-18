@@ -32,7 +32,7 @@ public class ProjectCreator extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("../ui/uitest.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../ui/single-view.fxml"));
 		primaryStage.setTitle("Create new Project");
 		primaryStage.setScene(new Scene(root, 400, 300));
 		primaryStage.show();
