@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,12 +13,21 @@
         <tabs>
           <Tab id="tab_Project" text="Project">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label id="lbl_ProjectName" layoutX="14.0" layoutY="14.0" text="Project name: " />
+                        <TextField id="txt_ProjectName" layoutX="108.0" layoutY="10.0" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab id="tab_Language" text="Programming Languages">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox id="chb_CSharp" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" text="C#" />
+                        <Label id="lbl_SelectLanguages" layoutX="14.0" layoutY="21.0" text="Select languages:" />
+                        <CheckBox id="chb_Java" layoutX="14.0" layoutY="68.0" mnemonicParsing="false" text="Java" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab id="tab_Documentation" disable="true" text="Documentation">
@@ -28,6 +38,20 @@
             <Tab id="tab_Diagrams" disable="true" text="Diagrams">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab id="tab_AdditionalSources" disable="true" text="Additional Sources">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab id="tab_Complete" text="Complete">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button id="btn_Submit" fx:id="btnSubmit" layoutX="518.0" layoutY="332.0" mnemonicParsing="false" text="Complete" />
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
         </tabs>

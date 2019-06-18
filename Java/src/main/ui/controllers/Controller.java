@@ -1,5 +1,7 @@
 package main.ui.controllers;
 
+import javafx.event.ActionEvent;
+
 /**
  * Hold fields and values important to all controllers.
  * @author Scraps
