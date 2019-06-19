@@ -7,58 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane id="stspa_Scene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.controllers.ProjectCreatorController">
+<StackPane id="stspa_Scene" fx:id="stpFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.controllers.ProjectCreatorController">
    <children>
-      <TabPane id="tp_Menu" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab id="tab_Project" fx:id="tbmProject" text="Project">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label id="lbl_ProjectName" layoutX="14.0" layoutY="14.0" text="Project name: " />
-                        <TextField id="txt_ProjectName" layoutX="108.0" layoutY="10.0" />
-                        <Label id="lbl_CreateFiles" layoutX="49.0" layoutY="48.0" text="Create: " />
-                        <CheckBox id="cb_CreateProgrammingProjects" layoutX="108.0" layoutY="48.0" mnemonicParsing="false" text="Programming Projects" />
-                        <CheckBox id="cb_CreateDocumentation" layoutX="108.0" layoutY="71.0" mnemonicParsing="false" text="Documentation" />
-                        <CheckBox id="cb_CreateDiagrams" layoutX="108.0" layoutY="94.0" mnemonicParsing="false" text="Diagrams" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab id="tab_Language" fx:id="tbmProgrammingLanguages" text="Programming Languages">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <CheckBox id="chb_CSharp" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" text="C#" />
-                        <Label id="lbl_SelectLanguages" layoutX="14.0" layoutY="21.0" text="Select languages:" />
-                        <CheckBox id="chb_Java" layoutX="14.0" layoutY="68.0" mnemonicParsing="false" text="Java" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab id="tab_Documentation" fx:id="tbm_Documentation" text="Documentation">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab id="tab_Diagrams" fx:id="tbm_Diagrams" text="Diagrams">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab id="tab_AdditionalSources" fx:id="tbm_AdditionalSources" text="Additional Sources">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab id="tab_Complete" fx:id="tbm_Complete" text="Complete">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button id="btn_Submit" fx:id="btnSubmit" layoutX="518.0" layoutY="332.0" mnemonicParsing="false" text="Complete" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
    </children>
 </StackPane>
