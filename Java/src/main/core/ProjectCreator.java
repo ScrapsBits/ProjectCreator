@@ -6,6 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Run the application with a user interface, designed with JavaFX.
+ * @author ScrapsBits
+ *
+ */
 public class ProjectCreator extends Application {
 	/**
 	 * Define if the launch mode is "safe" or "full".
@@ -60,7 +65,7 @@ public class ProjectCreator extends Application {
 		primaryStage.setTitle("Create new Project");
 		primaryStage.setScene(new Scene(root, stageWidth, stageHeight));
 		
-		System.out.println("User interface initialized."); // TODO: Replace with log component.
+		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log component.
 		primaryStage.show();
 	}
 }

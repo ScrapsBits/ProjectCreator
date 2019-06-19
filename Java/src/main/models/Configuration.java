@@ -7,7 +7,7 @@ import main.enums.SupportedProgrammingLanguages;
 
 /**
  * Keep track of the various settings turned off and on by user input.
- * @author Scraps
+ * @author ScrapsBits
  *
  */
 public final class Configuration {
@@ -20,10 +20,26 @@ public final class Configuration {
 	 */
 	private List<SupportedProgrammingLanguages> selectedProgrammingLanguages;
 	
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
 	/**
 	 * Initialize configuration settings.
 	 */
 	public Configuration() {
 		selectedProgrammingLanguages = new ArrayList<>();
+	}
+
+	public List<SupportedProgrammingLanguages> getSelectedProgrammingLanguages() {
+		return selectedProgrammingLanguages;
+	}
+
+	public void setSelectedProgrammingLanguages(List<SupportedProgrammingLanguages> selectedProgrammingLanguages) {
+		this.selectedProgrammingLanguages = selectedProgrammingLanguages;
 	}
 }

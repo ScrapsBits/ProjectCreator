@@ -1,28 +1,41 @@
 package main.ui.controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Define controls and actions for a user interface.
+ * @author ScrapsBits
+ *
+ */
 public class ProjectCreatorController extends Controller {
 	
 	@FXML
 	private Button btnSubmit;
+	@FXML
+	private Tab tbmProject;
+	@FXML
+	private Tab tbmProgrammingLanguages;
+	@FXML
+	private Tab tbmDocumentation;
+	@FXML
+	private Tab tbmDiagrams;
+	@FXML
+	private Tab tbmAdditionalSources;
+	@FXML
+	private Tab tbmComplete;
 	
 	/**
 	 * Initialize the user interface and define actions.
 	 */
 	public void initialize() {
-		System.out.println("Initializing user interface..."); // TODO: Replace with log component.
+		super.initialize();
+		System.out.println("Adding handlers to user interface elements."); // TODO: Replace with log component.
+		
 		System.out.println("Adding handler to submit button."); // TODO: Replace with log component.
-		btnSubmit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				handleSubmitClick(arg0);
-			}
-		});
+		btnSubmit.setOnMouseClicked((arg0) -> handleSubmitClick(arg0));
 	} 
 	
 	/**
