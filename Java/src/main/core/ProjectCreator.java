@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * Run the application with a user interface, designed with JavaFX.
+ *
  * @author ScrapsBits
  *
  */
@@ -24,48 +25,53 @@ public final class ProjectCreator extends Application {
 	 * Set the height of the stage.
 	 */
 	private static int stageHeight = 400;
-	
+
 	/**
 	 * Read if the launch mode is "safe".
-	 * @return Returns true if the launch mode is "safe". Returns false if the launch mode is "full".
+	 *
+	 * @return Returns true if the launch mode is "safe". Returns false if the
+	 *         launch mode is "full".
 	 */
 	public static boolean isSafeBootMode() {
-		return isSafeBootMode;
+		return ProjectCreator.isSafeBootMode;
 	}
 
 	/**
 	 * Launch the application.
+	 *
 	 * @param args Console arguments that may be provided upon launch.
 	 */
-	public static void main(String[] args) {
-		for (String arg : args) {
-			if(arg.contentEquals("safeboot") || arg.contentEquals("safe")) { // Set launch mode to safe boot mode.
-				isSafeBootMode = true;
+	public static void main(final String[] args) {
+		for (final String arg : args)
+			if (arg.contentEquals("safeboot") || arg.contentEquals("safe")) { // Set launch mode to safe boot mode.
+				ProjectCreator.isSafeBootMode = true;
 				System.out.println("Setting app to launch in safe mode."); // TODO: Replace with log component.
 			}
-		}
-		
-		if(isSafeBootMode) { // Launch application in safe boot mode.
+
+		if (ProjectCreator.isSafeBootMode)
 			System.out.println("Launching app in safe mode."); // TODO: Replace with log component.
-		} else { // Launch application in normal mode.
+		else
 			System.out.println("Launching app in normal mode."); // TODO: Replace with log component.
-		}
-		launch(args);
+		Application.launch(args);
 	}
 
 	/**
 	 * Launch the user interface.
+	 *
 	 * @param primaryStage The first stage launched by the application.
 	 */
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		System.out.println("Launching user interface. Loading in \"single-view.fxml\"."); // TODO: Replace with log component.
-		Parent root = FXMLLoader.load(getClass().getResource("../ui/single-view.fxml"));
-		
-		primaryStage.setTitle("Create new Project");
-		primaryStage.setScene(new Scene(root, stageWidth, stageHeight));
+	public void start(final Stage primaryStage) throws Exception {
+		System.out.println("Launching user interface. Loading in \"single-view.fxml\"."); // TODO: Replace with log
+																							// component.
+		final Parent root = FXMLLoader.load(getClass().getResource("../ui/single-view.fxml"));
+		final Scene scene = new Scene(root, ProjectCreator.stageWidth, ProjectCreator.stageHeight);
 
-		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log component.
+		primaryStage.setTitle("Create new Project");
+		primaryStage.setScene(scene);
+
+		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log
+																								// component.
 		primaryStage.show();
 	}
 }

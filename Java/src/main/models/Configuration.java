@@ -3,10 +3,11 @@ package main.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.enums.SupportedProgrammingLanguages;
+import main.ui.generator.enumerations.ProgrammingLanguages;
 
 /**
  * Keep track of the various settings turned off and on by user input.
+ * 
  * @author ScrapsBits
  *
  */
@@ -18,8 +19,8 @@ public final class Configuration {
 	/**
 	 * A list of all programming languages of which to make a software project.
 	 */
-	private List<SupportedProgrammingLanguages> selectedProgrammingLanguages;
-	
+	private List<ProgrammingLanguages> selectedProgrammingLanguages;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -35,11 +36,11 @@ public final class Configuration {
 		selectedProgrammingLanguages = new ArrayList<>();
 	}
 
-	public List<SupportedProgrammingLanguages> getSelectedProgrammingLanguages() {
+	public List<ProgrammingLanguages> getSelectedProgrammingLanguages() {
 		return selectedProgrammingLanguages;
 	}
 
-	public void setSelectedProgrammingLanguages(List<SupportedProgrammingLanguages> selectedProgrammingLanguages) {
+	public void setSelectedProgrammingLanguages(List<ProgrammingLanguages> selectedProgrammingLanguages) {
 		this.selectedProgrammingLanguages = selectedProgrammingLanguages;
 	}
 }
