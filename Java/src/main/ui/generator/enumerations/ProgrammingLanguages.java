@@ -7,10 +7,11 @@ package main.ui.generator.enumerations;
  *
  */
 public enum ProgrammingLanguages {
-	CSHARP("CSharp", "C#"), JAVA("Java", "Java");
+	CSHARP("CSharp", "C#", false), JAVA("Java", "Java", false);
 
 	private String id;
 	private String name;
+	private boolean isFunctional;
 
 	public String getId() {
 		return id;
@@ -19,9 +20,14 @@ public enum ProgrammingLanguages {
 	public String getName() {
 		return name;
 	}
+	
+	public boolean isFunctional() {
+		return isFunctional;
+	}
 
-	private ProgrammingLanguages(String id, String value) {
+	private ProgrammingLanguages(String id, String value, boolean isFunctional) {
 		this.id = id;
 		this.name = value;
+		this.isFunctional = isFunctional;
 	}
 }

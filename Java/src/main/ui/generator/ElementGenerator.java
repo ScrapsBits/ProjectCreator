@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.ui.generator.enumerations.MenuItems;
+import main.ui.generator.enumerations.ProgrammingLanguages;
 import main.ui.generator.enumerations.UserInterfaceElements;
 
 /**
@@ -54,23 +55,23 @@ public final class ElementGenerator {
 		List<Node> nodes = new ArrayList<>();
 
 		System.out.println("Generating StackPane components.");
-		nodes.add(generateStackPane("stpGenerationOptions"));
+		nodes.add(generateStackPane("GenerationOptions"));
 		
 		System.out.println("Generating Label components.");
-		nodes.add(generateLabel("lblProjectName", "Name: "));
-		nodes.add(generateLabel("lblProjectLocation", "Location (Default): "));
-		nodes.add(generateLabel("lblProjectGenerationOptions", "Create files for: "));
+		nodes.add(generateLabel("ProjectName", "Name: "));
+		nodes.add(generateLabel("ProjectLocation", "Location (Default): "));
+		nodes.add(generateLabel("ProjectGenerationOptions", "Create files for: "));
 		
 		System.out.println("Generating TextField components.");
-		nodes.add(generateTextField("txfProjectName", "My New Project"));
+		nodes.add(generateTextField("ProjectName", "My New Project"));
 		
 		System.out.println("Generating CheckBox components.");
-		nodes.add(generateCheckBox("chbProgramming", "Programming", true));
-		nodes.add(generateCheckBox("chbDocumentation", "Documentation"));
-		nodes.add(generateCheckBox("chbDiagrams", "Diagrams"));
+		nodes.add(generateCheckBox("Programming", "Programming", true));
+		nodes.add(generateCheckBox("Documentation", "Documentation"));
+		nodes.add(generateCheckBox("Diagrams", "Diagrams"));
 		
 		System.out.println("Generating Button components.");
-		nodes.add(generateButton("btnLocation", "Select Folder"));
+		nodes.add(generateButton("Location", "Select Folder"));
 		
 		anchorPane.getChildren().addAll(nodes);
 		return anchorPane;
@@ -82,11 +83,18 @@ public final class ElementGenerator {
 		List<Node> nodes = new ArrayList<>();
 		
 		System.out.println("Generating StackPane components.");
-		nodes.add(generateStackPane("stpProgrammingLanguages"));
+		nodes.add(generateStackPane("ProgrammingLanguages"));
 		
 		System.out.println("Generating Label components.");
+		nodes.add(generateLabel("Functional", "Functional Languages"));
+		nodes.add(generateLabel("ObjectOriented", "Object Oriented Languages"));
 		
 		System.out.println("Generating TextField components.");
+		
+		System.out.println("Generating CheckBox components.");
+		for(ProgrammingLanguages language : ProgrammingLanguages.values()) {
+			nodes.add(generateCheckBox(language.getId(), language.getName()));
+		}
 		
 		System.out.println("Generating Button components.");
 		
@@ -157,6 +165,7 @@ public final class ElementGenerator {
 		System.out.println("Generating TextField components.");
 		
 		System.out.println("Generating Button components.");
+		nodes.add(generateButton("Finalize", "Create projects."));
 		
 		anchorPane.getChildren().addAll(nodes);
 		return anchorPane;
