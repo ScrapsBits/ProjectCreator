@@ -5,7 +5,7 @@ import javafx.scene.layout.StackPane;
 
 /**
  * Hold fields and values important to all controllers.
- * 
+ *
  * @author ScrapsBits
  *
  */

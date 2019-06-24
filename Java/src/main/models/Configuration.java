@@ -3,11 +3,11 @@ package main.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.ui.generator.enumerations.ProgrammingLanguages;
+import main.ui.enumerations.ProgrammingLanguages;
 
 /**
  * Keep track of the various settings turned off and on by user input.
- * 
+ *
  * @author ScrapsBits
  *
  */
@@ -21,14 +21,6 @@ public final class Configuration {
 	 */
 	private List<ProgrammingLanguages> selectedProgrammingLanguages;
 
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
 	/**
 	 * Initialize configuration settings.
 	 */
@@ -36,11 +28,19 @@ public final class Configuration {
 		selectedProgrammingLanguages = new ArrayList<>();
 	}
 
+	public String getProjectName() {
+		return projectName;
+	}
+
 	public List<ProgrammingLanguages> getSelectedProgrammingLanguages() {
 		return selectedProgrammingLanguages;
 	}
 
-	public void setSelectedProgrammingLanguages(List<ProgrammingLanguages> selectedProgrammingLanguages) {
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
+
+	public void setSelectedProgrammingLanguages(final List<ProgrammingLanguages> selectedProgrammingLanguages) {
 		this.selectedProgrammingLanguages = selectedProgrammingLanguages;
 	}
 }

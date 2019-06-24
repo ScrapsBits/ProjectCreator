@@ -1,4 +1,4 @@
-package main.ui.generator.enumerations;
+package main.ui.enumerations;
 
 public enum MenuItems {
 	PROJECT("Project", "Project", true), PROGRAMMING("Programming", "Programming", true),

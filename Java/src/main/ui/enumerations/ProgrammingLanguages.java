@@ -1,8 +1,8 @@
-package main.ui.generator.enumerations;
+package main.ui.enumerations;
 
 /**
  * Keep track of all supported programming languages.
- * 
+ *
  * @author ScrapsBits
  *
  */
@@ -13,21 +13,21 @@ public enum ProgrammingLanguages {
 	private String name;
 	private boolean isFunctional;
 
+	private ProgrammingLanguages(final String id, final String value, final boolean isFunctional) {
+		this.id = id;
+		name = value;
+		this.isFunctional = isFunctional;
+	}
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isFunctional() {
 		return isFunctional;
-	}
-
-	private ProgrammingLanguages(String id, String value, boolean isFunctional) {
-		this.id = id;
-		this.name = value;
-		this.isFunctional = isFunctional;
 	}
 }

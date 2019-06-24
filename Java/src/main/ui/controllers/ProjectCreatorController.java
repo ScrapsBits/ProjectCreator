@@ -9,7 +9,7 @@ import main.ui.generator.ElementGenerator;
 
 /**
  * Define controls and actions for a user interface.
- * 
+ *
  * @author ScrapsBits
  *
  */
@@ -19,34 +19,13 @@ public final class ProjectCreatorController extends Controller {
 	private StackPane stpFrame;
 
 	/**
-	 * Initialize the user interface and define actions.
-	 */
-	@Override
-	public void initialize() {
-		super.initialize();
-		initializeTabs();
-		fillTabs();
-	}
-
-	/**
-	 * Initialize all components on the user interface and define styling, position
-	 * and actions.
-	 */
-	private void initializeTabs() {
-		System.out.println("Generating tabs."); // TODO: Replace with log component.
-		ElementGenerator generator = new ElementGenerator();
-		stpFrame.getChildren().add(generator.generateTabMenu());
-		System.out.println("All tabs generated."); // TODO: Replace with log component.
-	}
-
-	/**
 	 * Initialize the components for every tab.
 	 */
 	private void fillTabs() {
 		System.out.println("Generating components."); // TODO: Replace with log component.
-		ElementGenerator generator = new ElementGenerator();
-		TabPane menu = (TabPane) stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
-		for (Tab tab : menu.getTabs()) {
+		final ElementGenerator generator = new ElementGenerator();
+		final TabPane menu = (TabPane) stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
+		for (final Tab tab : menu.getTabs())
 			switch (tab.getId()) {
 			case "tabProject":
 				tab.setContent(generator.generateProjectTabContent(tab));
@@ -70,7 +49,27 @@ public final class ProjectCreatorController extends Controller {
 				tab.setContent(new AnchorPane());
 				break;
 			}
-		}
 		System.out.println("All components generated."); // TODO: Replace with log component.
+	}
+
+	/**
+	 * Initialize the user interface and define actions.
+	 */
+	@Override
+	public void initialize() {
+		super.initialize();
+		initializeTabs();
+		fillTabs();
+	}
+
+	/**
+	 * Initialize all components on the user interface and define styling, position
+	 * and actions.
+	 */
+	private void initializeTabs() {
+		System.out.println("Generating tabs."); // TODO: Replace with log component.
+		final ElementGenerator generator = new ElementGenerator();
+		stpFrame.getChildren().add(generator.generateTabMenu());
+		System.out.println("All tabs generated."); // TODO: Replace with log component.
 	}
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.ui.layout.ElementDesigner;
 
 /**
  * Run the application with a user interface, designed with JavaFX.
@@ -71,7 +72,8 @@ public final class ProjectCreator extends Application {
 		primaryStage.setScene(scene);
 
 		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log
-																								// component.
-		primaryStage.show();
+
+		primaryStage.show(); // component.
+		new ElementDesigner(scene).designElements();
 	}
 }
