@@ -1,10 +1,8 @@
 package main.ui.controllers;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import main.ui.elements.ElementGenerator;
 
 /**
@@ -14,9 +12,6 @@ import main.ui.elements.ElementGenerator;
  *
  */
 public final class ProjectCreatorController extends Controller {
-
-	@FXML
-	private StackPane stpFrame;
 
 	/**
 	 * Initialize the components for every tab.

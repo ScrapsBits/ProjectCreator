@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.ui.enumerations.MenuItems;
@@ -141,6 +142,7 @@ public final class ElementGenerator {
 		final Label label = new Label();
 		label.setId(UIElements.LABEL.getPrefix() + id);
 		label.setText(text);
+		label.setWrapText(true);
 		return label;
 	}
 
@@ -157,13 +159,9 @@ public final class ElementGenerator {
 			nodes.add(generateLabel("Functional", "Functional Languages"));
 			nodes.add(generateLabel("ObjectOriented", "Object Oriented Languages"));
 
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
-
 			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
 			for (final ProgrammingLanguages language : ProgrammingLanguages.values())
 				nodes.add(generateCheckBox(language.getId(), language.getName()));
-
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
 
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;

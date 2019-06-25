@@ -1,5 +1,8 @@
 package main.ui.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -9,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import main.ui.enumerations.MenuItems;
+import main.ui.enumerations.ProgrammingLanguages;
 import main.ui.enumerations.UIElements;
 
 /**
@@ -23,6 +27,11 @@ public final class ElementDesigner {
 	 */
 	private final Scene scene;
 
+	final double sceneWidth;
+	final double sceneHeight;
+	final double labelWidth;
+	final double marginX;
+	final double marginY;
 	/**
 	 * Instantiate the element designer class.
 	 *
@@ -30,6 +39,11 @@ public final class ElementDesigner {
 	 */
 	public ElementDesigner(final Scene scene) {
 		this.scene = scene;
+		sceneWidth = scene.getWidth();
+		sceneHeight = scene.getHeight();
+		labelWidth = 110;
+		marginX = 5;
+		marginY = 6;
 	}
 
 	/**
@@ -43,7 +57,7 @@ public final class ElementDesigner {
 			if (tab.getId().contentEquals(prefix + MenuItems.PROJECT.getId()))
 				designProjectTab();
 			else if (tab.getId().contentEquals(prefix + MenuItems.PROGRAMMING.getId())) {
-
+				designProgrammingTab();
 			} else if (tab.getId().contentEquals(prefix + MenuItems.DOCUMENTATION.getId())) {
 
 			} else if (tab.getId().contentEquals(prefix + MenuItems.DIAGRAMS.getId())) {
@@ -60,12 +74,6 @@ public final class ElementDesigner {
 	 * Position all elements of the Project tab.
 	 */
 	private void designProjectTab() {
-		final double sceneWidth = scene.getWidth();
-		final double sceneHeight = scene.getHeight();
-		final double labelWidth = 110;
-		final double marginX = 5;
-		final double marginY = 6;
-
 		System.out.println("Positioning StackPane GenerationOptions."); // TODO: Replace with log component.
 		final StackPane stpGenerationOptions = (StackPane) scene
 				.lookup("#" + UIElements.STACKPANE.getPrefix() + "GenerationOptions");
@@ -149,5 +157,52 @@ public final class ElementDesigner {
 		chbDiagrams.setLayoutX(marginX);
 		chbDiagrams.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
 				+ marginY * 3 + chbProgramming.getHeight() + chbDocumentation.getHeight());
+	}
+	
+	private void designProgrammingTab() {
+		final double languageColumnWidth = 120;
+		final double languageTopRowHeight = 22;
+		
+		System.out.println("Positioning StackPane ProgrammingLanguages.");
+		final StackPane stpProgrammingLanguages = (StackPane) scene.lookup("#" + UIElements.STACKPANE.getPrefix() + "ProgrammingLanguages");
+		stpProgrammingLanguages.setMinWidth(sceneWidth);
+		stpProgrammingLanguages.setPrefWidth(sceneWidth);
+		stpProgrammingLanguages.setMaxWidth(sceneWidth);
+		
+		System.out.println("Positioning Label Functional");
+		final Label lblFunctional = (Label) scene.lookup("#" + UIElements.LABEL.getPrefix() + "Functional");
+		lblFunctional.setMinSize(8, 40);
+		lblFunctional.setPrefSize(90, 34);
+		lblFunctional.setMaxSize(languageColumnWidth, languageTopRowHeight);
+		lblFunctional.setLayoutX(marginX);
+		lblFunctional.setLayoutY(marginY);
+		
+		System.out.println("Positioning Label ObjectOriented");
+		final Label lblObjectOriented = (Label) scene.lookup("#" + UIElements.LABEL.getPrefix() + "ObjectOriented");
+		lblObjectOriented.setMinSize(8, 40);
+		lblObjectOriented.setPrefSize(90, 34);
+		lblObjectOriented.setMaxSize(languageColumnWidth, 57);
+		lblObjectOriented.setLayoutX(marginX * 3 + lblFunctional.getWidth());
+		lblObjectOriented.setLayoutY(marginY);
+		
+		System.out.println("Positioning CheckBoxes");
+		int functionalLanguages = 0;
+		int objectOrientedLanguages = 0;
+		for(int i = 0; i < ProgrammingLanguages.values().length; i += 1) {
+			final ProgrammingLanguages language = ProgrammingLanguages.values()[i];
+			final CheckBox chbLanguage = (CheckBox) scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + language.getId());
+			chbLanguage.setMinWidth(40);
+			chbLanguage.setPrefWidth(60);
+			chbLanguage.setMaxWidth(languageColumnWidth);
+			if(language.isFunctional()) {
+				functionalLanguages += 1;
+				chbLanguage.setLayoutX(lblFunctional.getLayoutX());
+				chbLanguage.setLayoutY(languageTopRowHeight + marginY * functionalLanguages + chbLanguage.getHeight() * functionalLanguages); 
+			} else {
+				objectOrientedLanguages += 1;
+				chbLanguage.setLayoutX(lblObjectOriented.getLayoutX());
+				chbLanguage.setLayoutY(languageTopRowHeight + marginY * objectOrientedLanguages + chbLanguage.getHeight() * objectOrientedLanguages); 
+			}
+		}
 	}
 }

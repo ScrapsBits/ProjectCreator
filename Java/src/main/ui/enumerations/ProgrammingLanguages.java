@@ -7,7 +7,7 @@ package main.ui.enumerations;
  *
  */
 public enum ProgrammingLanguages {
-	CSHARP("CSharp", "C#", false), JAVA("Java", "Java", false);
+	CSHARP("CSharp", "C#", false), JAVA("Java", "Java", false), CPLUSPLUS("CPlusPlus", "C++", true);
 
 	private String id;
 	private String name;
