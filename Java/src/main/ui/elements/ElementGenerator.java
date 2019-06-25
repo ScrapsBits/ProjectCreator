@@ -1,4 +1,4 @@
-package main.ui.generator;
+package main.ui.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.ui.enumerations.MenuItems;
 import main.ui.enumerations.ProgrammingLanguages;
-import main.ui.enumerations.UserInterfaceElements;
+import main.ui.enumerations.UIElements;
 
 /**
  * Generate elements for the UI.
@@ -51,21 +51,22 @@ public final class ElementGenerator {
 
 	private AnchorPane generateAnchorPane(final String id) {
 		final AnchorPane anchorPane = new AnchorPane();
-		anchorPane.setId(UserInterfaceElements.ANCHORPANE.getPrefix() + id);
+		anchorPane.setId(UIElements.ANCHORPANE.getPrefix() + id);
 		return anchorPane;
 	}
 
 	private Button generateButton(final String id, final String text) {
 		final Button button = new Button();
-		button.setId(UserInterfaceElements.BUTTON.getPrefix() + id);
+		button.setId(UIElements.BUTTON.getPrefix() + id);
 		button.setText(text);
 		return button;
 	}
 
 	private CheckBox generateCheckBox(final String id, final String text) {
 		final CheckBox checkBox = new CheckBox();
-		checkBox.setId(UserInterfaceElements.CHECKBOX.getPrefix() + id);
+		checkBox.setId(UIElements.CHECKBOX.getPrefix() + id);
 		checkBox.setText(text);
+		checkBox.setAllowIndeterminate(false);
 		return checkBox;
 	}
 
@@ -138,7 +139,7 @@ public final class ElementGenerator {
 
 	private Label generateLabel(final String id, final String text) {
 		final Label label = new Label();
-		label.setId(UserInterfaceElements.LABEL.getPrefix() + id);
+		label.setId(UIElements.LABEL.getPrefix() + id);
 		label.setText(text);
 		return label;
 	}
@@ -204,13 +205,13 @@ public final class ElementGenerator {
 
 	private StackPane generateStackPane(final String id) {
 		final StackPane stackPane = new StackPane();
-		stackPane.setId(UserInterfaceElements.STACKPANE.getPrefix() + id);
+		stackPane.setId(UIElements.STACKPANE.getPrefix() + id);
 		return stackPane;
 	}
 
 	private Tab generateTab(final String id, final String name, final boolean isDisabled) {
 		final Tab tab = new Tab();
-		tab.setId(UserInterfaceElements.TAB.getPrefix() + id);
+		tab.setId(UIElements.TAB.getPrefix() + id);
 		tab.setText(name);
 		tab.setClosable(false);
 		tab.setDisable(isDisabled);
@@ -240,13 +241,13 @@ public final class ElementGenerator {
 
 	private TabPane generateTabPane(final String id) {
 		final TabPane tabPane = new TabPane();
-		tabPane.setId(UserInterfaceElements.TABPANE.getPrefix() + id);
+		tabPane.setId(UIElements.TABPANE.getPrefix() + id);
 		return tabPane;
 	}
 
 	private TextField generateTextField(final String id, final String promptText) {
 		final TextField textField = new TextField();
-		textField.setId(UserInterfaceElements.TEXTFIELD.getPrefix() + id);
+		textField.setId(UIElements.TEXTFIELD.getPrefix() + id);
 		textField.setPromptText(promptText);
 		return textField;
 	}

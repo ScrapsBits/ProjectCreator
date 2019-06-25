@@ -5,7 +5,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import main.ui.generator.ElementGenerator;
+import main.ui.elements.ElementGenerator;
 
 /**
  * Define controls and actions for a user interface.
