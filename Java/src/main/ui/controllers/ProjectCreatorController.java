@@ -1,9 +1,15 @@
 package main.ui.controllers;
 
+import java.util.List;
+
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import main.ui.elements.ElementGenerator;
+import main.ui.enumerations.UIElements;
 
 /**
  * Define controls and actions for a user interface.
@@ -55,6 +61,7 @@ public final class ProjectCreatorController extends Controller {
 		super.initialize();
 		initializeTabs();
 		fillTabs();
+		delegateActions();
 	}
 
 	/**
@@ -66,5 +73,87 @@ public final class ProjectCreatorController extends Controller {
 		final ElementGenerator generator = new ElementGenerator();
 		stpFrame.getChildren().add(generator.generateTabMenu());
 		System.out.println("All tabs generated."); // TODO: Replace with log component.
+	}
+
+	/**
+	 * Delegate event actions from elements to their handler methods.
+	 */
+	private void delegateActions() {
+		System.out.println("Delegating events.");
+		TabPane tbpMenu = (TabPane) stpFrame.getChildren().get(0);
+		List<Tab> tabs = tbpMenu.getTabs();
+		for (Tab tab : tabs) {
+			List<Node> elements = ((AnchorPane) (tab.getContent())).getChildren();
+			for (Node element : elements) {
+				switch (tab.getId()) {
+				case "tabProject":
+					delegateProjectTabActions(element);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Define all actions for elements on the Project tab. Refer each action to the
+	 * appropriate handler.
+	 * 
+	 * @param element An element displayed on the Project tab. Not all elements get
+	 *                an event handler.
+	 */
+	private void delegateProjectTabActions(Node element) {
+		switch (element.getId()) {
+		case "chbProgramming":
+			System.out.println("Delegating events for chbProgramming.");
+			System.out.println("Delegating mouse click event.");
+			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbProgrammingClick(event));
+			break;
+		case "chbDocumentation":
+			System.out.println("Delegating events for chbDocumentation.");
+			System.out.println("Delegating mouse click event.");
+			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDocumentationClick(event));
+			break;
+		case "chbDiagrams":
+			System.out.println("Delegating events for chbDocuments.");
+			System.out.println("Delegating mouse click event.");
+			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDiagramsClick(event));
+			break;
+		}
+	}
+
+	private void handleChbProgrammingClick(MouseEvent event) {
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		if (event.getSource() instanceof CheckBox) {
+			CheckBox chb = (CheckBox) event.getSource();
+			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) {
+					tab.setDisable(!chb.isSelected());
+				}
+			}
+		}
+	}
+	
+	private void handleChbDocumentationClick(MouseEvent event) {
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		if (event.getSource() instanceof CheckBox) {
+			CheckBox chb = (CheckBox) event.getSource();
+			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) {
+					tab.setDisable(!chb.isSelected());
+				}
+			}
+		}
+	}
+	
+	private void handleChbDiagramsClick(MouseEvent event) {
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		if (event.getSource() instanceof CheckBox) {
+			CheckBox chb = (CheckBox) event.getSource();
+			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) {
+					tab.setDisable(!chb.isSelected());
+				}
+			}
+		}
 	}
 }
