@@ -1,8 +1,7 @@
 package main.ui.enumerations;
 
 public enum MenuItems {
-	PROJECT("Project", "Project", true), PROGRAMMING("Programming", "Programming", true),
-	DOCUMENTATION("Documentation", "Documentation", false), DIAGRAMS("Diagrams", "Diagrams", false),
+	PROJECT("Project", "Project", true), PROGRAMMING("Programming", "Programming", true), DOCUMENTATION("Documentation", "Documentation", false), DIAGRAMS("Diagrams", "Diagrams", false),
 	ADDITIONAL_SOURCES("AdditionalSources", "Additional Sources", false), FINALIZE("Finalize", "Complete", true);
 
 	private String id;
@@ -15,15 +14,9 @@ public enum MenuItems {
 		this.isSupported = isSupported;
 	}
 
-	public String getId() {
-		return id;
-	}
+	public String getId() { return id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public boolean isSupported() {
-		return isSupported;
-	}
+	public boolean isSupported() { return isSupported; }
 }

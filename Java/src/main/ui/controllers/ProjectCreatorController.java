@@ -9,7 +9,6 @@ import main.ui.elements.ElementGenerator;
  * Define controls and actions for a user interface.
  *
  * @author ScrapsBits
- *
  */
 public final class ProjectCreatorController extends Controller {
 
@@ -19,9 +18,8 @@ public final class ProjectCreatorController extends Controller {
 	private void fillTabs() {
 		System.out.println("Generating components."); // TODO: Replace with log component.
 		final ElementGenerator generator = new ElementGenerator();
-		final TabPane menu = (TabPane) stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
-		for (final Tab tab : menu.getTabs())
-			switch (tab.getId()) {
+		final TabPane menu = (TabPane)stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
+		for(final Tab tab : menu.getTabs()) switch(tab.getId()) {
 			case "tabProject":
 				tab.setContent(generator.generateProjectTabContent(tab));
 				break;
@@ -43,7 +41,7 @@ public final class ProjectCreatorController extends Controller {
 			default:
 				tab.setContent(new AnchorPane());
 				break;
-			}
+		}
 		System.out.println("All components generated."); // TODO: Replace with log component.
 	}
 
@@ -58,8 +56,7 @@ public final class ProjectCreatorController extends Controller {
 	}
 
 	/**
-	 * Initialize all components on the user interface and define styling, position
-	 * and actions.
+	 * Initialize all components on the user interface and define styling, position and actions.
 	 */
 	private void initializeTabs() {
 		System.out.println("Generating tabs."); // TODO: Replace with log component.

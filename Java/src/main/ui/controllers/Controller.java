@@ -7,7 +7,6 @@ import javafx.scene.layout.StackPane;
  * Hold fields and values important to all controllers.
  *
  * @author ScrapsBits
- *
  */
 public abstract class Controller {
 
@@ -17,8 +16,7 @@ public abstract class Controller {
 	/**
 	 * Initialize a controller with default settings.
 	 */
-	protected Controller() {
-	}
+	protected Controller() {}
 
 	/**
 	 * Perform default initialization processes.

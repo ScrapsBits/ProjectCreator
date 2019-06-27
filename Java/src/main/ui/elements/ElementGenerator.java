@@ -21,19 +21,17 @@ import main.ui.enumerations.UIElements;
  * Generate elements for the UI.
  *
  * @author ScrapsBits
- *
  */
 public final class ElementGenerator {
 	/**
 	 * Instantiate the element generator.
 	 */
-	public ElementGenerator() {
-	}
+	public ElementGenerator() {}
 
 	public AnchorPane generateAdditionalSourcesTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Additional Sources tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -47,7 +45,7 @@ public final class ElementGenerator {
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	private AnchorPane generateAnchorPane(final String id) {
@@ -78,9 +76,9 @@ public final class ElementGenerator {
 	}
 
 	public AnchorPane generateDiagramsTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Diagrams tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -94,13 +92,13 @@ public final class ElementGenerator {
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	public AnchorPane generateDocumentationTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Documentation tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -114,13 +112,13 @@ public final class ElementGenerator {
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	public AnchorPane generateFinalizeTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Finalization tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -135,7 +133,7 @@ public final class ElementGenerator {
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	private Label generateLabel(final String id, final String text) {
@@ -147,9 +145,9 @@ public final class ElementGenerator {
 	}
 
 	public AnchorPane generateProgrammingTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Programming tab components.");
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -160,19 +158,18 @@ public final class ElementGenerator {
 			nodes.add(generateLabel("ObjectOriented", "Object Oriented Languages"));
 
 			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-			for (final ProgrammingLanguages language : ProgrammingLanguages.values())
-				nodes.add(generateCheckBox(language.getId(), language.getName()));
+			for(final ProgrammingLanguages language : ProgrammingLanguages.values()) nodes.add(generateCheckBox(language.getId(), language.getName()));
 
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	public AnchorPane generateProjectTabContent(final Tab tab) {
-		if (!tab.isDisabled()) {
+		if(!tab.isDisabled()) {
 			System.out.println("Generating Project tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane) tab.getContent();
+			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
 			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -198,7 +195,7 @@ public final class ElementGenerator {
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
-		return (AnchorPane) tab.getContent();
+		return (AnchorPane)tab.getContent();
 	}
 
 	private StackPane generateStackPane(final String id) {
@@ -227,7 +224,7 @@ public final class ElementGenerator {
 
 		// Generate and add all tabs to the tab pane.
 		final List<Tab> tabs = new ArrayList<>();
-		for (final MenuItems menuItem : MenuItems.values()) {
+		for(final MenuItems menuItem : MenuItems.values()) {
 			final Tab generateTab = generateTab(menuItem.getId(), menuItem.getName(), !menuItem.isSupported());
 			tabs.add(generateTab);
 			System.out.println("Generated tab " + menuItem.getName() + "."); // TODO: Replace with log component.

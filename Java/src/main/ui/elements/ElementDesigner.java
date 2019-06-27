@@ -19,7 +19,6 @@ import main.ui.enumerations.UIElements;
  * A class to design the single-view user interface.
  *
  * @author ScrapsBits
- *
  */
 public final class ElementDesigner {
 	/**
@@ -32,6 +31,7 @@ public final class ElementDesigner {
 	final double labelWidth;
 	final double marginX;
 	final double marginY;
+
 	/**
 	 * Instantiate the element designer class.
 	 *
@@ -52,21 +52,19 @@ public final class ElementDesigner {
 	public void designElements() {
 		System.out.println("Positioning and styling elements."); // TODO: Replace with log component.
 		final String prefix = UIElements.TAB.getPrefix();
-		for (final Tab tab : ((TabPane) scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))
-				.getTabs())
-			if (tab.getId().contentEquals(prefix + MenuItems.PROJECT.getId()))
-				designProjectTab();
-			else if (tab.getId().contentEquals(prefix + MenuItems.PROGRAMMING.getId())) {
-				designProgrammingTab();
-			} else if (tab.getId().contentEquals(prefix + MenuItems.DOCUMENTATION.getId())) {
+		for(final Tab tab : ((TabPane)scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs()) if(tab.getId().contentEquals(prefix + MenuItems.PROJECT.getId()))
+			designProjectTab();
+		else if(tab.getId().contentEquals(prefix + MenuItems.PROGRAMMING.getId())) {
+			designProgrammingTab();
+		} else if(tab.getId().contentEquals(prefix + MenuItems.DOCUMENTATION.getId())) {
 
-			} else if (tab.getId().contentEquals(prefix + MenuItems.DIAGRAMS.getId())) {
+		} else if(tab.getId().contentEquals(prefix + MenuItems.DIAGRAMS.getId())) {
 
-			} else if (tab.getId().contentEquals(prefix + MenuItems.ADDITIONAL_SOURCES.getId())) {
+		} else if(tab.getId().contentEquals(prefix + MenuItems.ADDITIONAL_SOURCES.getId())) {
 
-			} else if (tab.getId().contentEquals(prefix + MenuItems.FINALIZE.getId())) {
+		} else if(tab.getId().contentEquals(prefix + MenuItems.FINALIZE.getId())) {
 
-			}
+		}
 		System.out.println("All elements have been positioned and styled."); // TODO: Replace with log component.
 	}
 
@@ -75,15 +73,13 @@ public final class ElementDesigner {
 	 */
 	private void designProjectTab() {
 		System.out.println("Positioning StackPane GenerationOptions."); // TODO: Replace with log component.
-		final StackPane stpGenerationOptions = (StackPane) scene
-				.lookup("#" + UIElements.STACKPANE.getPrefix() + "GenerationOptions");
+		final StackPane stpGenerationOptions = (StackPane)scene.lookup("#" + UIElements.STACKPANE.getPrefix() + "GenerationOptions");
 		stpGenerationOptions.setMinHeight(sceneHeight);
 		stpGenerationOptions.setPrefHeight(sceneHeight);
 		stpGenerationOptions.setMaxHeight(sceneHeight);
 
 		System.out.println("Positioning TextField ProjectName.");
-		final TextField txfProjectName = (TextField) scene
-				.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
+		final TextField txfProjectName = (TextField)scene.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
 		txfProjectName.setMinWidth(40);
 		txfProjectName.setPrefWidth(sceneWidth - (marginX * 3 + labelWidth));
 		txfProjectName.setMaxWidth(sceneWidth - (marginX * 3 + labelWidth));
@@ -91,7 +87,7 @@ public final class ElementDesigner {
 		txfProjectName.setLayoutY(marginY);
 
 		System.out.println("Positioning Button Location");
-		final Button btnLocation = (Button) scene.lookup("#" + UIElements.BUTTON.getPrefix() + "Location");
+		final Button btnLocation = (Button)scene.lookup("#" + UIElements.BUTTON.getPrefix() + "Location");
 		btnLocation.setMinWidth(40);
 		btnLocation.setPrefWidth(90);
 		btnLocation.setMaxWidth(90);
@@ -99,8 +95,7 @@ public final class ElementDesigner {
 		btnLocation.setLayoutY(txfProjectName.getLayoutY() + txfProjectName.getHeight() + marginY);
 
 		System.out.println("Positioning TextField ProjectLocation.");
-		final TextField txfProjectLocation = (TextField) scene
-				.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
+		final TextField txfProjectLocation = (TextField)scene.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
 		txfProjectLocation.setMinWidth(40);
 		txfProjectLocation.setPrefWidth(sceneWidth - (marginX * 5 + labelWidth) - btnLocation.getWidth());
 		txfProjectLocation.setMaxWidth(sceneWidth - (marginX * 5 + labelWidth) - btnLocation.getWidth());
@@ -108,100 +103,88 @@ public final class ElementDesigner {
 		txfProjectLocation.setLayoutY(marginY * 2 + txfProjectName.getHeight());
 
 		System.out.println("Positioning Label ProjectName.");
-		final Label lblProjectName = (Label) scene
-				.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectName");
+		final Label lblProjectName = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectName");
 		lblProjectName.setLayoutX(marginX + labelWidth - lblProjectName.getWidth());
-		lblProjectName.setLayoutY(
-				txfProjectName.getLayoutY() + txfProjectName.getHeight() / 2 - lblProjectName.getHeight() / 2);
+		lblProjectName.setLayoutY(txfProjectName.getLayoutY() + txfProjectName.getHeight() / 2 - lblProjectName.getHeight() / 2);
 
 		System.out.println("Positioning Label ProjectLocation.");
-		final Label lblProjectLocation = (Label) scene
-				.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectLocation");
+		final Label lblProjectLocation = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectLocation");
 		lblProjectLocation.setLayoutX(marginX + labelWidth - lblProjectLocation.getWidth());
-		lblProjectLocation.setLayoutY(txfProjectLocation.getLayoutY() + txfProjectLocation.getHeight() / 2
-				- lblProjectLocation.getHeight() / 2);
+		lblProjectLocation.setLayoutY(txfProjectLocation.getLayoutY() + txfProjectLocation.getHeight() / 2 - lblProjectLocation.getHeight() / 2);
 
 		System.out.println("Positioning Label ProjectGenerationOptions");
-		final Label lblProjectGenerationOptions = (Label) scene
-				.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectGenerationOptions");
+		final Label lblProjectGenerationOptions = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectGenerationOptions");
 		lblProjectGenerationOptions.setLayoutX(marginX);
-		lblProjectGenerationOptions.setLayoutY(
-				lblProjectLocation.getLayoutY() + (lblProjectLocation.getLayoutY() - lblProjectName.getLayoutY()));
+		lblProjectGenerationOptions.setLayoutY(lblProjectLocation.getLayoutY() + (lblProjectLocation.getLayoutY() - lblProjectName.getLayoutY()));
 
 		System.out.println("Positioning CheckBox Programming");
-		final CheckBox chbProgramming = (CheckBox) scene
-				.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Programming");
+		final CheckBox chbProgramming = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Programming");
 		chbProgramming.setMinWidth(60);
 		chbProgramming.setPrefWidth(120);
 		chbProgramming.setMaxWidth(200);
 		chbProgramming.setLayoutX(marginX);
-		chbProgramming.setLayoutY(
-				lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY);
+		chbProgramming.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY);
 
 		System.out.println("Positioning CheckBox Documentation");
-		final CheckBox chbDocumentation = (CheckBox) scene
-				.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Documentation");
+		final CheckBox chbDocumentation = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Documentation");
 		chbDocumentation.setMinWidth(60);
 		chbDocumentation.setPrefWidth(120);
 		chbDocumentation.setMaxWidth(200);
 		chbDocumentation.setLayoutX(marginX);
-		chbDocumentation.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
-				+ marginY * 2 + chbProgramming.getHeight());
+		chbDocumentation.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY * 2 + chbProgramming.getHeight());
 
 		System.out.println("Positioning CheckBox Diagrams");
-		final CheckBox chbDiagrams = (CheckBox) scene
-				.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Diagrams");
+		final CheckBox chbDiagrams = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Diagrams");
 		chbDiagrams.setMinWidth(60);
 		chbDiagrams.setPrefWidth(120);
 		chbDiagrams.setMaxWidth(200);
 		chbDiagrams.setLayoutX(marginX);
-		chbDiagrams.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
-				+ marginY * 3 + chbProgramming.getHeight() + chbDocumentation.getHeight());
+		chbDiagrams.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY * 3 + chbProgramming.getHeight() + chbDocumentation.getHeight());
 	}
-	
+
 	private void designProgrammingTab() {
 		final double languageColumnWidth = 120;
 		final double languageTopRowHeight = 22;
-		
+
 		System.out.println("Positioning StackPane ProgrammingLanguages.");
-		final StackPane stpProgrammingLanguages = (StackPane) scene.lookup("#" + UIElements.STACKPANE.getPrefix() + "ProgrammingLanguages");
+		final StackPane stpProgrammingLanguages = (StackPane)scene.lookup("#" + UIElements.STACKPANE.getPrefix() + "ProgrammingLanguages");
 		stpProgrammingLanguages.setMinWidth(sceneWidth);
 		stpProgrammingLanguages.setPrefWidth(sceneWidth);
 		stpProgrammingLanguages.setMaxWidth(sceneWidth);
-		
+
 		System.out.println("Positioning Label Functional");
-		final Label lblFunctional = (Label) scene.lookup("#" + UIElements.LABEL.getPrefix() + "Functional");
+		final Label lblFunctional = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "Functional");
 		lblFunctional.setMinSize(8, 40);
 		lblFunctional.setPrefSize(90, 34);
 		lblFunctional.setMaxSize(languageColumnWidth, languageTopRowHeight);
 		lblFunctional.setLayoutX(marginX);
 		lblFunctional.setLayoutY(marginY);
-		
+
 		System.out.println("Positioning Label ObjectOriented");
-		final Label lblObjectOriented = (Label) scene.lookup("#" + UIElements.LABEL.getPrefix() + "ObjectOriented");
+		final Label lblObjectOriented = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ObjectOriented");
 		lblObjectOriented.setMinSize(8, 40);
 		lblObjectOriented.setPrefSize(90, 34);
 		lblObjectOriented.setMaxSize(languageColumnWidth, 57);
 		lblObjectOriented.setLayoutX(marginX * 3 + lblFunctional.getWidth());
 		lblObjectOriented.setLayoutY(marginY);
-		
+
 		System.out.println("Positioning CheckBoxes");
 		int functionalLanguages = 0;
 		int objectOrientedLanguages = 0;
 		for(int i = 0; i < ProgrammingLanguages.values().length; i += 1) {
 			final ProgrammingLanguages language = ProgrammingLanguages.values()[i];
-			final CheckBox chbLanguage = (CheckBox) scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + language.getId());
+			final CheckBox chbLanguage = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + language.getId());
 			chbLanguage.setMinWidth(40);
 			chbLanguage.setPrefWidth(60);
 			chbLanguage.setMaxWidth(languageColumnWidth);
 			if(language.isFunctional()) {
 				functionalLanguages += 1;
 				chbLanguage.setLayoutX(lblFunctional.getLayoutX());
-				chbLanguage.setLayoutY(languageTopRowHeight + marginY * functionalLanguages + chbLanguage.getHeight() * functionalLanguages); 
+				chbLanguage.setLayoutY(languageTopRowHeight + marginY * functionalLanguages + chbLanguage.getHeight() * functionalLanguages);
 			} else {
 				objectOrientedLanguages += 1;
 				chbLanguage.setLayoutX(lblObjectOriented.getLayoutX());
-				chbLanguage.setLayoutY(languageTopRowHeight + marginY * objectOrientedLanguages + chbLanguage.getHeight() * objectOrientedLanguages); 
+				chbLanguage.setLayoutY(languageTopRowHeight + marginY * objectOrientedLanguages + chbLanguage.getHeight() * objectOrientedLanguages);
 			}
 		}
 	}

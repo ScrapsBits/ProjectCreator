@@ -9,7 +9,6 @@ import main.ui.enumerations.ProgrammingLanguages;
  * Keep track of the various settings turned off and on by user input.
  *
  * @author ScrapsBits
- *
  */
 public final class Configuration {
 	/**
@@ -24,23 +23,13 @@ public final class Configuration {
 	/**
 	 * Initialize configuration settings.
 	 */
-	public Configuration() {
-		selectedProgrammingLanguages = new ArrayList<>();
-	}
+	public Configuration() { selectedProgrammingLanguages = new ArrayList<>(); }
 
-	public String getProjectName() {
-		return projectName;
-	}
+	public String getProjectName() { return projectName; }
 
-	public List<ProgrammingLanguages> getSelectedProgrammingLanguages() {
-		return selectedProgrammingLanguages;
-	}
+	public List<ProgrammingLanguages> getSelectedProgrammingLanguages() { return selectedProgrammingLanguages; }
 
-	public void setProjectName(final String projectName) {
-		this.projectName = projectName;
-	}
+	public void setProjectName(final String projectName) { this.projectName = projectName; }
 
-	public void setSelectedProgrammingLanguages(final List<ProgrammingLanguages> selectedProgrammingLanguages) {
-		this.selectedProgrammingLanguages = selectedProgrammingLanguages;
-	}
+	public void setSelectedProgrammingLanguages(final List<ProgrammingLanguages> selectedProgrammingLanguages) { this.selectedProgrammingLanguages = selectedProgrammingLanguages; }
 }

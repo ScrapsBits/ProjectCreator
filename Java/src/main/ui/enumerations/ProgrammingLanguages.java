@@ -4,7 +4,6 @@ package main.ui.enumerations;
  * Keep track of all supported programming languages.
  *
  * @author ScrapsBits
- *
  */
 public enum ProgrammingLanguages {
 	CSHARP("CSharp", "C#", false), JAVA("Java", "Java", false), CPLUSPLUS("CPlusPlus", "C++", true);
@@ -19,15 +18,9 @@ public enum ProgrammingLanguages {
 		this.isFunctional = isFunctional;
 	}
 
-	public String getId() {
-		return id;
-	}
+	public String getId() { return id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public boolean isFunctional() {
-		return isFunctional;
-	}
+	public boolean isFunctional() { return isFunctional; }
 }
