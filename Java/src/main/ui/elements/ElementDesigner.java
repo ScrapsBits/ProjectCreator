@@ -1,8 +1,5 @@
 package main.ui.elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -19,6 +16,7 @@ import main.ui.enumerations.UIElements;
  * A class to design the single-view user interface.
  *
  * @author ScrapsBits
+ *
  */
 public final class ElementDesigner {
 	/**
@@ -78,7 +76,7 @@ public final class ElementDesigner {
 		stpGenerationOptions.setPrefHeight(sceneHeight);
 		stpGenerationOptions.setMaxHeight(sceneHeight);
 
-		System.out.println("Positioning TextField ProjectName.");
+		System.out.println("Positioning TextField ProjectName."); // TODO: Replace with log component.
 		final TextField txfProjectName = (TextField)scene.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
 		txfProjectName.setMinWidth(40);
 		txfProjectName.setPrefWidth(sceneWidth - (marginX * 3 + labelWidth));
@@ -86,7 +84,7 @@ public final class ElementDesigner {
 		txfProjectName.setLayoutX(labelWidth + marginX * 2);
 		txfProjectName.setLayoutY(marginY);
 
-		System.out.println("Positioning Button Location");
+		System.out.println("Positioning Button Location"); // TODO: Replace with log component.
 		final Button btnLocation = (Button)scene.lookup("#" + UIElements.BUTTON.getPrefix() + "Location");
 		btnLocation.setMinWidth(40);
 		btnLocation.setPrefWidth(90);
@@ -94,7 +92,7 @@ public final class ElementDesigner {
 		btnLocation.setLayoutX(scene.getWidth() - marginX * 2 - btnLocation.getWidth());
 		btnLocation.setLayoutY(txfProjectName.getLayoutY() + txfProjectName.getHeight() + marginY);
 
-		System.out.println("Positioning TextField ProjectLocation.");
+		System.out.println("Positioning TextField ProjectLocation."); // TODO: Replace with log component.
 		final TextField txfProjectLocation = (TextField)scene.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
 		txfProjectLocation.setMinWidth(40);
 		txfProjectLocation.setPrefWidth(sceneWidth - (marginX * 5 + labelWidth) - btnLocation.getWidth());
@@ -102,22 +100,22 @@ public final class ElementDesigner {
 		txfProjectLocation.setLayoutX(labelWidth + marginX * 2);
 		txfProjectLocation.setLayoutY(marginY * 2 + txfProjectName.getHeight());
 
-		System.out.println("Positioning Label ProjectName.");
+		System.out.println("Positioning Label ProjectName."); // TODO: Replace with log component.
 		final Label lblProjectName = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectName");
 		lblProjectName.setLayoutX(marginX + labelWidth - lblProjectName.getWidth());
 		lblProjectName.setLayoutY(txfProjectName.getLayoutY() + txfProjectName.getHeight() / 2 - lblProjectName.getHeight() / 2);
 
-		System.out.println("Positioning Label ProjectLocation.");
+		System.out.println("Positioning Label ProjectLocation."); // TODO: Replace with log component.
 		final Label lblProjectLocation = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectLocation");
 		lblProjectLocation.setLayoutX(marginX + labelWidth - lblProjectLocation.getWidth());
 		lblProjectLocation.setLayoutY(txfProjectLocation.getLayoutY() + txfProjectLocation.getHeight() / 2 - lblProjectLocation.getHeight() / 2);
 
-		System.out.println("Positioning Label ProjectGenerationOptions");
+		System.out.println("Positioning Label ProjectGenerationOptions"); // TODO: Replace with log component.
 		final Label lblProjectGenerationOptions = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ProjectGenerationOptions");
 		lblProjectGenerationOptions.setLayoutX(marginX);
 		lblProjectGenerationOptions.setLayoutY(lblProjectLocation.getLayoutY() + (lblProjectLocation.getLayoutY() - lblProjectName.getLayoutY()));
 
-		System.out.println("Positioning CheckBox Programming");
+		System.out.println("Positioning CheckBox Programming"); // TODO: Replace with log component.
 		final CheckBox chbProgramming = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Programming");
 		chbProgramming.setMinWidth(60);
 		chbProgramming.setPrefWidth(120);
@@ -125,7 +123,7 @@ public final class ElementDesigner {
 		chbProgramming.setLayoutX(marginX);
 		chbProgramming.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY);
 
-		System.out.println("Positioning CheckBox Documentation");
+		System.out.println("Positioning CheckBox Documentation"); // TODO: Replace with log component.
 		final CheckBox chbDocumentation = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Documentation");
 		chbDocumentation.setMinWidth(60);
 		chbDocumentation.setPrefWidth(120);
@@ -133,26 +131,36 @@ public final class ElementDesigner {
 		chbDocumentation.setLayoutX(marginX);
 		chbDocumentation.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY * 2 + chbProgramming.getHeight());
 
-		System.out.println("Positioning CheckBox Diagrams");
+		System.out.println("Positioning CheckBox Diagrams"); // TODO: Replace with log component.
 		final CheckBox chbDiagrams = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + "Diagrams");
 		chbDiagrams.setMinWidth(60);
 		chbDiagrams.setPrefWidth(120);
 		chbDiagrams.setMaxWidth(200);
 		chbDiagrams.setLayoutX(marginX);
 		chbDiagrams.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight() + marginY * 3 + chbProgramming.getHeight() + chbDocumentation.getHeight());
+
+		System.out.println("Positioning CheckBox AdditionalSources"); // TODO: Replace with log component.
+		final CheckBox chbAdditionalSources = (CheckBox) scene
+				.lookup("#" + UIElements.CHECKBOX.getPrefix() + "AdditionalSources");
+		chbAdditionalSources.setMinWidth(60);
+		chbAdditionalSources.setPrefWidth(120);
+		chbAdditionalSources.setMaxWidth(200);
+		chbAdditionalSources.setLayoutX(marginX);
+		chbAdditionalSources.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
+				+ marginY * 4 + chbProgramming.getHeight() + chbDocumentation.getHeight() + chbDiagrams.getHeight());
 	}
 
 	private void designProgrammingTab() {
 		final double languageColumnWidth = 120;
 		final double languageTopRowHeight = 22;
 
-		System.out.println("Positioning StackPane ProgrammingLanguages.");
+		System.out.println("Positioning StackPane ProgrammingLanguages."); // TODO: Replace with log component.
 		final StackPane stpProgrammingLanguages = (StackPane)scene.lookup("#" + UIElements.STACKPANE.getPrefix() + "ProgrammingLanguages");
 		stpProgrammingLanguages.setMinWidth(sceneWidth);
 		stpProgrammingLanguages.setPrefWidth(sceneWidth);
 		stpProgrammingLanguages.setMaxWidth(sceneWidth);
 
-		System.out.println("Positioning Label Functional");
+		System.out.println("Positioning Label Functional"); // TODO: Replace with log component.
 		final Label lblFunctional = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "Functional");
 		lblFunctional.setMinSize(8, 40);
 		lblFunctional.setPrefSize(90, 34);
@@ -160,7 +168,7 @@ public final class ElementDesigner {
 		lblFunctional.setLayoutX(marginX);
 		lblFunctional.setLayoutY(marginY);
 
-		System.out.println("Positioning Label ObjectOriented");
+		System.out.println("Positioning Label ObjectOriented"); // TODO: Replace with log component.
 		final Label lblObjectOriented = (Label)scene.lookup("#" + UIElements.LABEL.getPrefix() + "ObjectOriented");
 		lblObjectOriented.setMinSize(8, 40);
 		lblObjectOriented.setPrefSize(90, 34);
@@ -168,7 +176,7 @@ public final class ElementDesigner {
 		lblObjectOriented.setLayoutX(marginX * 3 + lblFunctional.getWidth());
 		lblObjectOriented.setLayoutY(marginY);
 
-		System.out.println("Positioning CheckBoxes");
+		System.out.println("Positioning CheckBoxes"); // TODO: Replace with log component.
 		int functionalLanguages = 0;
 		int objectOrientedLanguages = 0;
 		for(int i = 0; i < ProgrammingLanguages.values().length; i += 1) {

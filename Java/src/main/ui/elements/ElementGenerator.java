@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.ui.enumerations.MenuItems;
@@ -188,6 +187,7 @@ public final class ElementGenerator {
 			nodes.add(generateCheckBox("Programming", "Programming", true));
 			nodes.add(generateCheckBox("Documentation", "Documentation"));
 			nodes.add(generateCheckBox("Diagrams", "Diagrams"));
+			nodes.add(generateCheckBox("AdditionalSources", "Other"));
 
 			System.out.println("Generating Button components."); // TODO: Replace with log component.
 			nodes.add(generateButton("Location", "Select Folder"));
