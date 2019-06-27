@@ -190,6 +190,7 @@ public final class ElementGenerator {
 			nodes.add(generateCheckBox("Programming", "Programming", true));
 			nodes.add(generateCheckBox("Documentation", "Documentation"));
 			nodes.add(generateCheckBox("Diagrams", "Diagrams"));
+			nodes.add(generateCheckBox("AdditionalSources", "Other"));
 
 			System.out.println("Generating Button components."); // TODO: Replace with log component.
 			nodes.add(generateButton("Location", "Select Folder"));

@@ -118,6 +118,11 @@ public final class ProjectCreatorController extends Controller {
 			System.out.println("Delegating mouse click event.");
 			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDiagramsClick(event));
 			break;
+		case "chbAdditionalSources":
+			System.out.println("Delegating events for chbAdditionalSources.");
+			System.out.println("Delegating mouse click event.");
+			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbAdditionalSourcesClick(event));
+			break;
 		}
 	}
 
@@ -151,6 +156,18 @@ public final class ProjectCreatorController extends Controller {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) {
+					tab.setDisable(!chb.isSelected());
+				}
+			}
+		}
+	}
+	
+	private void handleChbAdditionalSourcesClick(MouseEvent event) {
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		if (event.getSource() instanceof CheckBox) {
+			CheckBox chb = (CheckBox) event.getSource();
+			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) {
 					tab.setDisable(!chb.isSelected());
 				}
 			}

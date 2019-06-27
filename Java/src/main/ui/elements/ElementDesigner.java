@@ -154,6 +154,16 @@ public final class ElementDesigner {
 		chbDiagrams.setLayoutX(marginX);
 		chbDiagrams.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
 				+ marginY * 3 + chbProgramming.getHeight() + chbDocumentation.getHeight());
+
+		System.out.println("Positioning CheckBox AdditionalSources"); // TODO: Replace with log component.
+		final CheckBox chbAdditionalSources = (CheckBox) scene
+				.lookup("#" + UIElements.CHECKBOX.getPrefix() + "AdditionalSources");
+		chbAdditionalSources.setMinWidth(60);
+		chbAdditionalSources.setPrefWidth(120);
+		chbAdditionalSources.setMaxWidth(200);
+		chbAdditionalSources.setLayoutX(marginX);
+		chbAdditionalSources.setLayoutY(lblProjectGenerationOptions.getLayoutY() + lblProjectGenerationOptions.getHeight()
+				+ marginY * 4 + chbProgramming.getHeight() + chbDocumentation.getHeight() + chbDiagrams.getHeight());
 	}
 	
 	private void designProgrammingTab() {
