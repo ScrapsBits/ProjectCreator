@@ -3,11 +3,14 @@ package main.ui.controllers;
 import java.util.List;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import main.core.ProjectCreator;
+import main.core.enumerations.BootMode;
 import main.ui.elements.ElementGenerator;
 import main.ui.enumerations.UIElements;
 
@@ -86,6 +89,9 @@ public final class ProjectCreatorController extends Controller {
 				case "tabProject":
 					delegateProjectTabActions(element);
 					break;
+				case "tabFinalize":
+					delegateFinalizeTabActions(element);
+					break;
 				}
 			}
 		}
@@ -122,6 +128,15 @@ public final class ProjectCreatorController extends Controller {
 			break;
 		}
 	}
+	
+	private void delegateFinalizeTabActions(Node element) {
+		switch(element.getId()) {
+			case "btnFinalize":
+				System.out.println("Delegating events for btnFinalize.");
+				System.out.println("Delegating mouse click event.");
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnFinalizeClick(event));
+		}
+	}
 
 	private void handleChbProgrammingClick(MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
@@ -129,9 +144,19 @@ public final class ProjectCreatorController extends Controller {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) {
+					if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) {
 					tab.setDisable(!chb.isSelected());
+					}
 				}
 			}
+		}
+	}
+	
+	private void handleBtnFinalizeClick(MouseEvent event) {
+		System.out.println("Handling a click on button " + ((Node)(event.getSource())).getId());
+		if(event.getSource() instanceof Button) {
+			Button btn = (Button) event.getSource();
+			// TODO: Set writing section.
 		}
 	}
 	
@@ -141,7 +166,9 @@ public final class ProjectCreatorController extends Controller {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) {
+					if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) {
 					tab.setDisable(!chb.isSelected());
+				}
 				}
 			}
 		}
@@ -153,7 +180,9 @@ public final class ProjectCreatorController extends Controller {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) {
+					if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) {
 					tab.setDisable(!chb.isSelected());
+					}
 				}
 			}
 		}
@@ -165,7 +194,9 @@ public final class ProjectCreatorController extends Controller {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) {
+					if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) {
 					tab.setDisable(!chb.isSelected());
+					}
 				}
 			}
 		}

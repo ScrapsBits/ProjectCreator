@@ -17,7 +17,7 @@ public final class ProjectCreator extends Application {
 	/**
 	 * Define if the launch mode is "safe" or "full".
 	 */
-	private static BootMode bootMode = defaultBootMode();
+	private static BootMode bootMode;
 	/**
 	 * Set the width of the stage.
 	 */
