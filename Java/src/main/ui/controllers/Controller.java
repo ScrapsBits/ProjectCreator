@@ -2,8 +2,6 @@ package main.ui.controllers;
 
 import java.util.List;
 
-import javafx.fxml.FXML;
-import javafx.scene.layout.StackPane;
 import main.core.enumerations.ProgrammingLanguage;
 import main.models.Configuration;
 
@@ -13,9 +11,6 @@ import main.models.Configuration;
  * @author ScrapsBits
  */
 public abstract class Controller {
-
-	@FXML
-	protected StackPane stpFrame;
 	
 	private Configuration configuration;
 
@@ -47,6 +42,10 @@ public abstract class Controller {
 	}
 	
 	protected void setProjectLanguages(List<ProgrammingLanguage> languages) {
-		
+		if(languages != null && !languages.isEmpty()) {
+			configuration.setSelectedProgrammingLanguages(languages);
+		} else {
+			System.out.println("The provided list of languages is empty. At least one language must be selected.");
+		}
 	}
 }

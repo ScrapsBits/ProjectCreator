@@ -1,6 +1,7 @@
 package main.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import main.core.enumerations.ProgrammingLanguage;
@@ -28,6 +29,19 @@ public final class Configuration {
 	 * Initialize configuration settings.
 	 */
 	public Configuration() { selectedProgrammingLanguage = new ArrayList<>(); }
+	
+	/**
+	 * Initialize configuration settings from a configuration source.
+	 * @param projectName The name of the project, as loaded from the source.
+	 * @param configLocation The location where the configuration is stored.
+	 * @param selectedProgrammingLanguages The various programming languages that have been selected in the source.
+	 */
+	public Configuration(String projectName, String configLocation, List<ProgrammingLanguage> selectedProgrammingLanguages) {
+		this();
+		this.projectName = projectName;
+		this.configLocation = configLocation;
+		Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
+	}
 
 	/**
 	 * Get the path to the location where configuration files are stored.
