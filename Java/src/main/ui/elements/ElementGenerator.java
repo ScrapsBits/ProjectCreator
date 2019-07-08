@@ -12,8 +12,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import main.core.enumerations.ProgrammingLanguage;
 import main.ui.enumerations.MenuItems;
-import main.ui.enumerations.ProgrammingLanguages;
 import main.ui.enumerations.UIElements;
 
 /**
@@ -32,14 +32,6 @@ public final class ElementGenerator {
 			System.out.println("Generating Additional Sources tab components."); // TODO: Replace with log component.
 			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
-
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
 
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
@@ -80,14 +72,6 @@ public final class ElementGenerator {
 			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
-
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
@@ -100,14 +84,6 @@ public final class ElementGenerator {
 			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
 
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
-
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;
 		}
@@ -119,12 +95,6 @@ public final class ElementGenerator {
 			System.out.println("Generating Finalization tab components."); // TODO: Replace with log component.
 			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
 			final List<Node> nodes = new ArrayList<>();
-
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
 
 			System.out.println("Generating Button components."); // TODO: Replace with log component.
 			nodes.add(generateButton("Finalize", "Create projects"));
@@ -157,7 +127,7 @@ public final class ElementGenerator {
 			nodes.add(generateLabel("ObjectOriented", "Object Oriented Languages"));
 
 			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-			for(final ProgrammingLanguages language : ProgrammingLanguages.values()) nodes.add(generateCheckBox(language.getId(), language.getName()));
+			for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(!language.getName().contentEquals("")) nodes.add(generateCheckBox(language.getId(), language.getName()));
 
 			anchorPane.getChildren().addAll(nodes);
 			return anchorPane;

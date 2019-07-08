@@ -8,15 +8,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
+import main.core.enumerations.ProgrammingLanguage;
 import main.ui.enumerations.MenuItems;
-import main.ui.enumerations.ProgrammingLanguages;
 import main.ui.enumerations.UIElements;
 
 /**
  * A class to design the single-view user interface.
  *
  * @author ScrapsBits
- *
  */
 public final class ElementDesigner {
 	/**
@@ -178,20 +177,22 @@ public final class ElementDesigner {
 		System.out.println("Positioning CheckBoxes"); // TODO: Replace with log component.
 		int functionalLanguages = 0;
 		int objectOrientedLanguages = 0;
-		for(int i = 0; i < ProgrammingLanguages.values().length; i += 1) {
-			final ProgrammingLanguages language = ProgrammingLanguages.values()[i];
-			final CheckBox chbLanguage = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + language.getId());
-			chbLanguage.setMinWidth(40);
-			chbLanguage.setPrefWidth(60);
-			chbLanguage.setMaxWidth(languageColumnWidth);
-			if(language.isFunctional()) {
-				functionalLanguages += 1;
-				chbLanguage.setLayoutX(lblFunctional.getLayoutX());
-				chbLanguage.setLayoutY(languageTopRowHeight + marginY * functionalLanguages + chbLanguage.getHeight() * functionalLanguages);
-			} else {
-				objectOrientedLanguages += 1;
-				chbLanguage.setLayoutX(lblObjectOriented.getLayoutX());
-				chbLanguage.setLayoutY(languageTopRowHeight + marginY * objectOrientedLanguages + chbLanguage.getHeight() * objectOrientedLanguages);
+		for(int i = 0; i < ProgrammingLanguage.values().length; i += 1) {
+			final ProgrammingLanguage language = ProgrammingLanguage.values()[i];
+			if(!language.getName().contentEquals("")) {
+				final CheckBox chbLanguage = (CheckBox)scene.lookup("#" + UIElements.CHECKBOX.getPrefix() + language.getId());
+				chbLanguage.setMinWidth(40);
+				chbLanguage.setPrefWidth(60);
+				chbLanguage.setMaxWidth(languageColumnWidth);
+				if(language.isFunctional()) {
+					functionalLanguages += 1;
+					chbLanguage.setLayoutX(lblFunctional.getLayoutX());
+					chbLanguage.setLayoutY(languageTopRowHeight + marginY * functionalLanguages + chbLanguage.getHeight() * functionalLanguages);
+				} else {
+					objectOrientedLanguages += 1;
+					chbLanguage.setLayoutX(lblObjectOriented.getLayoutX());
+					chbLanguage.setLayoutY(languageTopRowHeight + marginY * objectOrientedLanguages + chbLanguage.getHeight() * objectOrientedLanguages);
+				}
 			}
 		}
 	}
