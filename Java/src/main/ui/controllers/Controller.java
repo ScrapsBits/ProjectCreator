@@ -34,13 +34,30 @@ public abstract class Controller {
 	 */
 	protected void setProjectName(String name) {
 		name = name.trim();
-		if(name != null && name.isEmpty()) {
+		if(name != null && !name.isEmpty()) {
 			configuration.setProjectName(name);
 		} else {
 			System.out.println("The provided name is not valid.");
 		}
 	}
 	
+	/**
+	 * Set the location for the configuration files. Also sets the default location for projects.
+	 * @param location The location where the configuration files will be stored. It will also be the default location for projects.
+	 */
+	protected void setProjectLocation(String location) {
+		location = location.trim();
+		if(location != null && !location.isEmpty()) {
+			configuration.setConfigLocation(location);
+		} else {
+			System.out.println("The location is not valid.");
+		}
+	}
+	
+	/**
+	 * Set the list of programming languages selected by the user.
+	 * @param languages A list of all languages for which a software project will be created.
+	 */
 	protected void setProjectLanguages(List<ProgrammingLanguage> languages) {
 		if(languages != null && !languages.isEmpty()) {
 			configuration.setSelectedProgrammingLanguages(languages);

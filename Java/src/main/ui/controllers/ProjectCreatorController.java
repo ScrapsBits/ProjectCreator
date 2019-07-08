@@ -1,5 +1,7 @@
 package main.ui.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -8,9 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 import main.core.ProjectCreator;
 import main.core.enumerations.BootMode;
 import main.ui.elements.ElementGenerator;
@@ -127,6 +131,11 @@ public final class ProjectCreatorController extends Controller {
 				System.out.println("Delegating mouse click event.");
 				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbAdditionalSourcesClick(event));
 				break;
+			case "btnLocation":
+				System.out.println("Delegating events for btnLocation.");
+				System.out.println("Delegating mouse click event.");
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnLocationClick(event)); 
+				break;
 		}
 	}
 
@@ -177,6 +186,26 @@ public final class ProjectCreatorController extends Controller {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
 				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+		}
+	}
+	
+	private void handleBtnLocationClick(final MouseEvent event) {
+		System.out.println("Handlign a click on button " + ((Node)event.getSource()).getId());
+		if(event.getSource() instanceof Button) {
+			final Button btn = (Button)event.getSource();
+			DirectoryChooser directoryChooser = new DirectoryChooser();
+			File selectedDirectory = directoryChooser.showDialog(stpFrame.getScene().getWindow());
+			if(selectedDirectory != null) {
+				TextField txf = ((TextField)btn.getScene().lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation"));
+				try {
+					String directory = selectedDirectory.getCanonicalPath();
+					txf.setText(directory);
+					this.setProjectLocation(directory);
+				} catch(IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
