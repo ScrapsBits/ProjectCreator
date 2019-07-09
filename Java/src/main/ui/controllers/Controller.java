@@ -12,7 +12,7 @@ import main.models.Configuration;
  */
 public abstract class Controller {
 	
-	private Configuration configuration;
+	protected Configuration configuration;
 
 	/**
 	 * Initialize a controller with default settings.
