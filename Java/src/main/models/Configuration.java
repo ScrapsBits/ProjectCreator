@@ -45,11 +45,53 @@ public final class Configuration {
 	}
 
 	/**
+	 * Add a new language to the list of programming languages.
+	 * 
+	 * @param  programmingLanguage      The language added to the list.
+	 * @throws IllegalArgumentException Thrown when the language is unknown or when it's marked as "not supported".
+	 */
+	public void addProgrammingLanguage(final ProgrammingLanguage programmingLanguage) {
+		if(programmingLanguage.equals(ProgrammingLanguage.UNKNOWN)) {
+			throw new IllegalArgumentException("Cannot add UNKNOWN. Please select another language.");
+		} else if(!programmingLanguage.isSupported()) { throw new IllegalArgumentException("Cannot add unsupported language " + programmingLanguage.getName() + "."); }
+
+		this.selectedProgrammingLanguage.add(programmingLanguage);
+	}
+
+	/**
 	 * Get the path to the location where configuration files are stored.
 	 * 
 	 * @return Returns the path where the config files are stored.
 	 */
 	public String getConfigLocation() { return configLocation; }
+
+	/**
+	 * Get the project name.
+	 * 
+	 * @return Returns the name of the project.
+	 */
+	public String getProjectName() { return projectName; }
+
+	/**
+	 * Get a list of selected programming languages.
+	 * 
+	 * @return Returns a list of selected programming languages.
+	 */
+	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return selectedProgrammingLanguage; }
+
+	/**
+	 * Remove a language from the list of programming languages.
+	 * 
+	 * @param programmingLanguage The language added to the list.
+	 */
+	public void removeProgrammingLanguage(final ProgrammingLanguage programmingLanguage) { this.selectedProgrammingLanguage.remove(programmingLanguage); }
+
+	/**
+	 * Safe the configuration into a file at the provided location.
+	 */
+	public void safe() {
+		// TODO: Write the configuration information into a file.
+	}
 
 	/**
 	 * Set the path where the configuration files will be stored.
@@ -67,23 +109,10 @@ public final class Configuration {
 	}
 
 	/**
-	 * Get the project name.
-	 * 
-	 * @return Returns the name of the project.
-	 */
-	public String getProjectName() { return projectName; }
-
-	/**
-	 * Get a list of selected programming languages.
-	 * 
-	 * @return Returns a list of selected programming languages.
-	 */
-	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return selectedProgrammingLanguage; }
-
-	/**
 	 * Set the name of the project.
 	 * 
-	 * @param projectName The project's name.
+	 * @param  projectName              The project's name.
+	 * @throws IllegalArgumentException Thrown when the name is null or empty.
 	 */
 	public void setProjectName(String projectName) {
 		if(projectName != null) {
@@ -103,34 +132,8 @@ public final class Configuration {
 	 */
 	public void setSelectedProgrammingLanguages(List<ProgrammingLanguage> selectedProgrammingLanguages) {
 		if(selectedProgrammingLanguages != null && selectedProgrammingLanguages.size() > 0) {
-		Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
+			this.selectedProgrammingLanguage.clear();
+			Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
 		}
-		}
-
-	/**
-	 * Add a new language to the list of programming languages.
-	 * 
-	 * @param  programmingLanguage      The language added to the list.
-	 * @throws IllegalArgumentException Thrown when the language is unknown or when it's marked as "not supported".
-	 */
-	public void addProgrammingLanguage(final ProgrammingLanguage programmingLanguage) {
-		if(programmingLanguage.equals(ProgrammingLanguage.UNKNOWN)) {
-			throw new IllegalArgumentException("Cannot add UNKNOWN. Please select another language.");
-		} else if(!programmingLanguage.isSupported()) { throw new IllegalArgumentException("Cannot add unsupported language " + programmingLanguage.getName() + "."); }
-
-		this.selectedProgrammingLanguage.add(programmingLanguage);
-	}
-
-	/**
-	 * Remove a language from the list of programming languages.
-	 * @param programmingLanguage The language added to the list.
-	 */
-	public void removeProgrammingLanguage(final ProgrammingLanguage programmingLanguage) { this.selectedProgrammingLanguage.remove(programmingLanguage); }
-
-	/**
-	 * Safe the configuration into a file at the provided location.
-	 */
-	public void safe() {
-		// TODO: Write the configuration information into a file.
 	}
 }

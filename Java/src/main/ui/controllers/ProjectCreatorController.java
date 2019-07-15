@@ -28,6 +28,9 @@ import main.ui.enumerations.UIElements;
  */
 public final class ProjectCreatorController extends Controller {
 
+	/**
+	 * The StackPane that contains all elements on the User Interface. It will be injected by the FXML loader.
+	 */
 	@FXML
 	private StackPane stpFrame;
 
@@ -167,11 +170,19 @@ public final class ProjectCreatorController extends Controller {
 		System.out.println("All components generated."); // TODO: Replace with log component.
 	}
 
+	/**
+	 * Handle a click on the Finalize button.
+	 * @param event The event triggering this function.
+	 */
 	private void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) {}
 	}
 
+	/**
+	 * Handle a click on the Location button.
+	 * @param event The event triggering this function.
+	 */
 	private void handleBtnLocationClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) {
@@ -193,7 +204,8 @@ public final class ProjectCreatorController extends Controller {
 	}
 
 	/**
-	 * @param event The event referring to the click on the checkbox.
+	 * Handle a click on the Additional Sources checkbox.
+	 * @param event The event triggering this function.
 	 */
 	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
@@ -205,7 +217,8 @@ public final class ProjectCreatorController extends Controller {
 	}
 
 	/**
-	 * @param event The event referring to the click on the checkbox.
+	 * Handle a click on the Diagrams checkbox.
+	 * @param event The event triggering this function.
 	 */
 	private void handleChbDiagramsClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
@@ -217,7 +230,8 @@ public final class ProjectCreatorController extends Controller {
 	}
 
 	/**
-	 * @param event The event referring to the click on the checkbox.
+	 * Handle a click on the Documentation checkbox.
+	 * @param event The event triggering this function.
 	 */
 	private void handleChbDocumentationClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
@@ -231,7 +245,7 @@ public final class ProjectCreatorController extends Controller {
 	/**
 	 * Handle a click on the Programming checkbox.
 	 *
-	 * @param event The event referring to the click on the checkbox.
+	 * @param event The event triggering this function.
 	 */
 	private void handleChbProgrammingClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
@@ -242,6 +256,10 @@ public final class ProjectCreatorController extends Controller {
 		}
 	}
 
+	/**
+	 * Handle a click on a programming language checkbox.
+	 * @param event The event triggering this function.
+	 */
 	private void handleProgrammingLanguageClick(final MouseEvent event) {
 		final CheckBox source = (CheckBox)event.getSource();
 		System.out.println("Handling a click on checkbox " + source.getId() + ".");

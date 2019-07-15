@@ -12,6 +12,9 @@ import main.models.Configuration;
  */
 public abstract class Controller {
 	
+	/**
+	 * Keep a reference to the configuration object.
+	 */
 	protected Configuration config;
 
 	/**
@@ -38,15 +41,14 @@ public abstract class Controller {
 	}
 	
 	/**
-	 * Set the project name to match user input.
-	 * @param name The name given to the project.
+	 * Set the list of programming languages selected by the user.
+	 * @param languages A list of all languages for which a software project will be created.
 	 */
-	protected void setProjectName(String name) {
-		name = name.trim();
-		if(name != null && !name.isEmpty()) {
-			this.config.setProjectName(name);
+	protected void setProjectLanguages(List<ProgrammingLanguage> languages) {
+		if(languages != null && !languages.isEmpty()) {
+			this.config.setSelectedProgrammingLanguages(languages);
 		} else {
-			System.out.println("The provided name is not valid.");
+			System.out.println("The provided list of languages is empty. At least one language must be selected.");
 		}
 	}
 	
@@ -64,14 +66,15 @@ public abstract class Controller {
 	}
 	
 	/**
-	 * Set the list of programming languages selected by the user.
-	 * @param languages A list of all languages for which a software project will be created.
+	 * Set the project name to match user input.
+	 * @param name The name given to the project.
 	 */
-	protected void setProjectLanguages(List<ProgrammingLanguage> languages) {
-		if(languages != null && !languages.isEmpty()) {
-			this.config.setSelectedProgrammingLanguages(languages);
+	protected void setProjectName(String name) {
+		name = name.trim();
+		if(name != null && !name.isEmpty()) {
+			this.config.setProjectName(name);
 		} else {
-			System.out.println("The provided list of languages is empty. At least one language must be selected.");
+			System.out.println("The provided name is not valid.");
 		}
 	}
 }

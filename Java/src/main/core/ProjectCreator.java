@@ -36,13 +36,13 @@ public final class ProjectCreator extends Application {
 
 	/**
 	 * Set the default boot mode for the application.
-	 * 
+	 *
 	 * @return Returns the default boot mode.
 	 */
 	private static BootMode defaultBootMode() {
-		ProjectCreator.bootMode = BootMode.DEVELOPMENT;
-		System.out.println("Default boot mode is " + ProjectCreator.bootMode.getBootCommand() + ".");
-		return ProjectCreator.bootMode;
+		final BootMode defaultBootMode = BootMode.DEVELOPMENT;
+		System.out.println("Default boot mode is " + defaultBootMode.getBootName() + ".");
+		return defaultBootMode;
 	}
 
 	/**
@@ -51,56 +51,26 @@ public final class ProjectCreator extends Application {
 	 * @param args Console arguments that may be provided upon launch.
 	 */
 	public static void main(final String[] args) {
-		if(ProjectCreator.validArgs(args)) {
-			for(final String arg : args) if(arg.contentEquals(BootMode.SAFE.getBootCommand())) {
-				ProjectCreator.bootMode = BootMode.SAFE;
-				System.out.println("Setting app to launch in safe mode."); // TODO: Replace with log component.
-			} else if(arg.contentEquals(BootMode.DEVELOPMENT.getBootCommand())) {
-				ProjectCreator.bootMode = BootMode.DEVELOPMENT;
-				System.out.println("Setting app to launch in development mode."); // TODO: Replace with log component.
-			} else if(arg.contentEquals(BootMode.DEFAULT.getBootCommand())) {
-				ProjectCreator.bootMode = BootMode.DEFAULT;
-				System.out.println("Setting app to launch in its default mode."); // TODO: Replace with log component.
+		try {
+			boolean bootArgProvided = false;
+			for(final String arg : args) for(final BootMode bootMode : BootMode.values()) for(final String bootCommand : bootMode.getBootCommands()) {
+				if(bootArgProvided && arg.contentEquals(bootCommand)) throw new IllegalArgumentException("Too many boot mode arguments have been provided. Reverting to default boot mode.");
+				if(arg.contentEquals(bootCommand)) {
+					bootArgProvided = true;
+					System.out.println("Setting app to launch in " + bootMode.getBootName() + " mode."); // TODO: Replace with log component.
+					ProjectCreator.bootMode = bootMode;
+				}
 			}
-
-			switch(ProjectCreator.bootMode) {
-				case SAFE:
-					System.out.println("Launching app in safe boot mode."); // TODO: Replace with log component.
-					break;
-				case DEVELOPMENT:
-					System.out.println("Launching app in development boot mode."); // TODO: Replace with log component.
-					break;
-				case NORMAL:
-					System.out.println("Launching app in normal boot mode."); // TODO: Replace with log component.
-					break;
-				case DEFAULT:
-				default:
-					System.out.println("Launching app in default boot mode."); // TODO: Replace with log component.
-					ProjectCreator.bootMode = ProjectCreator.defaultBootMode();
-					break;
+		} catch(final IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+		} finally {
+			if(ProjectCreator.bootMode == null || ProjectCreator.bootMode == BootMode.DEFAULT) {
+				if(ProjectCreator.bootMode == null) System.out.println("No boot commands have been provided. Using default boot mode.");
+				ProjectCreator.bootMode = ProjectCreator.defaultBootMode();
 			}
+			System.out.println("Launching app in " + ProjectCreator.bootMode.getBootName() + " boot mode."); // TODO: Replace with log component.
 			Application.launch(args);
-		} else
-			System.out.println("Too many boot mode arguments have been provided. Cannot launch application."); // TODO: Replace with log component.
-	}
-
-	/**
-	 * Ensure only none or one bootmode argument has been provided upon launch.
-	 * 
-	 * @param  args The arguments provided upon launch.
-	 * @return      Returns true if no or one bootmode argument is provided upon launch. Returns false if there are two or more bootmode arguments given.
-	 */
-	private static boolean validArgs(final String[] args) {
-		if(args.length == 0) {
-			ProjectCreator.bootMode = BootMode.DEFAULT;
-			return true;
 		}
-		int validArgs = 0;
-		for(final String arg : args) {
-			if(arg.contentEquals(BootMode.SAFE.getBootCommand()) || arg.contentEquals(BootMode.DEFAULT.getBootCommand()) || arg.contentEquals(BootMode.DEVELOPMENT.getBootCommand()))
-				validArgs += 1;
-		}
-		return validArgs == 1;
 	}
 
 	/**
