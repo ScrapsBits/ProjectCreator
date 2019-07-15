@@ -36,7 +36,7 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void fillTabs() {
 		System.out.println("Generating components."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator();
+		final ElementGenerator generator = new ElementGenerator(this.config);
 		final TabPane menu = (TabPane)stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
 		for(final Tab tab : menu.getTabs()) switch(tab.getId()) {
 			case "tabProject":
@@ -71,7 +71,6 @@ public final class ProjectCreatorController extends Controller {
 	public void initialize() {
 		super.initialize();
 		initializeTabs();
-		// TODO: Fill configuration values.
 		fillTabs();
 		delegateActions();
 	}
@@ -81,7 +80,7 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void initializeTabs() {
 		System.out.println("Generating tabs."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator();
+		final ElementGenerator generator = new ElementGenerator(this.config);
 		stpFrame.getChildren().add(generator.generateTabMenu());
 		System.out.println("All tabs generated."); // TODO: Replace with log component.
 	}
@@ -166,12 +165,13 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Handle a click on the Finalize button.
+	 * 
 	 * @param event The event referring to the click on the button.
 	 */
 	private void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		// TODO: Verify all input.
-		if(event.getSource() instanceof Button) { Button btn = (Button) event.getSource(); }
+		if(event.getSource() instanceof Button) {}
 		// TODO: Set writing section.
 	}
 
