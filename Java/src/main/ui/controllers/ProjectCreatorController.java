@@ -2,6 +2,7 @@ package main.ui.controllers;
 
 import java.util.List;
 
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -9,6 +10,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import main.core.ProjectCreator;
 import main.core.enumerations.BootMode;
 import main.ui.elements.ElementGenerator;
@@ -20,6 +22,16 @@ import main.ui.enumerations.UIElements;
  * @author ScrapsBits
  */
 public final class ProjectCreatorController extends Controller {
+
+	@FXML
+	private StackPane stpFrame;
+	
+	/**
+	 * Initialize the controller for the Single View user interface.
+	 */
+	public ProjectCreatorController() {
+		super();
+	}
 
 	/**
 	 * Initialize the components for every tab.
@@ -79,7 +91,7 @@ public final class ProjectCreatorController extends Controller {
 	 * Delegate event actions from elements to their handler methods.
 	 */
 	private void delegateActions() {
-		System.out.println("Delegating events.");
+		System.out.println("Delegating events."); // TODO: Replace with log component.
 		TabPane tbpMenu = (TabPane) stpFrame.getChildren().get(0);
 		List<Tab> tabs = tbpMenu.getTabs();
 		for (Tab tab : tabs) {
@@ -107,23 +119,23 @@ public final class ProjectCreatorController extends Controller {
 	private void delegateProjectTabActions(Node element) {
 		switch (element.getId()) {
 		case "chbProgramming":
-			System.out.println("Delegating events for chbProgramming.");
-			System.out.println("Delegating mouse click event.");
+			System.out.println("Delegating events for chbProgramming."); // TODO: Replace with log component.
+			System.out.println("Delegating mouse click event."); // TODO: Replace with log component.
 			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbProgrammingClick(event));
 			break;
 		case "chbDocumentation":
-			System.out.println("Delegating events for chbDocumentation.");
-			System.out.println("Delegating mouse click event.");
+			System.out.println("Delegating events for chbDocumentation."); // TODO: Replace with log component.
+			System.out.println("Delegating mouse click event."); // TODO: Replace with log component.
 			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDocumentationClick(event));
 			break;
 		case "chbDiagrams":
-			System.out.println("Delegating events for chbDocuments.");
-			System.out.println("Delegating mouse click event.");
+			System.out.println("Delegating events for chbDocuments."); // TODO: Replace with log component.
+			System.out.println("Delegating mouse click event."); // TODO: Replace with log component.
 			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDiagramsClick(event));
 			break;
 		case "chbAdditionalSources":
-			System.out.println("Delegating events for chbAdditionalSources.");
-			System.out.println("Delegating mouse click event.");
+			System.out.println("Delegating events for chbAdditionalSources."); // TODO: Replace with log component.
+			System.out.println("Delegating mouse click event."); // TODO: Replace with log component.
 			element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbAdditionalSourcesClick(event));
 			break;
 		}
@@ -132,14 +144,14 @@ public final class ProjectCreatorController extends Controller {
 	private void delegateFinalizeTabActions(Node element) {
 		switch(element.getId()) {
 			case "btnFinalize":
-				System.out.println("Delegating events for btnFinalize.");
-				System.out.println("Delegating mouse click event.");
+				System.out.println("Delegating events for btnFinalize."); // TODO: Replace with log component.
+				System.out.println("Delegating mouse click event."); // TODO: Replace with log component.
 				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnFinalizeClick(event));
 		}
 	}
 
 	private void handleChbProgrammingClick(MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId()); // TODO: Replace with log component.
 		if (event.getSource() instanceof CheckBox) {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
@@ -153,7 +165,7 @@ public final class ProjectCreatorController extends Controller {
 	}
 	
 	private void handleBtnFinalizeClick(MouseEvent event) {
-		System.out.println("Handling a click on button " + ((Node)(event.getSource())).getId());
+		System.out.println("Handling a click on button " + ((Node)(event.getSource())).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof Button) {
 			Button btn = (Button) event.getSource();
 			// TODO: Set writing section.
@@ -161,7 +173,7 @@ public final class ProjectCreatorController extends Controller {
 	}
 	
 	private void handleChbDocumentationClick(MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId()); // TODO: Replace with log component.
 		if (event.getSource() instanceof CheckBox) {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
@@ -175,7 +187,7 @@ public final class ProjectCreatorController extends Controller {
 	}
 	
 	private void handleChbDiagramsClick(MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId()); // TODO: Replace with log component.
 		if (event.getSource() instanceof CheckBox) {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
@@ -189,7 +201,7 @@ public final class ProjectCreatorController extends Controller {
 	}
 	
 	private void handleChbAdditionalSourcesClick(MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId());
+		System.out.println("Handling a click on checkbox " + ((Node)(event.getSource())).getId()); // TODO: Replace with log component.
 		if (event.getSource() instanceof CheckBox) {
 			CheckBox chb = (CheckBox) event.getSource();
 			for(Tab tab : ((TabPane) (chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu"))).getTabs()) {
