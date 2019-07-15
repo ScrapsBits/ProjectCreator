@@ -71,6 +71,7 @@ public final class ProjectCreatorController extends Controller {
 	public void initialize() {
 		super.initialize();
 		initializeTabs();
+		// TODO: Fill configuration values.
 		fillTabs();
 		delegateActions();
 	}
@@ -169,6 +170,7 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
+		// TODO: Verify all input.
 		if(event.getSource() instanceof Button) { Button btn = (Button) event.getSource(); }
 		// TODO: Set writing section.
 	}
