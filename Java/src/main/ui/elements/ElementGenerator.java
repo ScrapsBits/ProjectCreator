@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.models.Configuration;
 import main.ui.enumerations.MenuItems;
-import main.ui.enumerations.ProgrammingLanguages;
 import main.ui.enumerations.UIElements;
 
 /**
