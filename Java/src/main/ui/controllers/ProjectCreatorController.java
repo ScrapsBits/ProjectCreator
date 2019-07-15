@@ -61,7 +61,7 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Define all actions for elements on the Finalize tab. Refer each action to the appropriate handler.
-	 * 
+	 *
 	 * @param element An element displayed on the Finalize tab. Not all elements get an event handler.
 	 */
 	private void delegateFinalizeTabActions(final Node element) {
@@ -70,12 +70,13 @@ public final class ProjectCreatorController extends Controller {
 				System.out.println("Delegating events for btnFinalize.");
 				System.out.println("Delegating mouse click event.");
 				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnFinalizeClick(event));
+				break;
 		}
 	}
 
 	/**
 	 * Define all actions for elements on the Programming tab. Refer each action to the appropriate handler.
-	 * 
+	 *
 	 * @param element An element displayed on the Programming tab. Not all elements get an event handler.
 	 */
 	private void delegateProgrammingTabActions(final Node element) {
@@ -97,29 +98,10 @@ public final class ProjectCreatorController extends Controller {
 				break;
 		}
 	}
-	
-	private void handleProgrammingLanguageClick(MouseEvent event) {
-		CheckBox source = (CheckBox)event.getSource();
-		System.out.println("Handling a click on checkbox " + source.getId() + ".");
-		String id = source.getId().substring(3);
-		for(ProgrammingLanguage language : ProgrammingLanguage.values()) {
-			if(language.getId().contentEquals(id)) {
-				if(source.isSelected()) {
-					try {
-					this.configuration.addProgrammingLanguage(language);
-					} catch(IllegalArgumentException e) {
-						source.setDisable(true);
-						source.setSelected(false);
-					}
-				} else {
-					this.configuration.removeProgrammingLanguage(language);
-				}
-			}
-	}
 
 	/**
 	 * Define all actions for elements on the Project tab. Refer each action to the appropriate handler.
-	 * 
+	 *
 	 * @param element An element displayed on the Project tab. Not all elements get an event handler.
 	 */
 	private void delegateProjectTabActions(final Node element) {
@@ -157,7 +139,7 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void fillTabs() {
 		System.out.println("Generating components."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator();
+		final ElementGenerator generator = new ElementGenerator(config);
 		final TabPane menu = (TabPane)stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
 		for(final Tab tab : menu.getTabs()) switch(tab.getId()) {
 			case "tabProject":
@@ -185,65 +167,44 @@ public final class ProjectCreatorController extends Controller {
 		System.out.println("All components generated."); // TODO: Replace with log component.
 	}
 
-	/**
-	 * Handle a click on the Programming checkbox.
-	 * 
-	 * @param event The event referring to the click on the checkbox.
-	 */
-	private void handleChbProgrammingClick(final MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
-		if(event.getSource() instanceof CheckBox) {
-			final CheckBox chb = (CheckBox)event.getSource();
-			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+	private void handleBtnFinalizeClick(final MouseEvent event) {
+		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
+		if(event.getSource() instanceof Button) {}
 	}
 
 	private void handleBtnLocationClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) {
 			final Button btn = (Button)event.getSource();
-			DirectoryChooser directoryChooser = new DirectoryChooser();
-			File selectedDirectory = directoryChooser.showDialog(stpFrame.getScene().getWindow());
+			final DirectoryChooser directoryChooser = new DirectoryChooser();
+			final File selectedDirectory = directoryChooser.showDialog(stpFrame.getScene().getWindow());
 			if(selectedDirectory != null) {
-				TextField txf = ((TextField)btn.getScene().lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation"));
+				final TextField txf = (TextField)btn.getScene().lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
 				try {
-					String directory = selectedDirectory.getCanonicalPath();
+					final String directory = selectedDirectory.getCanonicalPath();
 					txf.setText(directory);
-					this.setProjectLocation(directory);
-				} catch(IOException e) {
+					setProjectLocation(directory);
+				} catch(final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+			}
 		}
 	}
 
-	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId());
-		if(event.getSource() instanceof CheckBox) {
-			final CheckBox chb = (CheckBox)event.getSource();
-			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
-		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
-		// TODO: Verify all input.
-		if(event.getSource() instanceof Button) {}
-	}
-
-	private void handleChbDiagramsClick(final MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId());
-	 * 
+	/**
 	 * @param event The event referring to the click on the checkbox.
 	 */
-	private void handleChbDocumentationClick(final MouseEvent event) {
+	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
-	private void handleChbDocumentationClick(final MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId());
-	 * 
+	/**
 	 * @param event The event referring to the click on the checkbox.
 	 */
 	private void handleChbDiagramsClick(final MouseEvent event) {
@@ -255,12 +216,24 @@ public final class ProjectCreatorController extends Controller {
 		}
 	}
 
-	private void handleChbProgrammingClick(final MouseEvent event) {
-		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId());
-	 * 
+	/**
 	 * @param event The event referring to the click on the checkbox.
 	 */
-	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
+	private void handleChbDocumentationClick(final MouseEvent event) {
+		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
+		if(event.getSource() instanceof CheckBox) {
+			final CheckBox chb = (CheckBox)event.getSource();
+			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+		}
+	}
+
+	/**
+	 * Handle a click on the Programming checkbox.
+	 *
+	 * @param event The event referring to the click on the checkbox.
+	 */
+	private void handleChbProgrammingClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
@@ -269,9 +242,25 @@ public final class ProjectCreatorController extends Controller {
 		}
 	}
 
+	private void handleProgrammingLanguageClick(final MouseEvent event) {
+		final CheckBox source = (CheckBox)event.getSource();
+		System.out.println("Handling a click on checkbox " + source.getId() + ".");
+		final String id = source.getId().substring(3);
+		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language.getId().contentEquals(id)) if(source.isSelected())
+			try {
+				config.addProgrammingLanguage(language);
+			} catch(final IllegalArgumentException e) {
+				source.setDisable(true);
+				source.setSelected(false);
+			}
+		else
+			config.removeProgrammingLanguage(language);
+	}
+
 	/**
 	 * Initialize the user interface and define actions.
 	 */
+	@Override
 	public void initialize() {
 		super.initialize();
 		initializeTabs();
@@ -284,7 +273,7 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void initializeTabs() {
 		System.out.println("Generating tabs."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator();
+		final ElementGenerator generator = new ElementGenerator(config);
 		stpFrame.getChildren().add(generator.generateTabMenu());
 		System.out.println("All tabs generated."); // TODO: Replace with log component.
 	}

@@ -12,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import main.core.enumerations.ProgrammingLanguage;
 import main.models.Configuration;
 import main.ui.enumerations.MenuItems;
 import main.ui.enumerations.UIElements;
@@ -35,7 +36,7 @@ public final class ElementGenerator {
 
 	/**
 	 * Generate and populate content for the Additional Sources tab.
-	 * 
+	 *
 	 * @param  tab The tab "AdditionalSources".
 	 * @return     Returns the child AnchorPane of the AdditionalSources tab.
 	 */
@@ -53,7 +54,7 @@ public final class ElementGenerator {
 
 	/**
 	 * Generate an AnchorPane element.
-	 * 
+	 *
 	 * @param  id The (unique) ID name of the AnchorPane.
 	 * @return    Returns an AnchorPane element.
 	 */
@@ -65,7 +66,7 @@ public final class ElementGenerator {
 
 	/**
 	 * Generate a Button element.
-	 * 
+	 *
 	 * @param  id   The (unique) ID name of the Button.
 	 * @param  text The text to display on the button.
 	 * @return      Returns a Button element.
@@ -149,12 +150,10 @@ public final class ElementGenerator {
 			nodes.add(generateLabel("ObjectOriented", "Object Oriented Languages"));
 
 			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-			for(final ProgrammingLanguages language : ProgrammingLanguages.values()) {
-				try {
-					nodes.add(generateCheckBox(language.getId(), language.getName(), this.config.getSelectedProgrammingLanguages().contains(language)));
-				} catch(NullPointerException e) {
-					nodes.add(generateCheckBox(language.getId(), language.getName()));
-				}
+			for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language != ProgrammingLanguage.UNKNOWN) try {
+				nodes.add(generateCheckBox(language.getId(), language.getName(), config.getSelectedProgrammingLanguages().contains(language)));
+			} catch(final NullPointerException e) {
+				nodes.add(generateCheckBox(language.getId(), language.getName()));
 			}
 
 			anchorPane.getChildren().addAll(nodes);
@@ -179,8 +178,8 @@ public final class ElementGenerator {
 
 			System.out.println("Generating TextField components."); // TODO: Replace with log component.
 			try {
-				nodes.add(generateTextField("ProjectName", "My New Project", this.config.getProjectName()));
-			} catch(NullPointerException e) {
+				nodes.add(generateTextField("ProjectName", "My New Project", config.getProjectName()));
+			} catch(final NullPointerException e) {
 				nodes.add(generateTextField("ProjectName", "My New Project"));
 			} finally {
 				nodes.add(generateTextField("ProjectLocation", "Documents/"));

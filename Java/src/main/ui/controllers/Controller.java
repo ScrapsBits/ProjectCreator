@@ -17,8 +17,8 @@ public abstract class Controller {
 	/**
 	 * Initialize a controller with default settings.
 	 */
-	protected Controller() { this.config = new Configuration(); }
-		configuration = new Configuration(); // TODO: Check if a configuration file can be located.
+	protected Controller() {
+		this.config = new Configuration(); // TODO: Check if a configuration file can be located.
 	}
 
 	/**
@@ -44,7 +44,7 @@ public abstract class Controller {
 	protected void setProjectName(String name) {
 		name = name.trim();
 		if(name != null && !name.isEmpty()) {
-			configuration.setProjectName(name);
+			this.config.setProjectName(name);
 		} else {
 			System.out.println("The provided name is not valid.");
 		}
@@ -57,7 +57,7 @@ public abstract class Controller {
 	protected void setProjectLocation(String location) {
 		location = location.trim();
 		if(location != null && !location.isEmpty()) {
-			configuration.setConfigLocation(location);
+			this.config.setConfigLocation(location);
 		} else {
 			System.out.println("The location is not valid.");
 		}
@@ -69,7 +69,7 @@ public abstract class Controller {
 	 */
 	protected void setProjectLanguages(List<ProgrammingLanguage> languages) {
 		if(languages != null && !languages.isEmpty()) {
-			configuration.setSelectedProgrammingLanguages(languages);
+			this.config.setSelectedProgrammingLanguages(languages);
 		} else {
 			System.out.println("The provided list of languages is empty. At least one language must be selected.");
 		}
