@@ -2,8 +2,8 @@ package main.ui.enumerations;
 
 /**
  * Define all items displayed in the menu.
- * @author ScrapsBits
  *
+ * @author ScrapsBits
  */
 public enum MenuItems {
 	/**
@@ -29,7 +29,7 @@ public enum MenuItems {
 	/**
 	 * A menu item to complete all actions and let the program work.
 	 */
-	FINALIZE("Finalize", "Complete", true);
+	FINALIZATION("Finalize", "Complete", true);
 
 	/**
 	 * The unique identifier for the menu item.
@@ -50,9 +50,9 @@ public enum MenuItems {
 		this.isSupported = isSupported;
 	}
 
-	public String getId() { return id; }
+	public String getId() { return this.id; }
 
-	public String getName() { return name; }
+	public String getName() { return this.name; }
 
-	public boolean isSupported() { return isSupported; }
+	public boolean isSupported() { return this.isSupported; }
 }

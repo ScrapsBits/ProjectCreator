@@ -60,32 +60,32 @@ public enum ProgrammingLanguage {
 	 *
 	 * @return Returns the language ID.
 	 */
-	public String getId() { return id; }
+	public String getId() { return this.id; }
 
 	/**
 	 * Fetch the name of the language.
 	 *
 	 * @return Returns the language name.
 	 */
-	public String getName() { return name; }
+	public String getName() { return this.name; }
 
 	/**
 	 * Fetch if the language is functional or object oriented.
 	 *
 	 * @return Returns true if the language is functional. Returns false if the language is object oriented.
 	 */
-	public boolean isFunctional() { return isFunctional; }
+	public boolean isFunctional() { return this.isFunctional; }
 
 	/**
 	 * Fetch if the language is supported by the application.
 	 *
 	 * @return Returns true if the language is supported. Returns false if the language is not supported.
 	 */
-	public boolean isSupported() { return isSupported; }
+	public boolean isSupported() { return this.isSupported; }
 
 	/**
 	 * Return the name of the programming language.
 	 */
 	@Override
-	public String toString() { return name; }
+	public String toString() { return this.name; }
 }

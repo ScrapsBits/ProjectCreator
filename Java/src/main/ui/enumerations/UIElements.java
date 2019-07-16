@@ -7,5 +7,5 @@ public enum UIElements {
 
 	private UIElements(final String prefix) { this.prefix = prefix; }
 
-	public String getPrefix() { return prefix; }
+	public String getPrefix() { return this.prefix; }
 }

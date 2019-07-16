@@ -1,4 +1,4 @@
-package main.ui.controllers;
+package main.ui.single_view;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import main.core.ProjectCreator;
+import main.ProjectCreator;
 import main.core.enumerations.BootMode;
 import main.core.enumerations.ProgrammingLanguage;
-import main.ui.elements.ElementGenerator;
+import main.ui.Controller;
 import main.ui.enumerations.UIElements;
 
 /**
@@ -26,7 +26,7 @@ import main.ui.enumerations.UIElements;
  *
  * @author ScrapsBits
  */
-public final class ProjectCreatorController extends Controller {
+public final class SingleViewController extends Controller {
 
 	/**
 	 * The StackPane that contains all elements on the User Interface. It will be injected by the FXML loader.
@@ -37,26 +37,26 @@ public final class ProjectCreatorController extends Controller {
 	/**
 	 * Initialize the controller for the Single View user interface.
 	 */
-	public ProjectCreatorController() { super(); }
+	public SingleViewController() { super(); }
 
 	/**
 	 * Delegate event actions from elements to their handler methods.
 	 */
 	private void delegateActions() {
 		System.out.println("Delegating events.");
-		final TabPane tbpMenu = (TabPane)stpFrame.getChildren().get(0);
+		final TabPane tbpMenu = (TabPane)this.stpFrame.getChildren().get(0);
 		final List<Tab> tabs = tbpMenu.getTabs();
 		for(final Tab tab : tabs) {
 			final List<Node> elements = ((AnchorPane)tab.getContent()).getChildren();
 			for(final Node element : elements) switch(tab.getId()) {
 				case "tabProject":
-					delegateProjectTabActions(element);
+					this.delegateProjectTabActions(element);
 					break;
 				case "tabProgramming":
-					delegateProgrammingTabActions(element);
+					this.delegateProgrammingTabActions(element);
 					break;
 				case "tabFinalize":
-					delegateFinalizeTabActions(element);
+					this.delegateFinalizeTabActions(element);
 					break;
 			}
 		}
@@ -72,7 +72,7 @@ public final class ProjectCreatorController extends Controller {
 			case "btnFinalize":
 				System.out.println("Delegating events for btnFinalize.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnFinalizeClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleBtnFinalizeClick(event));
 				break;
 		}
 	}
@@ -87,17 +87,17 @@ public final class ProjectCreatorController extends Controller {
 			case "chbCPlusPlus":
 				System.out.println("Delegating events for chbCPlusPlus.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleProgrammingLanguageClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
 				break;
 			case "chbCSharp":
 				System.out.println("Delegating events for chbCSharp.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleProgrammingLanguageClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
 				break;
 			case "chbJava":
 				System.out.println("Delegating events for chbJava.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleProgrammingLanguageClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
 				break;
 		}
 	}
@@ -112,27 +112,27 @@ public final class ProjectCreatorController extends Controller {
 			case "chbProgramming":
 				System.out.println("Delegating events for chbProgramming.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbProgrammingClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbProgrammingClick(event));
 				break;
 			case "chbDocumentation":
 				System.out.println("Delegating events for chbDocumentation.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDocumentationClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbDocumentationClick(event));
 				break;
 			case "chbDiagrams":
 				System.out.println("Delegating events for chbDocuments.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbDiagramsClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbDiagramsClick(event));
 				break;
 			case "chbAdditionalSources":
 				System.out.println("Delegating events for chbAdditionalSources.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleChbAdditionalSourcesClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbAdditionalSourcesClick(event));
 				break;
 			case "btnLocation":
 				System.out.println("Delegating events for btnLocation.");
 				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> handleBtnLocationClick(event));
+				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleBtnLocationClick(event));
 				break;
 		}
 	}
@@ -142,8 +142,8 @@ public final class ProjectCreatorController extends Controller {
 	 */
 	private void fillTabs() {
 		System.out.println("Generating components."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator(config);
-		final TabPane menu = (TabPane)stpFrame.getChildren().filtered((node) -> node.getId().equals("tbpMenu")).get(0);
+		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this.config, this);
+		final TabPane menu = (TabPane)this.stpFrame.getChildren().filtered((node) -> node.getId().equals(UIElements.TABPANE.getPrefix() + "Menu")).get(0);
 		for(final Tab tab : menu.getTabs()) switch(tab.getId()) {
 			case "tabProject":
 				tab.setContent(generator.generateProjectTabContent(tab));
@@ -172,6 +172,7 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Handle a click on the Finalize button.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleBtnFinalizeClick(final MouseEvent event) {
@@ -181,6 +182,7 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Handle a click on the Location button.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleBtnLocationClick(final MouseEvent event) {
@@ -188,13 +190,13 @@ public final class ProjectCreatorController extends Controller {
 		if(event.getSource() instanceof Button) {
 			final Button btn = (Button)event.getSource();
 			final DirectoryChooser directoryChooser = new DirectoryChooser();
-			final File selectedDirectory = directoryChooser.showDialog(stpFrame.getScene().getWindow());
+			final File selectedDirectory = directoryChooser.showDialog(this.stpFrame.getScene().getWindow());
 			if(selectedDirectory != null) {
 				final TextField txf = (TextField)btn.getScene().lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
 				try {
 					final String directory = selectedDirectory.getCanonicalPath();
 					txf.setText(directory);
-					setProjectLocation(directory);
+					this.setProjectLocation(directory);
 				} catch(final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -205,6 +207,7 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Handle a click on the Additional Sources checkbox.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
@@ -212,12 +215,13 @@ public final class ProjectCreatorController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
 	/**
 	 * Handle a click on the Diagrams checkbox.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleChbDiagramsClick(final MouseEvent event) {
@@ -225,12 +229,13 @@ public final class ProjectCreatorController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
 	/**
 	 * Handle a click on the Documentation checkbox.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleChbDocumentationClick(final MouseEvent event) {
@@ -238,7 +243,7 @@ public final class ProjectCreatorController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
@@ -258,6 +263,7 @@ public final class ProjectCreatorController extends Controller {
 
 	/**
 	 * Handle a click on a programming language checkbox.
+	 *
 	 * @param event The event triggering this function.
 	 */
 	private void handleProgrammingLanguageClick(final MouseEvent event) {
@@ -266,13 +272,13 @@ public final class ProjectCreatorController extends Controller {
 		final String id = source.getId().substring(3);
 		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language.getId().contentEquals(id)) if(source.isSelected())
 			try {
-				config.addProgrammingLanguage(language);
+				this.config.addProgrammingLanguage(language);
 			} catch(final IllegalArgumentException e) {
 				source.setDisable(true);
 				source.setSelected(false);
 			}
 		else
-			config.removeProgrammingLanguage(language);
+			this.config.removeProgrammingLanguage(language);
 	}
 
 	/**
@@ -281,18 +287,12 @@ public final class ProjectCreatorController extends Controller {
 	@Override
 	public void initialize() {
 		super.initialize();
-		initializeTabs();
-		fillTabs();
-		delegateActions();
-	}
-
-	/**
-	 * Initialize all components on the user interface and define styling, position and actions.
-	 */
-	private void initializeTabs() {
-		System.out.println("Generating tabs."); // TODO: Replace with log component.
-		final ElementGenerator generator = new ElementGenerator(config);
-		stpFrame.getChildren().add(generator.generateTabMenu());
-		System.out.println("All tabs generated."); // TODO: Replace with log component.
+		System.out.println("Generating user interface."); // TODO: Replace with log component.
+		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this.config, this);
+		generator.populate(this.stpFrame);
+		System.out.println("User interface generated."); // TODO: Replace with log component.
+		
+		this.fillTabs();
+		this.delegateActions();
 	}
 }

@@ -23,21 +23,21 @@ public final class Configuration {
 	/**
 	 * A list of all programming languages of which to make a software project.
 	 */
-	private List<ProgrammingLanguage> selectedProgrammingLanguage;
+	private final List<ProgrammingLanguage> selectedProgrammingLanguage;
 
 	/**
 	 * Initialize configuration settings.
 	 */
-	public Configuration() { selectedProgrammingLanguage = new ArrayList<>(); }
+	public Configuration() { this.selectedProgrammingLanguage = new ArrayList<>(); }
 
 	/**
 	 * Initialize configuration settings from a configuration source.
-	 * 
+	 *
 	 * @param projectName                  The name of the project, as loaded from the source.
 	 * @param configLocation               The location where the configuration is stored.
 	 * @param selectedProgrammingLanguages The various programming languages that have been selected in the source.
 	 */
-	public Configuration(String projectName, String configLocation, List<ProgrammingLanguage> selectedProgrammingLanguages) {
+	public Configuration(final String projectName, final String configLocation, final List<ProgrammingLanguage> selectedProgrammingLanguages) {
 		this();
 		this.setProjectName(projectName);
 		this.setConfigLocation(configLocation);
@@ -46,42 +46,42 @@ public final class Configuration {
 
 	/**
 	 * Add a new language to the list of programming languages.
-	 * 
+	 *
 	 * @param  programmingLanguage      The language added to the list.
 	 * @throws IllegalArgumentException Thrown when the language is unknown or when it's marked as "not supported".
 	 */
 	public void addProgrammingLanguage(final ProgrammingLanguage programmingLanguage) {
-		if(programmingLanguage.equals(ProgrammingLanguage.UNKNOWN)) {
+		if(programmingLanguage.equals(ProgrammingLanguage.UNKNOWN))
 			throw new IllegalArgumentException("Cannot add UNKNOWN. Please select another language.");
-		} else if(!programmingLanguage.isSupported()) { throw new IllegalArgumentException("Cannot add unsupported language " + programmingLanguage.getName() + "."); }
+		else if(!programmingLanguage.isSupported()) throw new IllegalArgumentException("Cannot add unsupported language " + programmingLanguage.getName() + ".");
 
 		this.selectedProgrammingLanguage.add(programmingLanguage);
 	}
 
 	/**
 	 * Get the path to the location where configuration files are stored.
-	 * 
+	 *
 	 * @return Returns the path where the config files are stored.
 	 */
-	public String getConfigLocation() { return configLocation; }
+	public String getConfigLocation() { return this.configLocation; }
 
 	/**
 	 * Get the project name.
-	 * 
+	 *
 	 * @return Returns the name of the project.
 	 */
-	public String getProjectName() { return projectName; }
+	public String getProjectName() { return this.projectName; }
 
 	/**
 	 * Get a list of selected programming languages.
-	 * 
+	 *
 	 * @return Returns a list of selected programming languages.
 	 */
-	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return selectedProgrammingLanguage; }
+	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return this.selectedProgrammingLanguage; }
 
 	/**
 	 * Remove a language from the list of programming languages.
-	 * 
+	 *
 	 * @param programmingLanguage The language added to the list.
 	 */
 	public void removeProgrammingLanguage(final ProgrammingLanguage programmingLanguage) { this.selectedProgrammingLanguage.remove(programmingLanguage); }
@@ -95,7 +95,7 @@ public final class Configuration {
 
 	/**
 	 * Set the path where the configuration files will be stored.
-	 * 
+	 *
 	 * @param configLocation The path where the config files are to be stored.
 	 */
 	public void setConfigLocation(String configLocation) {
@@ -110,7 +110,7 @@ public final class Configuration {
 
 	/**
 	 * Set the name of the project.
-	 * 
+	 *
 	 * @param  projectName              The project's name.
 	 * @throws IllegalArgumentException Thrown when the name is null or empty.
 	 */
@@ -127,10 +127,10 @@ public final class Configuration {
 
 	/**
 	 * Set the list of programming languages.
-	 * 
+	 *
 	 * @param selectedProgrammingLanguages The list of programming languages.
 	 */
-	public void setSelectedProgrammingLanguages(List<ProgrammingLanguage> selectedProgrammingLanguages) {
+	public void setSelectedProgrammingLanguages(final List<ProgrammingLanguage> selectedProgrammingLanguages) {
 		if(selectedProgrammingLanguages != null && selectedProgrammingLanguages.size() > 0) {
 			this.selectedProgrammingLanguage.clear();
 			Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);

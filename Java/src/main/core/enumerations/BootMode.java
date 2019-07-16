@@ -48,12 +48,12 @@ public enum BootMode {
 	 *
 	 * @return Returns a string array with all accepted boot mode commands.
 	 */
-	public String[] getBootCommands() { return bootCommands; }
+	public String[] getBootCommands() { return this.bootCommands; }
 
 	/**
 	 * Get the boot mode name.
 	 *
 	 * @return Returns the name of the boot mode.
 	 */
-	public String getBootName() { return bootName; }
+	public String getBootName() { return this.bootName; }
 }

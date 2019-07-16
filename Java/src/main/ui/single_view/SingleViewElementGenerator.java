@@ -1,4 +1,4 @@
-package main.ui.elements;
+package main.ui.single_view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.core.enumerations.ProgrammingLanguage;
 import main.models.Configuration;
+import main.ui.ElementGenerator;
 import main.ui.enumerations.MenuItems;
 import main.ui.enumerations.UIElements;
 
@@ -22,17 +23,8 @@ import main.ui.enumerations.UIElements;
  *
  * @author ScrapsBits
  */
-public final class ElementGenerator {
-
-	/**
-	 * Store a reference to the config object.
-	 */
-	private final Configuration config;
-
-	/**
-	 * Instantiate the element generator.
-	 */
-	public ElementGenerator(final Configuration config) { this.config = config; }
+public final class SingleViewElementGenerator extends ElementGenerator {
+	public SingleViewElementGenerator(final Configuration configuration, final SingleViewController singleViewController) { super(configuration, singleViewController); }
 
 	/**
 	 * Generate and populate content for the Additional Sources tab.
@@ -58,20 +50,17 @@ public final class ElementGenerator {
 	 * @param  id The (unique) ID name of the AnchorPane.
 	 * @return    Returns an AnchorPane element.
 	 */
-	private AnchorPane generateAnchorPane(final String id) {
+	protected AnchorPane generateAnchorPane(final String id) {
 		final AnchorPane anchorPane = new AnchorPane();
 		anchorPane.setId(UIElements.ANCHORPANE.getPrefix() + id);
 		return anchorPane;
 	}
 
 	/**
-	 * Generate a Button element.
-	 *
-	 * @param  id   The (unique) ID name of the Button.
-	 * @param  text The text to display on the button.
-	 * @return      Returns a Button element.
+	 * {@inheritDoc}
 	 */
-	private Button generateButton(final String id, final String text) {
+	@Override
+	protected Button generateButton(final String id, final String text) {
 		final Button button = new Button();
 		button.setId(UIElements.BUTTON.getPrefix() + id);
 		button.setText(text);
@@ -79,13 +68,10 @@ public final class ElementGenerator {
 	}
 
 	/**
-	 * Generate a CheckBox element.
-	 *
-	 * @param  id   The (unique) ID name of the CheckBox.
-	 * @param  text The text to display with the checkbox.
-	 * @return      Returns a CheckBox element.
+	 * {@inheritDoc}
 	 */
-	private CheckBox generateCheckBox(final String id, final String text) {
+	@Override
+	protected CheckBox generateCheckBox(final String id, final String text) {
 		final CheckBox checkBox = new CheckBox();
 		checkBox.setId(UIElements.CHECKBOX.getPrefix() + id);
 		checkBox.setText(text);
@@ -94,14 +80,10 @@ public final class ElementGenerator {
 	}
 
 	/**
-	 * Generate a CheckBox element.
-	 *
-	 * @param  id        The (unique) ID name of the CheckBox.
-	 * @param  text      The text to display with the checkbox.
-	 * @param  isChecked Define if the checkbox has to be checked or not.
-	 * @return           Returns a CheckBox element.
+	 * {@inheritDoc}
 	 */
-	private CheckBox generateCheckBox(final String id, final String text, final boolean isChecked) {
+	@Override
+	protected CheckBox generateCheckBox(final String id, final String text, final boolean isChecked) {
 		final CheckBox checkBox = this.generateCheckBox(id, text);
 		checkBox.setSelected(isChecked);
 		return checkBox;
@@ -162,18 +144,56 @@ public final class ElementGenerator {
 	}
 
 	/**
-	 * Generate a Label element.
-	 *
-	 * @param  id   The (unique) ID name of the Label.
-	 * @param  text The text to display with the label.
-	 * @return      Returns a Label element.
+	 * {@inheritDoc}
 	 */
-	private Label generateLabel(final String id, final String text) {
+	@Override
+	protected Label generateLabel(final String id, final String text) {
 		final Label label = new Label();
 		label.setId(UIElements.LABEL.getPrefix() + id);
 		label.setText(text);
 		label.setWrapText(true);
 		return label;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object generateMenu(final String id) {
+		final TabPane tabPane = this.generateTabPane(id);
+
+		// Generate all tabs.
+		for(final MenuItems menuItem : MenuItems.values()) {
+			final Tab generateTab = this.generateMenuItem(menuItem.getId(), menuItem.getName(), menuItem.isSupported());
+			tabPane.getTabs().add(generateTab);
+			System.out.println("Generated tab " + menuItem.getName() + "."); // TODO: Replace with log component.
+		}
+
+		return tabPane;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Tab generateMenuItem(final String id, final String text) {
+		final Tab tab = new Tab();
+		tab.setId(UIElements.TAB.getPrefix() + id);
+		tab.setText(text);
+		tab.setClosable(false);
+		tab.setContent(this.generateAnchorPane(id));
+		tab.setDisable(false);
+		return tab;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Tab generateMenuItem(final String id, final String text, final boolean enabled) {
+		final Tab tab = this.generateMenuItem(id, text);
+		tab.setDisable(!enabled);
+		return tab;
 	}
 
 	/**
@@ -197,7 +217,7 @@ public final class ElementGenerator {
 
 			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
 			for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language != ProgrammingLanguage.UNKNOWN) try {
-				nodes.add(this.generateCheckBox(language.getId(), language.getName(), this.config.getSelectedProgrammingLanguages().contains(language)));
+				nodes.add(this.generateCheckBox(language.getId(), language.getName(), super.getConfig().getSelectedProgrammingLanguages().contains(language)));
 			} catch(final NullPointerException e) {
 				nodes.add(this.generateCheckBox(language.getId(), language.getName()));
 			}
@@ -230,7 +250,7 @@ public final class ElementGenerator {
 
 			System.out.println("Generating TextField components."); // TODO: Replace with log component.
 			try {
-				nodes.add(this.generateTextField("ProjectName", "My New Project", this.config.getProjectName()));
+				nodes.add(this.generateTextField("ProjectName", "My New Project", super.getConfig().getProjectName()));
 			} catch(final NullPointerException e) {
 				nodes.add(this.generateTextField("ProjectName", "My New Project"));
 			} finally {
@@ -258,48 +278,10 @@ public final class ElementGenerator {
 	 * @param  id The (unique) ID name of the StackPane.
 	 * @return    Returns a StackPane element.
 	 */
-	private StackPane generateStackPane(final String id) {
+	protected StackPane generateStackPane(final String id) {
 		final StackPane stackPane = new StackPane();
 		stackPane.setId(UIElements.STACKPANE.getPrefix() + id);
 		return stackPane;
-	}
-
-	/**
-	 * Generate a Tab element.
-	 *
-	 * @param  id         The (unique) ID name of the Tab.
-	 * @param  name       The text to display with the label.
-	 * @param  isDisabled Define if the tab is disabled.
-	 * @return            Returns a Tab element.
-	 */
-	private Tab generateTab(final String id, final String name, final boolean isDisabled) {
-		final Tab tab = new Tab();
-		tab.setId(UIElements.TAB.getPrefix() + id);
-		tab.setText(name);
-		tab.setClosable(false);
-		tab.setDisable(isDisabled);
-		tab.setContent(this.generateAnchorPane(id));
-		return tab;
-	}
-
-	/**
-	 * Generate the tab menu.
-	 *
-	 * @return Returns a menu of various empty tabs.
-	 */
-	public TabPane generateTabMenu() {
-		final TabPane tabPane = this.generateTabPane("Menu");
-
-		// Generate and add all tabs to the tab pane.
-		final List<Tab> tabs = new ArrayList<>();
-		for(final MenuItems menuItem : MenuItems.values()) {
-			final Tab generateTab = this.generateTab(menuItem.getId(), menuItem.getName(), !menuItem.isSupported());
-			tabs.add(generateTab);
-			System.out.println("Generated tab " + menuItem.getName() + "."); // TODO: Replace with log component.
-		}
-		tabPane.getTabs().addAll(tabs);
-
-		return tabPane;
 	}
 
 	/**
@@ -308,20 +290,17 @@ public final class ElementGenerator {
 	 * @param  id The (unique) ID name of the TabPane.
 	 * @return    Returns a TabPane element.
 	 */
-	private TabPane generateTabPane(final String id) {
+	protected TabPane generateTabPane(final String id) {
 		final TabPane tabPane = new TabPane();
 		tabPane.setId(UIElements.TABPANE.getPrefix() + id);
 		return tabPane;
 	}
 
 	/**
-	 * Generate a TextField element.
-	 *
-	 * @param  id         The (unique) ID name of the TextField.
-	 * @param  promptText The text to display with the label when it has no value.
-	 * @return            Returns a TextField element.
+	 * {@inheritDoc}
 	 */
-	private TextField generateTextField(final String id, final String promptText) {
+	@Override
+	protected TextField generateTextField(final String id, final String promptText) {
 		final TextField textField = new TextField();
 		textField.setId(UIElements.TEXTFIELD.getPrefix() + id);
 		textField.setPromptText(promptText);
@@ -329,16 +308,23 @@ public final class ElementGenerator {
 	}
 
 	/**
-	 * Generate a TextField element.
-	 *
-	 * @param  id         The (unique) ID name of the TextField.
-	 * @param  promptText The text to display with the label when it has no value.
-	 * @param  text       The text to display with the label.
-	 * @return            Returns a TextField element.
+	 * {@inheritDoc}
 	 */
-	private TextField generateTextField(final String id, final String promptText, final String text) {
+	@Override
+	protected TextField generateTextField(final String id, final String promptText, final String text) {
 		final TextField textField = this.generateTextField(id, promptText);
 		textField.setText(text);
 		return textField;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * This method requires a frame of type StackPane.
+	 */
+	@Override
+	public void populate(final Object frame) {
+		if(!(frame instanceof StackPane)) throw new IllegalArgumentException("The frame must be of type StackPane.");
+		final StackPane stp = (StackPane)frame;
+		stp.getChildren().add((TabPane)this.generateMenu("Menu"));
 	}
 }
