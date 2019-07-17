@@ -49,9 +49,6 @@ public final class SingleViewController extends Controller {
 		for(final Tab tab : tabs) {
 			final List<Node> elements = ((AnchorPane)tab.getContent()).getChildren();
 			for(final Node element : elements) switch(tab.getId()) {
-				case "tabProject":
-					this.delegateProjectTabActions(element);
-					break;
 				case "tabProgramming":
 					this.delegateProgrammingTabActions(element);
 					break;
@@ -103,46 +100,11 @@ public final class SingleViewController extends Controller {
 	}
 
 	/**
-	 * Define all actions for elements on the Project tab. Refer each action to the appropriate handler.
-	 *
-	 * @param element An element displayed on the Project tab. Not all elements get an event handler.
-	 */
-	private void delegateProjectTabActions(final Node element) {
-		switch(element.getId()) {
-			case "chbProgramming":
-				System.out.println("Delegating events for chbProgramming.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbProgrammingClick(event));
-				break;
-			case "chbDocumentation":
-				System.out.println("Delegating events for chbDocumentation.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbDocumentationClick(event));
-				break;
-			case "chbDiagrams":
-				System.out.println("Delegating events for chbDocuments.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbDiagramsClick(event));
-				break;
-			case "chbAdditionalSources":
-				System.out.println("Delegating events for chbAdditionalSources.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleChbAdditionalSourcesClick(event));
-				break;
-			case "btnLocation":
-				System.out.println("Delegating events for btnLocation.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleBtnLocationClick(event));
-				break;
-		}
-	}
-
-	/**
 	 * Handle a click on the Finalize button.
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleBtnFinalizeClick(final MouseEvent event) {
+	public void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) {}
 	}
@@ -152,7 +114,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleBtnLocationClick(final MouseEvent event) {
+	public void handleBtnLocationClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) {
 			final Button btn = (Button)event.getSource();
@@ -177,7 +139,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleChbAdditionalSourcesClick(final MouseEvent event) {
+	public void handleChbAdditionalSourcesClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
@@ -191,7 +153,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleChbDiagramsClick(final MouseEvent event) {
+	public void handleChbDiagramsClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
@@ -205,7 +167,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleChbDocumentationClick(final MouseEvent event) {
+	public void handleChbDocumentationClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
@@ -219,7 +181,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleChbProgrammingClick(final MouseEvent event) {
+	public void handleChbProgrammingClick(final MouseEvent event) {
 		System.out.println("Handling a click on checkbox " + ((Node)event.getSource()).getId()); // TODO: Replace with log component.
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
@@ -233,7 +195,7 @@ public final class SingleViewController extends Controller {
 	 *
 	 * @param event The event triggering this function.
 	 */
-	private void handleProgrammingLanguageClick(final MouseEvent event) {
+	public void handleProgrammingLanguageClick(final MouseEvent event) {
 		final CheckBox source = (CheckBox)event.getSource();
 		System.out.println("Handling a click on checkbox " + source.getId() + ".");
 		final String id = source.getId().substring(3);

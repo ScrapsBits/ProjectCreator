@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.core.enumerations.ProgrammingLanguage;
@@ -262,13 +263,23 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		}
 
 		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-		nodes.add(this.generateCheckBox("Programming", "Programming", true));
-		nodes.add(this.generateCheckBox("Documentation", "Documentation"));
-		nodes.add(this.generateCheckBox("Diagrams", "Diagrams"));
-		nodes.add(this.generateCheckBox("AdditionalSources", "Other"));
+		CheckBox chbProgramming = this.generateCheckBox("Programming", "Programming", true);
+		chbProgramming.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbProgrammingClick(event));
+		nodes.add(chbProgramming);
+		CheckBox chbDocumentation = this.generateCheckBox("Documentation", "Documentation");
+		chbDocumentation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbDocumentationClick(event));
+		nodes.add(chbDocumentation);
+		CheckBox chbDiagrams = this.generateCheckBox("Diagrams", "Diagrams");
+		chbDiagrams.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbDiagramsClick(event));
+		nodes.add(chbDiagrams);
+		CheckBox chbAdditionalSources = this.generateCheckBox("AdditionalSources", "Other");
+		chbAdditionalSources.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbAdditionalSourcesClick(event));
+		nodes.add(chbAdditionalSources);
 
 		System.out.println("Generating Button components."); // TODO: Replace with log component.
-		nodes.add(this.generateButton("Location", "Select Folder"));
+		Button btnLocation = this.generateButton("Location", "Select Folder");
+		btnLocation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleBtnLocationClick(event));
+		nodes.add(btnLocation);
 		anchorPane.getChildren().addAll(nodes);
 		return anchorPane;
 	}
