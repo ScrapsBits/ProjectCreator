@@ -32,16 +32,13 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The tab "AdditionalSources".
 	 * @return     Returns the child AnchorPane of the AdditionalSources tab.
 	 */
-	public AnchorPane generateAdditionalSourcesTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Additional Sources tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
-			// TODO: Generate elements for the Additional Sources tab.
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
-		}
-		return (AnchorPane)tab.getContent();
+	public AnchorPane generateAdditionalSourcesTabContent() {
+		System.out.println("Generating Additional Sources tab components."); // TODO: Replace with log component.
+		final AnchorPane anchorPane = this.generateAnchorPane("AdditionalSources");
+		final List<Node> nodes = new ArrayList<>();
+		// TODO: Generate elements for the Additional Sources tab.
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -95,15 +92,12 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The Diagrams tab.
 	 * @return     Returns the AnchorPane to be placed on the Diagrams tab.
 	 */
-	public AnchorPane generateDiagramsTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Diagrams tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
-		}
-		return (AnchorPane)tab.getContent();
+	public AnchorPane generateDiagramsTabContent() {
+		System.out.println("Generating Diagrams tab components."); // TODO: Replace with log component.
+		final AnchorPane anchorPane = this.generateAnchorPane("Diagrams");
+		final List<Node> nodes = new ArrayList<>();
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -112,15 +106,12 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The Documentation tab.
 	 * @return     Returns the AnchorPane to be placed on the Documentation tab.
 	 */
-	public AnchorPane generateDocumentationTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Documentation tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
-		}
-		return (AnchorPane)tab.getContent();
+	public AnchorPane generateDocumentationTabContent() {
+		System.out.println("Generating Documentation tab components."); // TODO: Replace with log component.
+		final AnchorPane anchorPane = this.generateAnchorPane("Documentation");
+		final List<Node> nodes = new ArrayList<>();
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -129,18 +120,15 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The Finalize tab.
 	 * @return     Returns the AnchorPane to be placed on the Finalize tab.
 	 */
-	public AnchorPane generateFinalizeTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Finalization tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
-			nodes.add(this.generateButton("Finalize", "Create projects"));
+	public AnchorPane generateFinalizeTabContent() {
+		System.out.println("Generating Finalization tab components."); // TODO: Replace with log component.
+		final AnchorPane anchorPane = this.generateAnchorPane("Finalize");
+		final List<Node> nodes = new ArrayList<>();
+		System.out.println("Generating Button components."); // TODO: Replace with log component.
+		nodes.add(this.generateButton("Finalize", "Create projects"));
 
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
-		}
-		return (AnchorPane)tab.getContent();
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -165,10 +153,30 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		// Generate all tabs.
 		for(final MenuItems menuItem : MenuItems.values()) {
 			final Tab generateTab = this.generateMenuItem(menuItem.getId(), menuItem.getName(), menuItem.isSupported());
+			System.out.println("Generated tab " + menuItem.getName() + ".\nPopulating tab " + menuItem.getName() + "."); // TODO: Replace with log component.
+			switch(menuItem.getId().toLowerCase()) {
+				case "project":
+					generateTab.setContent(this.generateProjectTabContent());
+					break;
+				case "programming":
+					generateTab.setContent(this.generateProgrammingTabContent());
+					break;
+				case "documentation":
+					generateTab.setContent(this.generateDocumentationTabContent());
+					break;
+				case "diagrams":
+					generateTab.setContent(this.generateDiagramsTabContent());
+					break;
+				case "additionalSources":
+					generateTab.setContent(this.generateAdditionalSourcesTabContent());
+					break;
+				case "finalize":
+					generateTab.setContent(this.generateFinalizeTabContent());
+					break;
+			}
 			tabPane.getTabs().add(generateTab);
-			System.out.println("Generated tab " + menuItem.getName() + "."); // TODO: Replace with log component.
 		}
-
+		System.out.println("Size tabpane: " + tabPane.getTabs().size());
 		return tabPane;
 	}
 
@@ -202,30 +210,27 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The Programming tab.
 	 * @return     Returns the AnchorPane to be placed on the Programming tab.
 	 */
-	public AnchorPane generateProgrammingTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Programming tab components.");
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
+	public AnchorPane generateProgrammingTabContent() {
+		System.out.println("Generating Programming tab components.");
+		final AnchorPane anchorPane = this.generateAnchorPane("Programming");
+		final List<Node> nodes = new ArrayList<>();
 
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-			nodes.add(this.generateStackPane("ProgrammingLanguages"));
+		System.out.println("Generating StackPane components."); // TODO: Replace with log component.
+		nodes.add(this.generateStackPane("ProgrammingLanguages"));
 
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-			nodes.add(this.generateLabel("Functional", "Functional Languages"));
-			nodes.add(this.generateLabel("ObjectOriented", "Object Oriented Languages"));
+		System.out.println("Generating Label components."); // TODO: Replace with log component.
+		nodes.add(this.generateLabel("Functional", "Functional Languages"));
+		nodes.add(this.generateLabel("ObjectOriented", "Object Oriented Languages"));
 
-			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-			for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language != ProgrammingLanguage.UNKNOWN) try {
-				nodes.add(this.generateCheckBox(language.getId(), language.getName(), super.getConfig().getSelectedProgrammingLanguages().contains(language)));
-			} catch(final NullPointerException e) {
-				nodes.add(this.generateCheckBox(language.getId(), language.getName()));
-			}
-
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
+		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
+		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language != ProgrammingLanguage.UNKNOWN) try {
+			nodes.add(this.generateCheckBox(language.getId(), language.getName(), super.getConfig().getSelectedProgrammingLanguages().contains(language)));
+		} catch(final NullPointerException e) {
+			nodes.add(this.generateCheckBox(language.getId(), language.getName()));
 		}
-		return (AnchorPane)tab.getContent();
+
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -234,42 +239,38 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 * @param  tab The Project tab.
 	 * @return     Returns the AnchorPane to be placed on the Project tab.
 	 */
-	public AnchorPane generateProjectTabContent(final Tab tab) {
-		if(!tab.isDisabled()) {
-			System.out.println("Generating Project tab components."); // TODO: Replace with log component.
-			final AnchorPane anchorPane = (AnchorPane)tab.getContent();
-			final List<Node> nodes = new ArrayList<>();
+	public AnchorPane generateProjectTabContent() {
+		System.out.println("Generating Project tab components."); // TODO: Replace with log component.
+		final AnchorPane anchorPane = generateAnchorPane("ProjectContent");
+		final List<Node> nodes = new ArrayList<>();
 
-			System.out.println("Generating StackPane components."); // TODO: Replace with log component.
-			nodes.add(this.generateStackPane("GenerationOptions"));
+		System.out.println("Generating StackPane components."); // TODO: Replace with log component.
+		nodes.add(this.generateStackPane("GenerationOptions"));
 
-			System.out.println("Generating Label components."); // TODO: Replace with log component.
-			nodes.add(this.generateLabel("ProjectName", "Name: "));
-			nodes.add(this.generateLabel("ProjectLocation", "Location (Default): "));
-			nodes.add(this.generateLabel("ProjectGenerationOptions", "Create files for: "));
+		System.out.println("Generating Label components."); // TODO: Replace with log component.
+		nodes.add(this.generateLabel("ProjectName", "Name: "));
+		nodes.add(this.generateLabel("ProjectLocation", "Location (Default): "));
+		nodes.add(this.generateLabel("ProjectGenerationOptions", "Create files for: "));
 
-			System.out.println("Generating TextField components."); // TODO: Replace with log component.
-			try {
-				nodes.add(this.generateTextField("ProjectName", "My New Project", super.getConfig().getProjectName()));
-			} catch(final NullPointerException e) {
-				nodes.add(this.generateTextField("ProjectName", "My New Project"));
-			} finally {
-				nodes.add(this.generateTextField("ProjectLocation", "Documents/"));
-			}
-
-			System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-			nodes.add(this.generateCheckBox("Programming", "Programming", true));
-			nodes.add(this.generateCheckBox("Documentation", "Documentation"));
-			nodes.add(this.generateCheckBox("Diagrams", "Diagrams"));
-			nodes.add(this.generateCheckBox("AdditionalSources", "Other"));
-
-			System.out.println("Generating Button components."); // TODO: Replace with log component.
-			nodes.add(this.generateButton("Location", "Select Folder"));
-
-			anchorPane.getChildren().addAll(nodes);
-			return anchorPane;
+		System.out.println("Generating TextField components."); // TODO: Replace with log component.
+		try {
+			nodes.add(this.generateTextField("ProjectName", "My New Project", super.getConfig().getProjectName()));
+		} catch(final NullPointerException e) {
+			nodes.add(this.generateTextField("ProjectName", "My New Project"));
+		} finally {
+			nodes.add(this.generateTextField("ProjectLocation", "Documents/"));
 		}
-		return (AnchorPane)tab.getContent();
+
+		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
+		nodes.add(this.generateCheckBox("Programming", "Programming", true));
+		nodes.add(this.generateCheckBox("Documentation", "Documentation"));
+		nodes.add(this.generateCheckBox("Diagrams", "Diagrams"));
+		nodes.add(this.generateCheckBox("AdditionalSources", "Other"));
+
+		System.out.println("Generating Button components."); // TODO: Replace with log component.
+		nodes.add(this.generateButton("Location", "Select Folder"));
+		anchorPane.getChildren().addAll(nodes);
+		return anchorPane;
 	}
 
 	/**
@@ -318,13 +319,11 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * This method requires a frame of type StackPane.
+	 * {@inheritDoc} This method requires a frame of type StackPane.
 	 */
 	@Override
 	public void populate(final Object frame) {
 		if(!(frame instanceof StackPane)) throw new IllegalArgumentException("The frame must be of type StackPane.");
-		final StackPane stp = (StackPane)frame;
-		stp.getChildren().add((TabPane)this.generateMenu("Menu"));
+		((StackPane)frame).getChildren().add((TabPane)this.generateMenu("Menu"));
 	}
 }

@@ -29,10 +29,10 @@ public abstract class Controller {
 	 */
 	protected void initialize() {
 		try {
-			// TODO: Read CONFIG file.
 			System.out.println("Attempting to read .config file at the default location."); // TODO: Replace with log component.
-			// TODO: Fill configuration values.
+			// TODO: Read CONFIG file.
 			throw new UnsupportedOperationException();
+			// TODO: Fill configuration values.
 		} catch(final Exception e) {
 			System.out.println("No .config file found. Proceeding with default values."); // TODO: Replace with log component.
 		} finally {

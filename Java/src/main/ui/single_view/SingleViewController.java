@@ -138,39 +138,6 @@ public final class SingleViewController extends Controller {
 	}
 
 	/**
-	 * Initialize the components for every tab.
-	 */
-	private void fillTabs() {
-		System.out.println("Generating components."); // TODO: Replace with log component.
-		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this.config, this);
-		final TabPane menu = (TabPane)this.stpFrame.getChildren().filtered((node) -> node.getId().equals(UIElements.TABPANE.getPrefix() + "Menu")).get(0);
-		for(final Tab tab : menu.getTabs()) switch(tab.getId()) {
-			case "tabProject":
-				tab.setContent(generator.generateProjectTabContent(tab));
-				break;
-			case "tabProgramming":
-				tab.setContent(generator.generateProgrammingTabContent(tab));
-				break;
-			case "tabDocumentation":
-				tab.setContent(generator.generateDocumentationTabContent(tab));
-				break;
-			case "tabDiagrams":
-				tab.setContent(generator.generateDiagramsTabContent(tab));
-				break;
-			case "tabAdditionalSources":
-				tab.setContent(generator.generateAdditionalSourcesTabContent(tab));
-				break;
-			case "tabFinalize":
-				tab.setContent(generator.generateFinalizeTabContent(tab));
-				break;
-			default:
-				tab.setContent(new AnchorPane());
-				break;
-		}
-		System.out.println("All components generated."); // TODO: Replace with log component.
-	}
-
-	/**
 	 * Handle a click on the Finalize button.
 	 *
 	 * @param event The event triggering this function.
@@ -292,7 +259,6 @@ public final class SingleViewController extends Controller {
 		generator.populate(this.stpFrame);
 		System.out.println("User interface generated."); // TODO: Replace with log component.
 		
-		this.fillTabs();
 		this.delegateActions();
 	}
 }
