@@ -3,6 +3,7 @@ package main.ui.single_view;
 import java.io.File;
 import java.io.IOException;
 
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -44,7 +45,18 @@ public final class SingleViewController extends Controller {
 	 */
 	public void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
-		if(event.getSource() instanceof Button) {}
+		if(event.getSource() instanceof Button) {
+			try {
+				super.config.safe();
+			} catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	public void listenMenuTabChange(Observable tab) {
+		System.out.println("I listened!");
+		System.out.println(tab);
 	}
 
 	/**

@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import main.core.enumerations.ProgrammingLanguage;
+import main.core.files.ConfigFileWriter;
+import main.core.files.ProjectCreatorFileWriter;
+import main.core.files.enumerations.ConfigStructure;
 
 /**
  * Keep track of the various settings turned off and on by user input.
@@ -28,7 +31,9 @@ public final class Configuration {
 	/**
 	 * Initialize configuration settings.
 	 */
-	public Configuration() { this.selectedProgrammingLanguage = new ArrayList<>(); }
+	public Configuration() {
+		this.selectedProgrammingLanguage = new ArrayList<>();
+	}
 
 	/**
 	 * Initialize configuration settings from a configuration source.
@@ -88,9 +93,31 @@ public final class Configuration {
 
 	/**
 	 * Safe the configuration into a file at the provided location.
+	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
 	public void safe() {
-		// TODO: Write the configuration information into a file.
+		if(validate()) {
+			// TODO: Write the configuration information into a file.
+			System.out.println("Writing the config file."); // TODO: Replace with log component.
+			ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, ConfigStructure.XML);
+			fileWriter.write();
+		} else {
+			throw new IllegalArgumentException("Could not write file. Please make sure the given input is valid.");
+		}
+	}
+
+	/**
+	 * Validate if all input follows the expected pattern.
+	 */
+	public boolean validate() {
+		try {
+			if(this.configLocation == null || this.configLocation.contentEquals("")) throw new IllegalArgumentException("The provided configuration file location is invalid.");
+			if(this.selectedProgrammingLanguage.size() == 0) throw new IllegalArgumentException("At least one programming language must be selected.");
+			return true;
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			return false;
+		}
 	}
 
 	/**
