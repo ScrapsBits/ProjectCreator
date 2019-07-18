@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import main.core.enumerations.ProgrammingLanguage;
-import main.models.Configuration;
 import main.ui.ElementGenerator;
 import main.ui.enumerations.MenuItems;
 import main.ui.enumerations.UIElements;
@@ -25,7 +24,13 @@ import main.ui.enumerations.UIElements;
  * @author ScrapsBits
  */
 public final class SingleViewElementGenerator extends ElementGenerator {
-	public SingleViewElementGenerator(final Configuration configuration, final SingleViewController singleViewController) { super(configuration, singleViewController); }
+
+	private final SingleViewController singleViewController;
+
+	public SingleViewElementGenerator(final SingleViewController controller) {
+		super(controller);
+		this.singleViewController = (SingleViewController)super.getController();
+	}
 
 	/**
 	 * Generate and populate content for the Additional Sources tab.
@@ -126,7 +131,9 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		final AnchorPane anchorPane = this.generateAnchorPane("Finalize");
 		final List<Node> nodes = new ArrayList<>();
 		System.out.println("Generating Button components."); // TODO: Replace with log component.
-		nodes.add(this.generateButton("Finalize", "Create projects"));
+		final Button btnFinalize = this.generateButton("Finalize", "Create projects");
+		btnFinalize.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleBtnFinalizeClick(event));
+		nodes.add(btnFinalize);
 
 		anchorPane.getChildren().addAll(nodes);
 		return anchorPane;
@@ -224,10 +231,14 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		nodes.add(this.generateLabel("ObjectOriented", "Object Oriented Languages"));
 
 		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
+		CheckBox chbLanguage = null;
 		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language != ProgrammingLanguage.UNKNOWN) try {
-			nodes.add(this.generateCheckBox(language.getId(), language.getName(), super.getConfig().getSelectedProgrammingLanguages().contains(language)));
+			chbLanguage = this.generateCheckBox(language.getId(), language.getName(), super.getConfig().getSelectedProgrammingLanguages().contains(language));
 		} catch(final NullPointerException e) {
-			nodes.add(this.generateCheckBox(language.getId(), language.getName()));
+			chbLanguage = this.generateCheckBox(language.getId(), language.getName());
+		} finally {
+			chbLanguage.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleProgrammingLanguageClick(event));
+			nodes.add(chbLanguage);
 		}
 
 		anchorPane.getChildren().addAll(nodes);
@@ -242,7 +253,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	 */
 	public AnchorPane generateProjectTabContent() {
 		System.out.println("Generating Project tab components."); // TODO: Replace with log component.
-		final AnchorPane anchorPane = generateAnchorPane("ProjectContent");
+		final AnchorPane anchorPane = this.generateAnchorPane("ProjectContent");
 		final List<Node> nodes = new ArrayList<>();
 
 		System.out.println("Generating StackPane components."); // TODO: Replace with log component.
@@ -263,22 +274,22 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		}
 
 		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
-		CheckBox chbProgramming = this.generateCheckBox("Programming", "Programming", true);
-		chbProgramming.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbProgrammingClick(event));
+		final CheckBox chbProgramming = this.generateCheckBox("Programming", "Programming", true);
+		chbProgramming.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleChbProgrammingClick(event));
 		nodes.add(chbProgramming);
-		CheckBox chbDocumentation = this.generateCheckBox("Documentation", "Documentation");
-		chbDocumentation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbDocumentationClick(event));
+		final CheckBox chbDocumentation = this.generateCheckBox("Documentation", "Documentation");
+		chbDocumentation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleChbDocumentationClick(event));
 		nodes.add(chbDocumentation);
-		CheckBox chbDiagrams = this.generateCheckBox("Diagrams", "Diagrams");
-		chbDiagrams.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbDiagramsClick(event));
+		final CheckBox chbDiagrams = this.generateCheckBox("Diagrams", "Diagrams");
+		chbDiagrams.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleChbDiagramsClick(event));
 		nodes.add(chbDiagrams);
-		CheckBox chbAdditionalSources = this.generateCheckBox("AdditionalSources", "Other");
-		chbAdditionalSources.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleChbAdditionalSourcesClick(event));
+		final CheckBox chbAdditionalSources = this.generateCheckBox("AdditionalSources", "Other");
+		chbAdditionalSources.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleChbAdditionalSourcesClick(event));
 		nodes.add(chbAdditionalSources);
 
 		System.out.println("Generating Button components."); // TODO: Replace with log component.
-		Button btnLocation = this.generateButton("Location", "Select Folder");
-		btnLocation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> ((SingleViewController)super.getController()).handleBtnLocationClick(event));
+		final Button btnLocation = this.generateButton("Location", "Select Folder");
+		btnLocation.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleBtnLocationClick(event));
 		nodes.add(btnLocation);
 		anchorPane.getChildren().addAll(nodes);
 		return anchorPane;

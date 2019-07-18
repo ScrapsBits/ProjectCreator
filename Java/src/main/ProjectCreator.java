@@ -58,7 +58,7 @@ public final class ProjectCreator extends Application {
 		try {
 			boolean bootArgProvided = false;
 			for(final String arg : args) for(final BootMode bootMode : BootMode.values()) for(final String bootCommand : bootMode.getBootCommands()) {
-				boolean argEqualsCommand = arg.contentEquals(bootCommand);
+				final boolean argEqualsCommand = arg.contentEquals(bootCommand);
 				if(bootArgProvided && argEqualsCommand) throw new IllegalArgumentException("Too many boot mode arguments have been provided. Reverting to default boot mode.");
 				if(argEqualsCommand) {
 					bootArgProvided = true;

@@ -45,18 +45,18 @@ public final class SingleViewElementDesigner extends ElementDesigner {
 	@Override
 	public void design() {
 		System.out.println("Positioning and styling elements."); // TODO: Replace with log component.
-		final String prefix = UIElements.TAB.getPrefix();
-		for(final Tab tab : ((TabPane)this.scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs()) if(tab.getId().contentEquals(prefix + MenuItems.PROJECT.getId()))
+		final String tabPrefix = UIElements.TAB.getPrefix();
+		for(final Tab tab : ((TabPane)this.scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs()) if(tab.getId().contentEquals(tabPrefix + MenuItems.PROJECT.getId()))
 			this.designProjectTab();
-		else if(tab.getId().contentEquals(prefix + MenuItems.PROGRAMMING.getId()))
+		else if(tab.getId().contentEquals(tabPrefix + MenuItems.PROGRAMMING.getId()))
 			this.designProgrammingTab();
-		else if(tab.getId().contentEquals(prefix + MenuItems.DOCUMENTATION.getId()))
+		else if(tab.getId().contentEquals(tabPrefix + MenuItems.DOCUMENTATION.getId()))
 			this.designDocumentationTab();
-		else if(tab.getId().contentEquals(prefix + MenuItems.DIAGRAMS.getId()))
+		else if(tab.getId().contentEquals(tabPrefix + MenuItems.DIAGRAMS.getId()))
 			this.designDiagramsTab();
-		else if(tab.getId().contentEquals(prefix + MenuItems.ADDITIONAL_SOURCES.getId()))
+		else if(tab.getId().contentEquals(tabPrefix + MenuItems.ADDITIONAL_SOURCES.getId()))
 			this.designAdditionalSourcesTab();
-		else if(tab.getId().contentEquals(prefix + MenuItems.FINALIZATION.getId())) this.designFinalizationTab();
+		else if(tab.getId().contentEquals(tabPrefix + MenuItems.FINALIZATION.getId())) this.designFinalizationTab();
 		System.out.println("All elements have been positioned and styled."); // TODO: Replace with log component.
 	}
 

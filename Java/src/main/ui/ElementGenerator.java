@@ -10,11 +10,6 @@ import main.models.Configuration;
 public abstract class ElementGenerator {
 
 	/**
-	 * Store a reference to the configuration object.
-	 */
-	private final Configuration config;
-
-	/**
 	 * Store a reference to the controller object.
 	 */
 	private final Controller controller;
@@ -24,10 +19,7 @@ public abstract class ElementGenerator {
 	 *
 	 * @param configuration Collect the configuration and store it. It's data will be used to automatically fill in form data.
 	 */
-	protected ElementGenerator(final Configuration configuration, final Controller controller) {
-		this.config = configuration;
-		this.controller = controller;
-	}
+	protected ElementGenerator(final Controller controller) { this.controller = controller; }
 
 	/**
 	 * Generate a button with the given (unique) id and text.
@@ -117,10 +109,11 @@ public abstract class ElementGenerator {
 	 *
 	 * @return Returns the configuration object.
 	 */
-	protected Configuration getConfig() { return this.config; }
-	
+	protected Configuration getConfig() { return this.controller.getConfig(); }
+
 	/**
 	 * Get the reference to the controller object.
+	 *
 	 * @return Returns the controller object.
 	 */
 	protected Controller getController() { return this.controller; }

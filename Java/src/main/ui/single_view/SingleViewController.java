@@ -2,7 +2,6 @@ package main.ui.single_view;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,7 +11,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import main.ProjectCreator;
@@ -38,66 +36,6 @@ public final class SingleViewController extends Controller {
 	 * Initialize the controller for the Single View user interface.
 	 */
 	public SingleViewController() { super(); }
-
-	/**
-	 * Delegate event actions from elements to their handler methods.
-	 */
-	private void delegateActions() {
-		System.out.println("Delegating events.");
-		final TabPane tbpMenu = (TabPane)this.stpFrame.getChildren().get(0);
-		final List<Tab> tabs = tbpMenu.getTabs();
-		for(final Tab tab : tabs) {
-			final List<Node> elements = ((AnchorPane)tab.getContent()).getChildren();
-			for(final Node element : elements) switch(tab.getId()) {
-				case "tabProgramming":
-					this.delegateProgrammingTabActions(element);
-					break;
-				case "tabFinalize":
-					this.delegateFinalizeTabActions(element);
-					break;
-			}
-		}
-	}
-
-	/**
-	 * Define all actions for elements on the Finalize tab. Refer each action to the appropriate handler.
-	 *
-	 * @param element An element displayed on the Finalize tab. Not all elements get an event handler.
-	 */
-	private void delegateFinalizeTabActions(final Node element) {
-		switch(element.getId()) {
-			case "btnFinalize":
-				System.out.println("Delegating events for btnFinalize.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleBtnFinalizeClick(event));
-				break;
-		}
-	}
-
-	/**
-	 * Define all actions for elements on the Programming tab. Refer each action to the appropriate handler.
-	 *
-	 * @param element An element displayed on the Programming tab. Not all elements get an event handler.
-	 */
-	private void delegateProgrammingTabActions(final Node element) {
-		switch(element.getId()) {
-			case "chbCPlusPlus":
-				System.out.println("Delegating events for chbCPlusPlus.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
-				break;
-			case "chbCSharp":
-				System.out.println("Delegating events for chbCSharp.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
-				break;
-			case "chbJava":
-				System.out.println("Delegating events for chbJava.");
-				System.out.println("Delegating mouse click event.");
-				element.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.handleProgrammingLanguageClick(event));
-				break;
-		}
-	}
 
 	/**
 	 * Handle a click on the Finalize button.
@@ -217,10 +155,8 @@ public final class SingleViewController extends Controller {
 	public void initialize() {
 		super.initialize();
 		System.out.println("Generating user interface."); // TODO: Replace with log component.
-		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this.config, this);
+		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this);
 		generator.populate(this.stpFrame);
 		System.out.println("User interface generated."); // TODO: Replace with log component.
-		
-		this.delegateActions();
 	}
 }

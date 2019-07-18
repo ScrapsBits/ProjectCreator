@@ -24,6 +24,8 @@ public abstract class Controller {
 		this.config = new Configuration(); // TODO: Check if a configuration file can be located.
 	}
 
+	public Configuration getConfig() { return this.config; }
+
 	/**
 	 * Perform default initialization processes.
 	 */
