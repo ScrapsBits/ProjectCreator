@@ -1,4 +1,4 @@
-package main.core.files;
+package main.core.files.write;
 
 /**
  * Write a file to storage.

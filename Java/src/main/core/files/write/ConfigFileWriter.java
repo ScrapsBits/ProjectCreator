@@ -1,4 +1,4 @@
-package main.core.files;
+package main.core.files.write;
 
 import java.io.File;
 
@@ -16,6 +16,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import main.core.enumerations.ProgrammingLanguage;
 import main.core.files.enumerations.ConfigStructure;
 import main.models.Configuration;
 
@@ -75,6 +76,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 			Document document = documentBuilder.newDocument();
+			
 			Element root = document.createElement("configuration");
 			document.appendChild(root);
 
@@ -86,16 +88,24 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 			projectLocation.setValue(this.config.getConfigLocation());
 			project.setAttributeNode(projectLocation);
 			root.appendChild(project);
+			
+			Element programming = document.createElement("languages");
+			root.appendChild(programming);
+			
+			for(ProgrammingLanguage language : this.config.getSelectedProgrammingLanguages()) {
+				Element lang = document.createElement("programming-language");
+				Attr langName = document.createAttribute("name");
+				langName.setValue(language.getName());
+				lang.setAttributeNode(langName);
+				Attr type = document.createAttribute("type");
+				type.setValue(language.isFunctional() ? "functional" : "object-oriented"); 
+			}
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource domSource = new DOMSource(document);
 			StreamResult streamResult = new StreamResult(configFile);
 			transformer.transform(domSource, streamResult);
-
-			// } catch(IOException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
 		} catch(ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

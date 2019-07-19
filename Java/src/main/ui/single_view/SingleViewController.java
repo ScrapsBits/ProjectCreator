@@ -12,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import main.ProjectCreator;
@@ -33,10 +34,14 @@ public final class SingleViewController extends Controller {
 	@FXML
 	private StackPane stpFrame;
 
+	private Tab activeTab;
+
 	/**
 	 * Initialize the controller for the Single View user interface.
 	 */
-	public SingleViewController() { super(); }
+	public SingleViewController() {
+		super();
+	}
 
 	/**
 	 * Handle a click on the Finalize button.
@@ -53,10 +58,75 @@ public final class SingleViewController extends Controller {
 			}
 		}
 	}
-	
-	public void listenMenuTabChange(Observable tab) {
-		System.out.println("I listened!");
-		System.out.println(tab);
+
+	/**
+	 * Triggers when the selected menu changes. Performs some input checks and saves them to configuration.
+	 * 
+	 * @param tabPane The Observable object, listening to the changes.
+	 * @param tabMenu The tabpane object that triggers the function.
+	 */
+	public void listenMenuTabChange(Observable tabPane, TabPane tabMenu) {
+		Tab newTab = tabMenu.getSelectionModel().getSelectedItem();
+		switch(newTab.getId()) {
+			case "tabProject":
+				System.out.println("Switched to tab Project");
+				break;
+			case "tabProgramming":
+				System.out.println("Switched to tab Programming");
+				break;
+			case "tabDocumentation":
+				System.out.println("Switched to tab Documentation");
+				break;
+			case "tabDiagrams":
+				System.out.println("Switched to tab Diagrams");
+				break;
+			case "tabAdditionalSources":
+				System.out.println("Switched to tab Additional Sources");
+				break;
+			case "tabFinalize":
+				System.out.println("Switched to tab Finalization");
+				break;
+		}
+
+		if(!"tabProject".contentEquals(newTab.getId())) {
+			Node[] inputs = new Node[2];
+			boolean[] validInputs = new boolean[inputs.length];
+			for(int i = 0; i < inputs.length; i += 1) {
+				validInputs[i] = false;
+			}
+			Tab projectTab = (Tab)((TabPane)this.stpFrame.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs().filtered((tab) -> "tabProject".contentEquals(tab.getId()))
+					.get(0);
+			AnchorPane projectTabContent = (AnchorPane)projectTab.getContent();
+			try {
+				int inputSlot = 0;
+				TextField txfProjectName = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
+				this.config.setProjectName(txfProjectName.getText());
+				inputs[inputSlot] = txfProjectName;
+				validInputs[inputSlot] = true;
+			} catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+
+			try {
+				int inputSlot = 1;
+				TextField txfConfigLocation = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
+				this.config.setConfigLocation(txfConfigLocation.getText());
+				inputs[inputSlot] = txfConfigLocation;
+				validInputs[inputSlot] = true;
+			} catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+
+			boolean isValid = true;
+			for(int i = 0; i < inputs.length; i += 1) {
+				if(!validInputs[i]) {
+					// TODO: Mark input[i] as invalid.. Somehow
+					isValid = false;
+				}
+			}
+			if(!isValid) { tabMenu.getSelectionModel().select(projectTab); }
+		}
+		this.activeTab = newTab;
 	}
 
 	/**

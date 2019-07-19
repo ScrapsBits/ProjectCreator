@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import main.core.enumerations.ProgrammingLanguage;
-import main.core.files.ConfigFileWriter;
-import main.core.files.ProjectCreatorFileWriter;
 import main.core.files.enumerations.ConfigStructure;
+import main.core.files.write.ConfigFileWriter;
+import main.core.files.write.ProjectCreatorFileWriter;
 
 /**
  * Keep track of the various settings turned off and on by user input.
@@ -31,9 +31,7 @@ public final class Configuration {
 	/**
 	 * Initialize configuration settings.
 	 */
-	public Configuration() {
-		this.selectedProgrammingLanguage = new ArrayList<>();
-	}
+	public Configuration() { this.selectedProgrammingLanguage = new ArrayList<>(); }
 
 	/**
 	 * Initialize configuration settings from a configuration source.
@@ -93,6 +91,7 @@ public final class Configuration {
 
 	/**
 	 * Safe the configuration into a file at the provided location.
+	 * 
 	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
 	public void safe() {
@@ -110,14 +109,27 @@ public final class Configuration {
 	 * Validate if all input follows the expected pattern.
 	 */
 	public boolean validate() {
+		String emptyString = "";
+		boolean isValid = true;
 		try {
-			if(this.configLocation == null || this.configLocation.contentEquals("")) throw new IllegalArgumentException("The provided configuration file location is invalid.");
-			if(this.selectedProgrammingLanguage.size() == 0) throw new IllegalArgumentException("At least one programming language must be selected.");
-			return true;
+			if(this.projectName == null || emptyString.contentEquals(this.projectName)) throw new IllegalArgumentException("The provided project name is invalid.");
 		} catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			return false;
+			isValid = false;
 		}
+		try {
+			if(this.configLocation == null || emptyString.contentEquals(this.configLocation)) throw new IllegalArgumentException("The provided configuration file location is invalid.");
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			isValid = false;
+		}
+		try {
+			if(this.selectedProgrammingLanguage.size() < 1) throw new IllegalArgumentException("At least one programming language must be selected.");
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			isValid = false;
+		}
+		return isValid;
 	}
 
 	/**

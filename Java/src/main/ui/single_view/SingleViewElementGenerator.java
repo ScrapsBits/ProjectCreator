@@ -157,7 +157,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	@Override
 	protected Object generateMenu(final String id) {
 		final TabPane tabPane = this.generateTabPane(id);
-		tabPane.getSelectionModel().selectedItemProperty().addListener((tab) -> this.singleViewController.listenMenuTabChange(tab));
+		tabPane.getSelectionModel().selectedItemProperty().addListener((tab) -> this.singleViewController.listenMenuTabChange(tab, tabPane));
 
 		// Generate all tabs.
 		for(final MenuItems menuItem : MenuItems.values()) {
