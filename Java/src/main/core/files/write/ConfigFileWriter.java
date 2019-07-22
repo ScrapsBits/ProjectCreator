@@ -41,6 +41,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	 * Prepare the writing of the configuration into a file.
 	 *
 	 * @param configuration The configuration settings.
+	 * @param structure     The structure used for the writing of the Configuration file.
 	 */
 	public ConfigFileWriter(final Configuration configuration, final ConfigStructure structure) {
 		super(configuration.getConfigLocation());

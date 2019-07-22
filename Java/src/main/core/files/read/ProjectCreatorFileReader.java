@@ -1,17 +1,16 @@
-package main.core.files.write;
+package main.core.files.read;
 
 import main.core.files.ProjectCreatorFileManager;
 import main.core.files.enumerations.ConfigStructure;
 
 /**
- * Write a file to storage.
+ * Read a file from storage.
  *
  * @author ScrapsBits
  */
-public abstract class ProjectCreatorFileWriter {
-
+public abstract class ProjectCreatorFileReader {
 	/**
-	 * The location where the file will be written.
+	 * The location where files will be read from.
 	 */
 	private final String fileLocation;
 
@@ -26,26 +25,28 @@ public abstract class ProjectCreatorFileWriter {
 	protected ConfigStructure configStructure;
 
 	/**
-	 * Initialize the File Writer.
+	 * Initialize the File Reader.
 	 *
-	 * @param  fileLocation             The location where new files will be stored.
+	 * @param  fileLocation             The location where existing files will be read.
+	 * @param  configurationStructure   The structure used by the files being read.
 	 * @throws IllegalArgumentException Thrown when the location does not exist AND cannot be created by the client device.
 	 */
-	protected ProjectCreatorFileWriter(final String fileLocation) {
+	protected ProjectCreatorFileReader(final String fileLocation, final ConfigStructure configurationStructure) {
 		if(fileLocation == null || fileLocation.contentEquals("")) throw new IllegalArgumentException("The provided location is not allowed.");
 		this.fileLocation = fileLocation;
 		this.fileManager = new ProjectCreatorFileManager();
+		this.configStructure = configurationStructure;
 	}
 
 	/**
 	 * Get the location where all files will be located.
 	 *
-	 * @return Returns the location where all files will be written.
+	 * @return Returns the location where all files will be read from.
 	 */
-	protected final String getFileLocation() { return this.fileLocation; }
+	public final String getFileLocation() { return this.fileLocation; }
 
 	/**
-	 * Write the file.
+	 * Read a file. Return what was read.
 	 */
-	public abstract void write();
+	public abstract Object read();
 }

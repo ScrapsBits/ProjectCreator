@@ -150,6 +150,8 @@ public final class Configuration {
 
 	/**
 	 * Validate if all input follows the expected pattern.
+	 *
+	 * @return Returns true if the configuration is valid. Returns false if any input is invalid.
 	 */
 	public boolean validate() {
 		final String emptyString = "";

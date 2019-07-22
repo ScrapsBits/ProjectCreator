@@ -177,11 +177,16 @@ public final class SingleViewController extends Controller {
 	 * @param tabMenu The tab pane object that triggers the function.
 	 */
 	public void listenMenuTabChange(final Observable tabPane, final TabPane tabMenu) {
+		System.out.println("Changing tab.");
 		// Input checks from the previous tab.
 		switch(this.activeTab.getId()) {
 			case "tabProject":
+				try {
 				super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
 				super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
+				} catch(NullPointerException e) {
+					System.out.println("Running first initialization.");
+				}
 				break;
 			case "tabProgramming":
 				break;
@@ -261,7 +266,7 @@ public final class SingleViewController extends Controller {
 
 	/**
 	 * Replace the active tab with the one that's currently open.
-	 * 
+	 *
 	 * @param newTab The newly opened tab.
 	 */
 	public void setActiveTab(final Tab newTab) { this.activeTab = newTab; }

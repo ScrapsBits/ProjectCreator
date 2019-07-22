@@ -1,8 +1,13 @@
 package main.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import main.core.enumerations.ProgrammingLanguage;
+import main.core.files.ProjectCreatorFileManager;
 import main.models.Configuration;
 
 /**
@@ -20,9 +25,7 @@ public abstract class Controller {
 	/**
 	 * Initialize a controller with default settings.
 	 */
-	protected Controller() {
-		this.config = new Configuration(); // TODO: Check if a configuration file can be located.
-	}
+	protected Controller() { this.config = new Configuration(); }
 
 	public Configuration getConfig() { return this.config; }
 
@@ -31,15 +34,38 @@ public abstract class Controller {
 	 */
 	protected void initialize() {
 		try {
-			System.out.println("Attempting to read .config file at the default location."); // TODO: Replace with log component.
-			// TODO: Read CONFIG file.
+			System.out.println("Attempting to read projects file."); // TODO: Replace with log component.
+			String[] projects = readProjectsFile();
+			System.out.println("Read " + projects.length + " lines.");
+			// TODO: Loop through all key-value pair projects. Pick the most recent one by default.. Somehow.
 			throw new UnsupportedOperationException();
 			// TODO: Fill configuration values.
 		} catch(final Exception e) {
-			System.out.println("No .config file found. Proceeding with default values."); // TODO: Replace with log component.
+			System.out.println("No projects file found. Proceeding with default values."); // TODO: Replace with log component.
 		} finally {
 			System.out.println("Initializing user interface..."); // TODO: Replace with log component.
 		}
+	}
+
+	private String[] readProjectsFile() {
+		// TODO: Read CONFIG file.
+		String projectsFileLocation = new ProjectCreatorFileManager().getApplicationFilesDirectory();
+		System.out.println("Reading projects file at " + projectsFileLocation + ".");
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(new File(projectsFileLocation + "\\projects"));
+			List<String> lines = new ArrayList<>();
+			while(scanner.hasNextLine()) {
+				lines.add(scanner.nextLine());
+			}
+			return (String[])lines.toArray();
+		} catch(FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			scanner.close();
+		}
+		return new String[0];
 	}
 
 	/**

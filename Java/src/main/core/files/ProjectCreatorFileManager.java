@@ -29,7 +29,7 @@ public final class ProjectCreatorFileManager {
 			directory = System.getProperty("user.home");
 			if(os.contains("MAC")) directory += "/Library/Application Support";
 		}
-		directory += "/" + ProjectCreator.getApplicationName();
+		directory += "\\" + ProjectCreator.getApplicationName();
 		this.applicationFilesDirectory = directory;
 		final File fileDirectory = new File(directory);
 		System.out.println("Located application data location at: " + fileDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.

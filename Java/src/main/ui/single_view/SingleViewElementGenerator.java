@@ -35,8 +35,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate and populate content for the Additional Sources tab.
 	 *
-	 * @param  tab The tab "AdditionalSources".
-	 * @return     Returns the child AnchorPane of the AdditionalSources tab.
+	 * @return Returns the child AnchorPane of the AdditionalSources tab.
 	 */
 	public AnchorPane generateAdditionalSourcesTabContent() {
 		System.out.println("Generating Additional Sources tab components."); // TODO: Replace with log component.
@@ -95,8 +94,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate content for the Diagrams tab.
 	 *
-	 * @param  tab The Diagrams tab.
-	 * @return     Returns the AnchorPane to be placed on the Diagrams tab.
+	 * @return Returns the AnchorPane to be placed on the Diagrams tab.
 	 */
 	public AnchorPane generateDiagramsTabContent() {
 		System.out.println("Generating Diagrams tab components."); // TODO: Replace with log component.
@@ -109,8 +107,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate content for the Documentation tab.
 	 *
-	 * @param  tab The Documentation tab.
-	 * @return     Returns the AnchorPane to be placed on the Documentation tab.
+	 * @return Returns the AnchorPane to be placed on the Documentation tab.
 	 */
 	public AnchorPane generateDocumentationTabContent() {
 		System.out.println("Generating Documentation tab components."); // TODO: Replace with log component.
@@ -123,8 +120,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate content for the Finalize tab.
 	 *
-	 * @param  tab The Finalize tab.
-	 * @return     Returns the AnchorPane to be placed on the Finalize tab.
+	 * @return Returns the AnchorPane to be placed on the Finalize tab.
 	 */
 	public AnchorPane generateFinalizeTabContent() {
 		System.out.println("Generating Finalization tab components."); // TODO: Replace with log component.
@@ -217,8 +213,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate content for the Programming tab.
 	 *
-	 * @param  tab The Programming tab.
-	 * @return     Returns the AnchorPane to be placed on the Programming tab.
+	 * @return Returns the AnchorPane to be placed on the Programming tab.
 	 */
 	public AnchorPane generateProgrammingTabContent() {
 		System.out.println("Generating Programming tab components.");
@@ -250,8 +245,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 	/**
 	 * Generate content for the Project tab.
 	 *
-	 * @param  tab The Project tab.
-	 * @return     Returns the AnchorPane to be placed on the Project tab.
+	 * @return Returns the AnchorPane to be placed on the Project tab.
 	 */
 	public AnchorPane generateProjectTabContent() {
 		System.out.println("Generating Project tab components."); // TODO: Replace with log component.
