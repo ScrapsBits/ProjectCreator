@@ -23,30 +23,30 @@ import main.models.Configuration;
 
 /**
  * Write the configuration file.
- * 
+ *
  * @author ScrapsBits
  */
 public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	/**
 	 * Keep a reference to the configuration model.
 	 */
-	private Configuration config;
+	private final Configuration config;
 
 	/**
 	 * Represents an in-memory version of the configuration file.
 	 */
-	private File configFile;
+	private final File configFile;
 
 	/**
 	 * Prepare the writing of the configuration into a file.
-	 * 
+	 *
 	 * @param configuration The configuration settings.
 	 */
-	public ConfigFileWriter(Configuration configuration, ConfigStructure structure) {
+	public ConfigFileWriter(final Configuration configuration, final ConfigStructure structure) {
 		super(configuration.getConfigLocation());
 		this.config = configuration;
 		super.configStructure = structure;
-		this.configFile = new File(config.getConfigLocation() + "/.config");
+		this.configFile = new File(this.config.getConfigLocation() + "/.config");
 	}
 
 	/**
@@ -61,59 +61,59 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 
 		switch(this.configStructure) {
 			case XML:
-				writeXML();
+				this.writeXML();
 				break;
 		}
 	}
 
 	private void writeXML() {
 		try {
-			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-			Document document = documentBuilder.newDocument();
-			
-			Element root = document.createElement("configuration");
+			final DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			final Document document = documentBuilder.newDocument();
+
+			final Element root = document.createElement("configuration");
 			document.appendChild(root);
 
-			Element project = document.createElement("project");
-			Attr projectName = document.createAttribute("name");
+			final Element project = document.createElement("project");
+			final Attr projectName = document.createAttribute("name");
 			projectName.setValue(this.config.getProjectName());
 			project.setAttributeNode(projectName);
-			Attr projectLocation = document.createAttribute("location");
+			final Attr projectLocation = document.createAttribute("location");
 			projectLocation.setValue(this.config.getConfigLocation());
 			project.setAttributeNode(projectLocation);
 			root.appendChild(project);
-			
-			Element programming = document.createElement("languages");
+
+			final Element programming = document.createElement("languages");
 			root.appendChild(programming);
-			
-			for(ProgrammingLanguage language : this.config.getSelectedProgrammingLanguages()) {
-				Element lang = document.createElement("programming-language");
-				Attr langName = document.createAttribute("name");
+
+			for(final ProgrammingLanguage language : this.config.getSelectedProgrammingLanguages()) {
+				final Element lang = document.createElement("programming-language");
+				final Attr langName = document.createAttribute("name");
 				langName.setValue(language.getName());
 				lang.setAttributeNode(langName);
-				Attr type = document.createAttribute("type");
+				final Attr type = document.createAttribute("type");
 				type.setValue(language.isFunctional() ? "functional" : "object-oriented");
 				lang.setAttributeNode(type);
 				programming.appendChild(lang);
 			}
 
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
+			final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			final Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-			
-			DOMSource domSource = new DOMSource(document);
-			StreamResult streamResult = new StreamResult(configFile);
+
+			final DOMSource domSource = new DOMSource(document);
+			final StreamResult streamResult = new StreamResult(this.configFile);
 			transformer.transform(domSource, streamResult);
-		} catch(ParserConfigurationException e) {
+		} catch(final ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch(TransformerConfigurationException e) {
+		} catch(final TransformerConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch(TransformerException e) {
+		} catch(final TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

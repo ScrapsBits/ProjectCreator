@@ -6,7 +6,7 @@ import main.ProjectCreator;
 
 /**
  * Contains default information about all files.
- * 
+ *
  * @author ScrapsBits
  */
 public final class ProjectCreatorFileManager {
@@ -21,24 +21,20 @@ public final class ProjectCreatorFileManager {
 	public ProjectCreatorFileManager() {
 		System.out.println("Locating application data location..."); // TODO: Replace with log component.
 		String directory;
-		String os = (System.getProperty("os.name")).toUpperCase();
+		final String os = System.getProperty("os.name").toUpperCase();
 		System.out.println("Detected OS: " + os); // TODO: Replace with log component.
-		if(os.contains("WIN")) {
+		if(os.contains("WIN"))
 			directory = System.getenv("AppData");
-		} else {
+		else {
 			directory = System.getProperty("user.home");
-			if(os.contains("MAC")) { directory += "/Library/Application Support"; }
+			if(os.contains("MAC")) directory += "/Library/Application Support";
 		}
 		directory += "/" + ProjectCreator.getApplicationName();
 		this.applicationFilesDirectory = directory;
-		File fileDirectory = new File(directory);
+		final File fileDirectory = new File(directory);
 		System.out.println("Located application data location at: " + fileDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.
-		if(!fileDirectory.isDirectory()) {
-			fileDirectory.mkdir();
-		}
+		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
 	}
-	
-	public final String getApplicationFilesDirectory() {
-		return this.applicationFilesDirectory;
-	}
+
+	public String getApplicationFilesDirectory() { return this.applicationFilesDirectory; }
 }

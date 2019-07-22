@@ -53,7 +53,7 @@ public final class ProjectCreator extends Application {
 
 	/**
 	 * Read the application name.
-	 * 
+	 *
 	 * @return Returns the name of the application.
 	 */
 	public static String getApplicationName() { return ProjectCreator.APPLICATION_NAME; }

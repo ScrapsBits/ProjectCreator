@@ -91,45 +91,17 @@ public final class Configuration {
 
 	/**
 	 * Safe the configuration into a file at the provided location.
-	 * 
+	 *
 	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
 	public void safe() {
-		if(validate()) {
+		if(this.validate()) {
 			// TODO: Write the configuration information into a file.
 			System.out.println("Writing the config file."); // TODO: Replace with log component.
-			ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, ConfigStructure.XML);
+			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, ConfigStructure.XML);
 			fileWriter.write();
-		} else {
+		} else
 			throw new IllegalArgumentException("Could not write file. Please make sure the given input is valid.");
-		}
-	}
-
-	/**
-	 * Validate if all input follows the expected pattern.
-	 */
-	public boolean validate() {
-		String emptyString = "";
-		boolean isValid = true;
-		try {
-			if(this.projectName == null || emptyString.contentEquals(this.projectName)) throw new IllegalArgumentException("The provided project name is invalid.");
-		} catch(IllegalArgumentException e) {
-			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			isValid = false;
-		}
-		try {
-			if(this.configLocation == null || emptyString.contentEquals(this.configLocation)) throw new IllegalArgumentException("The provided configuration file location is invalid.");
-		} catch(IllegalArgumentException e) {
-			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			isValid = false;
-		}
-		try {
-			if(this.selectedProgrammingLanguage.size() < 1) throw new IllegalArgumentException("At least one programming language must be selected.");
-		} catch(IllegalArgumentException e) {
-			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			isValid = false;
-		}
-		return isValid;
 	}
 
 	/**
@@ -174,5 +146,32 @@ public final class Configuration {
 			this.selectedProgrammingLanguage.clear();
 			Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
 		}
+	}
+
+	/**
+	 * Validate if all input follows the expected pattern.
+	 */
+	public boolean validate() {
+		final String emptyString = "";
+		boolean isValid = true;
+		try {
+			if(this.projectName == null || emptyString.contentEquals(this.projectName)) throw new IllegalArgumentException("The provided project name is invalid.");
+		} catch(final IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			isValid = false;
+		}
+		try {
+			if(this.configLocation == null || emptyString.contentEquals(this.configLocation)) throw new IllegalArgumentException("The provided configuration file location is invalid.");
+		} catch(final IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			isValid = false;
+		}
+		try {
+			if(this.selectedProgrammingLanguage.size() < 1) throw new IllegalArgumentException("At least one programming language must be selected.");
+		} catch(final IllegalArgumentException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			isValid = false;
+		}
+		return isValid;
 	}
 }
