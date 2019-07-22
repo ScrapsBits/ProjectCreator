@@ -14,6 +14,8 @@ import main.ui.single_view.SingleViewElementDesigner;
  * @author ScrapsBits
  */
 public final class ProjectCreator extends Application {
+
+	private static final String APPLICATION_NAME = "ProjectCreator";
 	/**
 	 * Find the location of the Single View used by the application.
 	 */
@@ -48,6 +50,13 @@ public final class ProjectCreator extends Application {
 		System.out.println("Default boot mode is " + defaultBootMode.getBootName() + ".");
 		return defaultBootMode;
 	}
+
+	/**
+	 * Read the application name.
+	 * 
+	 * @return Returns the name of the application.
+	 */
+	public static String getApplicationName() { return ProjectCreator.APPLICATION_NAME; }
 
 	/**
 	 * Launch the application.
@@ -89,7 +98,7 @@ public final class ProjectCreator extends Application {
 		final Parent root = FXMLLoader.load(this.getClass().getResource(ProjectCreator.SINGLE_VIEW_LOCATION));
 		final Scene scene = new Scene(root, ProjectCreator.stageWidth, ProjectCreator.stageHeight);
 
-		primaryStage.setTitle("Create new Project");
+		primaryStage.setTitle("Create new project");
 		primaryStage.setScene(scene);
 
 		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log component

@@ -15,7 +15,7 @@ public abstract class Controller {
 	/**
 	 * Keep a reference to the configuration object.
 	 */
-	protected Configuration config;
+	protected final Configuration config;
 
 	/**
 	 * Initialize a controller with default settings.

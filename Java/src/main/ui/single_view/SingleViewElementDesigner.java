@@ -151,7 +151,7 @@ public final class SingleViewElementDesigner extends ElementDesigner {
 				chbLanguage.setMinWidth(40);
 				chbLanguage.setPrefWidth(60);
 				chbLanguage.setMaxWidth(languageColumnWidth);
-				if(!language.isFunctional()) {
+				if(language.isFunctional()) {
 					functionalLanguages += 1;
 					chbLanguage.setLayoutX(lblFunctional.getLayoutX());
 					chbLanguage.setLayoutY(languageTopRowHeight + super.getInnerMarginY() * functionalLanguages + chbLanguage.getHeight() * functionalLanguages);

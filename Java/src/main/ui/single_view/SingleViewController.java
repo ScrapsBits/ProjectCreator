@@ -12,7 +12,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import main.ProjectCreator;
@@ -34,6 +33,9 @@ public final class SingleViewController extends Controller {
 	@FXML
 	private StackPane stpFrame;
 
+	/**
+	 * The tab that's currently open.
+	 */
 	private Tab activeTab;
 
 	/**
@@ -41,6 +43,14 @@ public final class SingleViewController extends Controller {
 	 */
 	public SingleViewController() {
 		super();
+	}
+	
+	/**
+	 * Replace the active tab with the one that's currently open.
+	 * @param newTab The newly opened tab.
+	 */
+	public void setActiveTab(Tab newTab) {
+		this.activeTab = newTab;
 	}
 
 	/**
@@ -63,70 +73,89 @@ public final class SingleViewController extends Controller {
 	 * Triggers when the selected menu changes. Performs some input checks and saves them to configuration.
 	 * 
 	 * @param tabPane The Observable object, listening to the changes.
-	 * @param tabMenu The tabpane object that triggers the function.
+	 * @param tabMenu The tab pane object that triggers the function.
 	 */
 	public void listenMenuTabChange(Observable tabPane, TabPane tabMenu) {
+		// Input checks from the previous tab.
+		switch(activeTab.getId()) {
+			case "tabProject":
+				super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
+				super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
+				break;
+			case "tabProgramming":
+				break;
+			case "tabDocumentation":
+				break;
+			case "tabDiagrams":
+				break;
+			case "tabAdditionalSources":
+				break;
+			case "tabFinalize":
+				break;
+		}
+		
 		Tab newTab = tabMenu.getSelectionModel().getSelectedItem();
 		switch(newTab.getId()) {
 			case "tabProject":
-				System.out.println("Switched to tab Project");
+				System.out.println("Switched to tab Project"); // TODO: Replace with log component.
 				break;
 			case "tabProgramming":
-				System.out.println("Switched to tab Programming");
+				System.out.println("Switched to tab Programming"); // TODO: Replace with log component.
 				break;
 			case "tabDocumentation":
-				System.out.println("Switched to tab Documentation");
+				System.out.println("Switched to tab Documentation"); // TODO: Replace with log component.
 				break;
 			case "tabDiagrams":
-				System.out.println("Switched to tab Diagrams");
+				System.out.println("Switched to tab Diagrams"); // TODO: Replace with log component.
 				break;
 			case "tabAdditionalSources":
-				System.out.println("Switched to tab Additional Sources");
+				System.out.println("Switched to tab Additional Sources"); // TODO: Replace with log component.
 				break;
 			case "tabFinalize":
-				System.out.println("Switched to tab Finalization");
+				System.out.println("Switched to tab Finalization"); // TODO: Replace with log component.
 				break;
 		}
 
-		if(!"tabProject".contentEquals(newTab.getId())) {
-			Node[] inputs = new Node[2];
-			boolean[] validInputs = new boolean[inputs.length];
-			for(int i = 0; i < inputs.length; i += 1) {
-				validInputs[i] = false;
-			}
-			Tab projectTab = (Tab)((TabPane)this.stpFrame.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs().filtered((tab) -> "tabProject".contentEquals(tab.getId()))
-					.get(0);
-			AnchorPane projectTabContent = (AnchorPane)projectTab.getContent();
-			try {
-				int inputSlot = 0;
-				TextField txfProjectName = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
-				this.config.setProjectName(txfProjectName.getText());
-				inputs[inputSlot] = txfProjectName;
-				validInputs[inputSlot] = true;
-			} catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-
-			try {
-				int inputSlot = 1;
-				TextField txfConfigLocation = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
-				this.config.setConfigLocation(txfConfigLocation.getText());
-				inputs[inputSlot] = txfConfigLocation;
-				validInputs[inputSlot] = true;
-			} catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-
-			boolean isValid = true;
-			for(int i = 0; i < inputs.length; i += 1) {
-				if(!validInputs[i]) {
-					// TODO: Mark input[i] as invalid.. Somehow
-					isValid = false;
-				}
-			}
-			if(!isValid) { tabMenu.getSelectionModel().select(projectTab); }
-		}
-		this.activeTab = newTab;
+//		if("tabProject".contentEquals(activeTab.getId()) && !"tabProject".contentEquals(newTab.getId())) {
+//			Node[] inputs = new Node[2];
+//			boolean[] validInputs = new boolean[inputs.length];
+//			for(int i = 0; i < inputs.length; i += 1) {
+//				validInputs[i] = false;
+//			}
+//			Tab projectTab = (Tab)((TabPane)this.stpFrame.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs().filtered((tab) -> "tabProject".contentEquals(tab.getId()))
+//					.get(0);
+//			AnchorPane projectTabContent = (AnchorPane)projectTab.getContent();
+//			try {
+//				int inputSlot = 0;
+//				TextField txfProjectName = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
+//				this.config.setProjectName(txfProjectName.getText());
+//				inputs[inputSlot] = txfProjectName;
+//				validInputs[inputSlot] = true;
+//			} catch(IllegalArgumentException e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+//			try {
+//				int inputSlot = 1;
+//				TextField txfConfigLocation = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
+//				this.config.setConfigLocation(txfConfigLocation.getText());
+//				inputs[inputSlot] = txfConfigLocation;
+//				validInputs[inputSlot] = true;
+//			} catch(IllegalArgumentException e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+//			boolean isValid = true;
+//			for(int i = 0; i < inputs.length; i += 1) {
+//				if(!validInputs[i]) {
+//					// TODO: Mark input[i] as invalid.. Somehow
+//					isValid = false;
+//				}
+//			}
+//			if(!isValid) { tabMenu.getSelectionModel().select(projectTab); }
+//		}
+		this.setActiveTab(newTab);
+		System.out.println("Active tab: " + this.activeTab.getId());
 	}
 
 	/**

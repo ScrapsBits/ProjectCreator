@@ -5,6 +5,7 @@ import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -32,11 +33,6 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	private Configuration config;
 
 	/**
-	 * Define in which way the configurations need to be written down.
-	 */
-	private ConfigStructure configStructure;
-
-	/**
 	 * Represents an in-memory version of the configuration file.
 	 */
 	private File configFile;
@@ -49,7 +45,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	public ConfigFileWriter(Configuration configuration, ConfigStructure structure) {
 		super(configuration.getConfigLocation());
 		this.config = configuration;
-		this.configStructure = structure;
+		super.configStructure = structure;
 		this.configFile = new File(config.getConfigLocation() + "/.config");
 	}
 
@@ -58,7 +54,6 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	 */
 	@Override
 	public void write() {
-		// TODO Auto-generated method stub
 		// FileWriter writer = new FileWriter(configFile);
 		// writer.write("This should be line one.\n");
 		// writer.write("Will this be line two?");
@@ -98,11 +93,17 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 				langName.setValue(language.getName());
 				lang.setAttributeNode(langName);
 				Attr type = document.createAttribute("type");
-				type.setValue(language.isFunctional() ? "functional" : "object-oriented"); 
+				type.setValue(language.isFunctional() ? "functional" : "object-oriented");
+				lang.setAttributeNode(type);
+				programming.appendChild(lang);
 			}
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			
 			DOMSource domSource = new DOMSource(document);
 			StreamResult streamResult = new StreamResult(configFile);
 			transformer.transform(domSource, streamResult);

@@ -13,15 +13,15 @@ public enum ProgrammingLanguage {
 	/**
 	 * Represents the language "C++". It's considered a functional language. It's not supported by the application.
 	 */
-	CPLUSPLUS("CPlusPlus", "C++", false, false),
+	CPLUSPLUS("CPlusPlus", "C++", true, false),
 	/**
 	 * Represents the language "C#". It's considered an object oriented language.
 	 */
-	CSHARP("CSharp", "C#", true, true),
+	CSHARP("CSharp", "C#", false, true),
 	/**
 	 * Represents the language "Java". It's considered an object oriented language.
 	 */
-	JAVA("Java", "Java", true, true);
+	JAVA("Java", "Java", false, true);
 
 	/**
 	 * Each language has a unique ID. It may not contain any special characters.

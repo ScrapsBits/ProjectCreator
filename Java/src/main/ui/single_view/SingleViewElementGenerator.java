@@ -166,6 +166,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 			switch(menuItem.getId().toLowerCase()) {
 				case "project":
 					generateTab.setContent(this.generateProjectTabContent());
+					this.singleViewController.setActiveTab(generateTab);
 					break;
 				case "programming":
 					generateTab.setContent(this.generateProgrammingTabContent());
