@@ -15,9 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import main.ProjectCreator;
-import main.core.enumerations.BootMode;
 import main.core.enumerations.ProgrammingLanguage;
 import main.ui.Controller;
+import main.ui.enumerations.BootMode;
 import main.ui.enumerations.UIElements;
 
 /**
