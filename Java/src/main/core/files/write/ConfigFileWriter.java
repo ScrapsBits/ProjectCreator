@@ -44,9 +44,8 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	 * @param structure     The structure used for the writing of the Configuration file.
 	 */
 	public ConfigFileWriter(final Configuration configuration, final ConfigStructure structure) {
-		super(configuration.getConfigLocation());
+		super(configuration.getConfigLocation(), structure);
 		this.config = configuration;
-		super.configStructure = structure;
 		this.configFile = new File(this.config.getConfigLocation() + "/.config");
 	}
 
@@ -55,6 +54,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	 */
 	@Override
 	public void write() {
+		System.out.println("Writing the config file."); // TODO: Replace with log component.
 		// FileWriter writer = new FileWriter(configFile);
 		// writer.write("This should be line one.\n");
 		// writer.write("Will this be line two?");
@@ -65,6 +65,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 				this.writeXML();
 				break;
 		}
+		System.out.println("Config file written."); // TODO: Replace with log component.
 	}
 
 	private void writeXML() {

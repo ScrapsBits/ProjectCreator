@@ -3,22 +3,40 @@ package main.core.files;
 import java.io.File;
 
 import main.ProjectCreator;
+import main.core.files.enumerations.ConfigStructure;
 
 /**
  * Contains default information about all files.
  *
  * @author ScrapsBits
  */
-public final class ProjectCreatorFileManager {
+public abstract class ProjectCreatorFileManager {
 	/**
-	 * Contains the directory to application related files.
+	 * The location where files will be read from.
 	 */
-	private final String applicationFilesDirectory;
+	private final String fileLocation;
+
+	/**
+	 * Define in which way the configurations need to be written down.
+	 */
+	protected final ConfigStructure configStructure;
 
 	/**
 	 * Initialize the file location where the application should look to find the active configuration file.
 	 */
-	public ProjectCreatorFileManager() {
+	protected ProjectCreatorFileManager(final String fileLocation, final ConfigStructure configStructure) {
+		this.fileLocation = fileLocation;
+		this.configStructure = configStructure;
+	}
+
+	/**
+	 * Get the location where all files will be located.
+	 *
+	 * @return Returns the location where all files will be written.
+	 */
+	protected final String getFileLocation() { return this.fileLocation; }
+
+	public static String getApplicationFilesDirectory() {
 		System.out.println("Locating application data location..."); // TODO: Replace with log component.
 		String directory;
 		final String os = System.getProperty("os.name").toUpperCase();
@@ -30,11 +48,9 @@ public final class ProjectCreatorFileManager {
 			if(os.contains("MAC")) directory += "/Library/Application Support";
 		}
 		directory += "\\" + ProjectCreator.getApplicationName();
-		this.applicationFilesDirectory = directory;
 		final File fileDirectory = new File(directory);
 		System.out.println("Located application data location at: " + fileDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.
 		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
+		return directory;
 	}
-
-	public String getApplicationFilesDirectory() { return this.applicationFilesDirectory; }
 }

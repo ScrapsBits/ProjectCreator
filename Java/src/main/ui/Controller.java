@@ -3,11 +3,14 @@ package main.ui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import main.core.enumerations.ProgrammingLanguage;
 import main.core.files.ProjectCreatorFileManager;
+import main.core.files.enumerations.ConfigStructure;
+import main.core.files.read.ConfigFileReader;
 import main.models.Configuration;
 
 /**
@@ -25,7 +28,28 @@ public abstract class Controller {
 	/**
 	 * Initialize a controller with default settings.
 	 */
-	protected Controller() { this.config = new Configuration(); }
+	protected Controller() {
+		Configuration configuration = null;
+		try {
+			System.out.println("Attempting to read projects file."); // TODO: Replace with log component.
+			String[] projects = readProjectsFile();
+			System.out.println("Read " + projects.length + " lines."); // TODO: Replace with log component.
+			// TODO: Loop through all key-value pair projects. Pick the most recent one by default.. Somehow.
+			String[] location = new String[projects.length];
+			for(int i = 0; i < projects.length; i += 1) {
+				String[] projectData = projects[i].split("=");
+				location[i] = projectData[1]; 
+			}
+			System.out.println("Loading in first found project."); // TODO: Replace with log component.
+			ConfigFileReader reader = new ConfigFileReader(location[0], ConfigStructure.XML);
+			configuration = reader.read();
+		} catch(final UnsupportedOperationException e) {
+			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			System.out.println("No projects file found. Proceeding with default values."); // TODO: Replace with log component. this.config = new Configuration(); }
+			configuration = new Configuration();
+		}
+		this.config = configuration;
+	}
 
 	public Configuration getConfig() { return this.config; }
 
@@ -33,23 +57,12 @@ public abstract class Controller {
 	 * Perform default initialization processes.
 	 */
 	protected void initialize() {
-		try {
-			System.out.println("Attempting to read projects file."); // TODO: Replace with log component.
-			String[] projects = readProjectsFile();
-			System.out.println("Read " + projects.length + " lines.");
-			// TODO: Loop through all key-value pair projects. Pick the most recent one by default.. Somehow.
-			throw new UnsupportedOperationException();
-			// TODO: Fill configuration values.
-		} catch(final Exception e) {
-			System.out.println("No projects file found. Proceeding with default values."); // TODO: Replace with log component.
-		} finally {
 			System.out.println("Initializing user interface..."); // TODO: Replace with log component.
-		}
 	}
 
 	private String[] readProjectsFile() {
 		// TODO: Read CONFIG file.
-		String projectsFileLocation = new ProjectCreatorFileManager().getApplicationFilesDirectory();
+		String projectsFileLocation = ProjectCreatorFileManager.getApplicationFilesDirectory();
 		System.out.println("Reading projects file at " + projectsFileLocation + ".");
 		Scanner scanner = null;
 		try {
@@ -58,9 +71,8 @@ public abstract class Controller {
 			while(scanner.hasNextLine()) {
 				lines.add(scanner.nextLine());
 			}
-			return (String[])lines.toArray();
+			return Arrays.copyOf(lines.toArray(), lines.size(), String[].class);
 		} catch(FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			scanner.close();

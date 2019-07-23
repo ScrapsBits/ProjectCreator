@@ -182,10 +182,18 @@ public final class SingleViewController extends Controller {
 		switch(this.activeTab.getId()) {
 			case "tabProject":
 				try {
-				super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
-				super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
+					try {
+						super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
+					} catch(IllegalArgumentException e) {
+						System.out.println(e.getMessage()); // TODO: Replace with log component.
+					}
+					try {
+						super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
+					} catch(IllegalArgumentException e) {
+						System.out.println(e.getMessage()); // TODO: Replace with log component.
+					}
 				} catch(NullPointerException e) {
-					System.out.println("Running first initialization.");
+					System.out.println("Running first initialization."); // TODO: Replace with log component.
 				}
 				break;
 			case "tabProgramming":

@@ -97,7 +97,6 @@ public final class Configuration {
 	public void safe() {
 		if(this.validate()) {
 			// TODO: Write the configuration information into a file.
-			System.out.println("Writing the config file."); // TODO: Replace with log component.
 			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, ConfigStructure.XML);
 			fileWriter.write();
 		} else

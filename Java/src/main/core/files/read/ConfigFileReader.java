@@ -35,37 +35,50 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 		Configuration config = new Configuration();
 		switch(this.configStructure) {
 			case XML:
-				File configFile = new File(this.getFileLocation());
+				File configFile = new File(this.getFileLocation() + "\\.config");
 
 				try {
 					DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+					documentBuilderFactory.setIgnoringElementContentWhitespace(true);
 					DocumentBuilder documentBuilder;
 					documentBuilder = documentBuilderFactory.newDocumentBuilder();
 					Document document = documentBuilder.parse(configFile);
+					System.out.println("Opening file " + document.getLocalName() + "."); // TODO: Replace with log component.
 
 					document.getDocumentElement().normalize();
+					System.out.println("Found node " + document.getDocumentElement().getNodeName() + "."); // TODO: Replace with log component.
 
-					NodeList nodes = document.getChildNodes();
+					NodeList nodes = document.getDocumentElement().getChildNodes();
+					System.out.println("Found " + nodes.getLength() + " children.");
 					for(int i = 0; i < nodes.getLength(); i += 1) {
 						Node node = nodes.item(i);
+						if(node.getNodeType() == Node.ELEMENT_NODE) {
+							System.out.println("Reading child node " + node.getNodeName() + "."); // TODO: Replace with log component.
 
-						switch(node.getNodeName()) {
-							case "project":
-								NamedNodeMap projectMap = node.getAttributes();
-								Node projectLocationNode = projectMap.getNamedItem("location");
-								config.setConfigLocation(projectLocationNode.getNodeValue());
-								Node projectNameNode = projectMap.getNamedItem("name");
-								config.setProjectName(projectNameNode.getNodeValue());
-								break;
-							case "languages":
-								NodeList languages = node.getChildNodes();
-								for(int r = 0; r < languages.getLength(); r += 1) {
-									NamedNodeMap languagesMap = languages.item(r).getAttributes();
-									for(ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values()) {
-										if(languagesMap.getNamedItem("name").getNodeValue().equals(programmingLanguage.getName())) { config.addProgrammingLanguage(programmingLanguage); }
+							switch(node.getNodeName()) {
+								case "project":
+									NamedNodeMap projectMap = node.getAttributes();
+									Node projectLocationNode = projectMap.getNamedItem("location");
+									config.setConfigLocation(projectLocationNode.getNodeValue());
+									Node projectNameNode = projectMap.getNamedItem("name");
+									config.setProjectName(projectNameNode.getNodeValue());
+									break;
+								case "languages":
+									NodeList languages = node.getChildNodes();
+									System.out.println("Found " + languages.getLength() + " languages.");
+									for(int r = 0; r < languages.getLength(); r += 1) {
+										if(languages.item(r).getNodeType() == Node.ELEMENT_NODE) {
+											NamedNodeMap languagesMap = languages.item(r).getAttributes();
+											for(ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values()) {
+												if(languagesMap.getNamedItem("name").getNodeValue().contentEquals(programmingLanguage.getName())) {
+													System.out.println("Found " + (programmingLanguage.isFunctional() ? "functional" : "object-oriented") + " language " + programmingLanguage.getName() + ".");
+													config.addProgrammingLanguage(programmingLanguage);
+												}
+											}
+										}
 									}
-								}
-								break;
+									break;
+							}
 						}
 					}
 
