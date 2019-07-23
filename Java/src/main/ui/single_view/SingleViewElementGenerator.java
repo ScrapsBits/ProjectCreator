@@ -263,9 +263,9 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		System.out.println("Generating TextField components."); // TODO: Replace with log component.
 		try {
 			nodes.add(this.generateTextField("ProjectName", "My New Project", super.getConfig().getProjectName()));
+			nodes.add(this.generateTextField("ProjectLocation", "Documents/", super.getConfig().getConfigLocation()));
 		} catch(final NullPointerException e) {
 			nodes.add(this.generateTextField("ProjectName", "My New Project"));
-		} finally {
 			nodes.add(this.generateTextField("ProjectLocation", "Documents/"));
 		}
 
