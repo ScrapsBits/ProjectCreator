@@ -60,8 +60,11 @@ public abstract class Controller {
 		System.out.println("Initializing user interface..."); // TODO: Replace with log component.
 	}
 
+	/**
+	 * Read the file containing the locations of all projects.
+	 * @return Returns a string array with each key-value pair project-location.
+	 */
 	private String[] readProjectsFile() {
-		// TODO: Read CONFIG file.
 		final String projectsFileLocation = ProjectCreatorFileManager.getApplicationFilesDirectory();
 		System.out.println("Reading projects file at " + projectsFileLocation + ".");
 		Scanner scanner = null;
