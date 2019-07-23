@@ -184,15 +184,15 @@ public final class SingleViewController extends Controller {
 				try {
 					try {
 						super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
-					} catch(IllegalArgumentException e) {
+					} catch(final IllegalArgumentException e) {
 						System.out.println(e.getMessage()); // TODO: Replace with log component.
 					}
 					try {
 						super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
-					} catch(IllegalArgumentException e) {
+					} catch(final IllegalArgumentException e) {
 						System.out.println(e.getMessage()); // TODO: Replace with log component.
 					}
-				} catch(NullPointerException e) {
+				} catch(final NullPointerException e) {
 					System.out.println("Running first initialization."); // TODO: Replace with log component.
 				}
 				break;

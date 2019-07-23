@@ -32,18 +32,18 @@ public abstract class Controller {
 		Configuration configuration = null;
 		try {
 			System.out.println("Attempting to read projects file."); // TODO: Replace with log component.
-			String[] projects = readProjectsFile();
+			final String[] projects = this.readProjectsFile();
 			System.out.println("Read " + projects.length + " lines."); // TODO: Replace with log component.
 			// TODO: Loop through all key-value pair projects. Pick the most recent one by default.. Somehow.
-			String[] location = new String[projects.length];
+			final String[] location = new String[projects.length];
 			for(int i = 0; i < projects.length; i += 1) {
-				String[] projectData = projects[i].split("=");
-				location[i] = projectData[1]; 
+				final String[] projectData = projects[i].split("=");
+				location[i] = projectData[1];
 			}
 			System.out.println("Loading in first found project."); // TODO: Replace with log component.
-			ConfigFileReader reader = new ConfigFileReader(location[0], ConfigStructure.XML);
+			final ConfigFileReader reader = new ConfigFileReader(location[0], ConfigStructure.XML);
 			configuration = reader.read();
-		} catch(final UnsupportedOperationException e) {
+		} catch(final FileNotFoundException e) {
 			System.out.println(e.getMessage()); // TODO: Replace with log component.
 			System.out.println("No projects file found. Proceeding with default values."); // TODO: Replace with log component. this.config = new Configuration(); }
 			configuration = new Configuration();
@@ -57,22 +57,20 @@ public abstract class Controller {
 	 * Perform default initialization processes.
 	 */
 	protected void initialize() {
-			System.out.println("Initializing user interface..."); // TODO: Replace with log component.
+		System.out.println("Initializing user interface..."); // TODO: Replace with log component.
 	}
 
 	private String[] readProjectsFile() {
 		// TODO: Read CONFIG file.
-		String projectsFileLocation = ProjectCreatorFileManager.getApplicationFilesDirectory();
+		final String projectsFileLocation = ProjectCreatorFileManager.getApplicationFilesDirectory();
 		System.out.println("Reading projects file at " + projectsFileLocation + ".");
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new File(projectsFileLocation + "\\projects"));
-			List<String> lines = new ArrayList<>();
-			while(scanner.hasNextLine()) {
-				lines.add(scanner.nextLine());
-			}
+			final List<String> lines = new ArrayList<>();
+			while(scanner.hasNextLine()) lines.add(scanner.nextLine());
 			return Arrays.copyOf(lines.toArray(), lines.size(), String[].class);
-		} catch(FileNotFoundException e) {
+		} catch(final FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
 			scanner.close();

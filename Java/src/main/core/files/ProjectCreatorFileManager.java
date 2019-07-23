@@ -11,6 +11,24 @@ import main.core.files.enumerations.ConfigStructure;
  * @author ScrapsBits
  */
 public abstract class ProjectCreatorFileManager {
+	public static String getApplicationFilesDirectory() {
+		System.out.println("Locating application data location..."); // TODO: Replace with log component.
+		String directory;
+		final String os = System.getProperty("os.name").toUpperCase();
+		System.out.println("Detected OS: " + os); // TODO: Replace with log component.
+		if(os.contains("WIN"))
+			directory = System.getenv("AppData");
+		else {
+			directory = System.getProperty("user.home");
+			if(os.contains("MAC")) directory += "/Library/Application Support";
+		}
+		directory += "\\" + ProjectCreator.getApplicationName();
+		final File fileDirectory = new File(directory);
+		System.out.println("Located application data location at: " + fileDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.
+		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
+		return directory;
+	}
+
 	/**
 	 * The location where files will be read from.
 	 */
@@ -35,22 +53,4 @@ public abstract class ProjectCreatorFileManager {
 	 * @return Returns the location where all files will be written.
 	 */
 	protected final String getFileLocation() { return this.fileLocation; }
-
-	public static String getApplicationFilesDirectory() {
-		System.out.println("Locating application data location..."); // TODO: Replace with log component.
-		String directory;
-		final String os = System.getProperty("os.name").toUpperCase();
-		System.out.println("Detected OS: " + os); // TODO: Replace with log component.
-		if(os.contains("WIN"))
-			directory = System.getenv("AppData");
-		else {
-			directory = System.getProperty("user.home");
-			if(os.contains("MAC")) directory += "/Library/Application Support";
-		}
-		directory += "\\" + ProjectCreator.getApplicationName();
-		final File fileDirectory = new File(directory);
-		System.out.println("Located application data location at: " + fileDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.
-		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
-		return directory;
-	}
 }

@@ -1,5 +1,7 @@
 package main.core.files.read;
 
+import java.io.FileNotFoundException;
+
 import main.core.files.ProjectCreatorFileManager;
 import main.core.files.enumerations.ConfigStructure;
 
@@ -16,6 +18,7 @@ public abstract class ProjectCreatorFileReader extends ProjectCreatorFileManager
 	 * @param  fileLocation             The location where existing files will be read.
 	 * @param  configurationStructure   The structure used by the files being read.
 	 * @throws IllegalArgumentException Thrown when the location does not exist AND cannot be created by the client device.
+	 * @throws FileNotFoundException    Thrown when the .config file does not exist.
 	 */
 	protected ProjectCreatorFileReader(final String fileLocation, final ConfigStructure configStructure) {
 		super(fileLocation, configStructure);
@@ -24,6 +27,8 @@ public abstract class ProjectCreatorFileReader extends ProjectCreatorFileManager
 
 	/**
 	 * Read a file. Return what was read.
+	 *
+	 * @throws FileNotFoundException
 	 */
-	public abstract Object read();
+	public abstract Object read() throws FileNotFoundException;
 }

@@ -1,6 +1,7 @@
 package main.core.files.read;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,66 +32,65 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Configuration read() {
-		Configuration config = new Configuration();
+	public Configuration read() throws FileNotFoundException {
+		final Configuration config = new Configuration();
 		switch(this.configStructure) {
 			case XML:
-				File configFile = new File(this.getFileLocation() + "\\.config");
+				final File configFile = new File(this.getFileLocation() + "\\.config");
+				if(!configFile.isFile()) throw new FileNotFoundException("The requested .config file does not exist.");
 
 				try {
-					DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+					final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 					documentBuilderFactory.setIgnoringElementContentWhitespace(true);
 					DocumentBuilder documentBuilder;
 					documentBuilder = documentBuilderFactory.newDocumentBuilder();
-					Document document = documentBuilder.parse(configFile);
+					final Document document = documentBuilder.parse(configFile);
 					System.out.println("Opening file " + document.getLocalName() + "."); // TODO: Replace with log component.
 
 					document.getDocumentElement().normalize();
 					System.out.println("Found node " + document.getDocumentElement().getNodeName() + "."); // TODO: Replace with log component.
 
-					NodeList nodes = document.getDocumentElement().getChildNodes();
+					final NodeList nodes = document.getDocumentElement().getChildNodes();
 					System.out.println("Found " + nodes.getLength() + " children.");
 					for(int i = 0; i < nodes.getLength(); i += 1) {
-						Node node = nodes.item(i);
+						final Node node = nodes.item(i);
 						if(node.getNodeType() == Node.ELEMENT_NODE) {
 							System.out.println("Reading child node " + node.getNodeName() + "."); // TODO: Replace with log component.
 
 							switch(node.getNodeName()) {
 								case "project":
-									NamedNodeMap projectMap = node.getAttributes();
-									Node projectLocationNode = projectMap.getNamedItem("location");
+									final NamedNodeMap projectMap = node.getAttributes();
+									final Node projectLocationNode = projectMap.getNamedItem("location");
 									config.setConfigLocation(projectLocationNode.getNodeValue());
-									Node projectNameNode = projectMap.getNamedItem("name");
+									final Node projectNameNode = projectMap.getNamedItem("name");
 									config.setProjectName(projectNameNode.getNodeValue());
 									break;
 								case "languages":
-									NodeList languages = node.getChildNodes();
+									final NodeList languages = node.getChildNodes();
 									System.out.println("Found " + languages.getLength() + " languages.");
-									for(int r = 0; r < languages.getLength(); r += 1) {
-										if(languages.item(r).getNodeType() == Node.ELEMENT_NODE) {
-											NamedNodeMap languagesMap = languages.item(r).getAttributes();
-											for(ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values()) {
-												if(languagesMap.getNamedItem("name").getNodeValue().contentEquals(programmingLanguage.getName())) {
-													System.out.println("Found " + (programmingLanguage.isFunctional() ? "functional" : "object-oriented") + " language " + programmingLanguage.getName() + ".");
-													config.addProgrammingLanguage(programmingLanguage);
-												}
+									for(int r = 0; r < languages.getLength(); r += 1) if(languages.item(r).getNodeType() == Node.ELEMENT_NODE) {
+										final NamedNodeMap languagesMap = languages.item(r).getAttributes();
+										for(final ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values())
+											if(languagesMap.getNamedItem("name").getNodeValue().contentEquals(programmingLanguage.getName())) {
+												System.out
+														.println("Found " + (programmingLanguage.isFunctional() ? "functional" : "object-oriented") + " language " + programmingLanguage.getName() + ".");
+												config.addProgrammingLanguage(programmingLanguage);
 											}
-										}
 									}
 									break;
 							}
 						}
 					}
 
-				} catch(SAXException e) {
+				} catch(final SAXException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch(IOException e) {
+				} catch(final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch(ParserConfigurationException e1) {
+				} catch(final ParserConfigurationException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 
 				return config;
