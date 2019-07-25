@@ -25,6 +25,11 @@ public class BootModule {
 	
 	public BootModule(HashMap<String, BootMode> bootModes) {
 		this.bootMode = bootModes;
+		addBootCommand("default", BootMode.DEFAULT);
+		addBootCommand("normal", BootMode.NORMAL);
+		addBootCommand("safe", BootMode.SAFE);
+		addBootCommand("safemode", BootMode.SAFE);
+		addBootCommand("development", BootMode.DEVELOPMENT);
 	}
 	
 	/**
@@ -34,9 +39,8 @@ public class BootModule {
 	 * @throws IllegalArgumentException Thrown when the command is not specified properly.
 	 */
 	public BootMode getBootMode(String command) {
-		BootMode bootMode = this.bootMode.get(command);
-		if(bootMode == null) throw new IllegalArgumentException("The given command is not supported.");
-		return bootMode;
+		if(hasCommand(command)) return this.bootMode.get(command);
+		throw new IllegalArgumentException("The given command is not supported.");
 	}
 	
 	/**

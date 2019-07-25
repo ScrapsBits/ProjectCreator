@@ -2,7 +2,6 @@ package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.ui.BootModule;
@@ -23,7 +22,7 @@ public final class ProjectCreator extends Application {
 	/**
 	 * The boot mode used when no specific arguments have been provided.
 	 */
-	private static final BootMode DEFAULT_BOOT_MODE = BootMode.SAFE;
+	private static final BootMode DEFAULT_BOOT_MODE = BootMode.DEVELOPMENT;
 	/**
 	 * Find the location of the Single View used by the application.
 	 */
@@ -57,7 +56,7 @@ public final class ProjectCreator extends Application {
 	 *
 	 * @return Returns the name of the application.
 	 */
-	public static final String getApplicationName() { return ProjectCreator.APPLICATION_NAME; }
+	public static String getApplicationName() { return ProjectCreator.APPLICATION_NAME; }
 
 	/**
 	 * Launch the application.
@@ -66,34 +65,28 @@ public final class ProjectCreator extends Application {
 	 */
 	public static void main(final String[] args) {
 		try {
-			// TODO: Load in BOOT_MODULE commands from external source.
-			ProjectCreator.BOOT_MODULE.addBootCommand("default", BootMode.DEFAULT);
-			ProjectCreator.BOOT_MODULE.addBootCommand("normal", BootMode.NORMAL);
-			ProjectCreator.BOOT_MODULE.addBootCommand("safe", BootMode.SAFE);
-			ProjectCreator.BOOT_MODULE.addBootCommand("safemode", BootMode.SAFE);
-			ProjectCreator.BOOT_MODULE.addBootCommand("development", BootMode.DEVELOPMENT);
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-		
-		try {
-			int bootCommands = 0;
-			for(final String arg : args) {
-				if(ProjectCreator.BOOT_MODULE.hasCommand(arg)) bootCommands += 1;
-				if(bootCommands == 1) {
-					System.out.println("Boot mode set to " + ProjectCreator.BOOT_MODULE.getBootMode(arg) + "."); // TODO: Replace with log component.
-					ProjectCreator.bootMode = ProjectCreator.BOOT_MODULE.getBootMode(arg);
-				} else if(bootCommands > 1) throw new IllegalArgumentException("Too many boot mode arguments have been provided. Reverting to default boot mode.");
-			}
+			// Check if only one boot command has been provided. If multiple boot commands have been provided, use default boot mode.
+			byte bootCommands = 0;
+			for(final String arg : args) if(ProjectCreator.BOOT_MODULE.hasCommand(arg)) if((bootCommands += 1) == 1) {
+				System.out.println("Boot mode set to " + ProjectCreator.BOOT_MODULE.getBootMode(arg) + "."); // TODO: Replace with log component.
+				ProjectCreator.bootMode = ProjectCreator.BOOT_MODULE.getBootMode(arg);
+			} else if(bootCommands > 1) throw new IllegalArgumentException("Too many boot mode arguments have been provided. Reverting to default boot mode.");
+			if(bootCommands == 0) System.out.println("No boot mode arguments have been provided. Applying default boot mode."); // TODO: Replace with log component.
 		} catch(final IllegalArgumentException e) {
+			// Something went wrong. Set boot mode to default.
 			System.out.println(e.getMessage()); // TODO: Replace with log component.
+			ProjectCreator.bootMode = BootMode.DEFAULT;
 		} finally {
+			// If the selected boot mode is default, use what's set as default boot mode.
 			if(ProjectCreator.bootMode == BootMode.DEFAULT) {
 				System.out.println("Default boot mode is " + ProjectCreator.DEFAULT_BOOT_MODE + "."); // TODO: Replace with log component.
 				ProjectCreator.bootMode = ProjectCreator.DEFAULT_BOOT_MODE;
 			}
-			System.out.println("Launching app in " + ProjectCreator.bootMode + " boot mode."); // TODO: Replace with log component.
+
+			// If default boot mode is set to default by accident, use normal mode.
+			if(ProjectCreator.bootMode == BootMode.DEFAULT) ProjectCreator.bootMode = BootMode.NORMAL;
+
+			System.out.println("Launching app in " + ProjectCreator.bootMode + " boot mode..."); // TODO: Replace with log component.
 			Application.launch(args);
 		}
 	}
@@ -105,16 +98,18 @@ public final class ProjectCreator extends Application {
 	 */
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
-		System.out.println("Starting app..."); // TODO: Replace with log component.
-		final Parent root = FXMLLoader.load(this.getClass().getResource(ProjectCreator.SINGLE_VIEW_LOCATION));
-		final Scene scene = new Scene(root, ProjectCreator.stageWidth, ProjectCreator.stageHeight);
+		System.out.println("Loading in \"single-view.fxml\"..."); // TODO: Replace with log component.
+		final Scene scene = new Scene(FXMLLoader.load(this.getClass().getResource(ProjectCreator.SINGLE_VIEW_LOCATION)), ProjectCreator.stageWidth, ProjectCreator.stageHeight);
+		System.out.println("Loaded \"single-view.fxml\" successfully."); // TODO: Replace with log component.
 
-		System.out.println("Launching user interface. Loading in \"single-view.fxml\"."); // TODO: Replace with log component.
+		System.out.println("Initializing user interface."); // TODO: Replace with log component.
 		primaryStage.setTitle("Create new project");
 		primaryStage.setScene(scene);
+		System.out.println("User interface initialized."); // TODO: Replace with log component.
 
-		System.out.println("User interface initialized. \nDisplaying initialized interface."); // TODO: Replace with log component
+		System.out.println("Displaying user interface..."); // TODO: Replace with log component
 		primaryStage.show();
 		new SingleViewElementDesigner(scene).design();
+		System.out.println("User interface displayed."); // TODO: Replace with log component.
 	}
 }

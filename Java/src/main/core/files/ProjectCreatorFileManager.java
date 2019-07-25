@@ -3,7 +3,7 @@ package main.core.files;
 import java.io.File;
 
 import main.ProjectCreator;
-import main.core.files.enumerations.ConfigStructure;
+import main.core.files.enumerations.FileStructure;
 
 /**
  * Contains default information about all files.
@@ -28,6 +28,12 @@ public abstract class ProjectCreatorFileManager {
 		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
 		return directory;
 	}
+	
+	public boolean isValidLocation(String location) {
+		if(location == null || location.isEmpty()) return false;
+		File directory = new File(location);
+		return directory.isDirectory();
+	}
 
 	/**
 	 * The location where files will be read from.
@@ -37,14 +43,14 @@ public abstract class ProjectCreatorFileManager {
 	/**
 	 * Define in which way the configurations need to be written down.
 	 */
-	protected final ConfigStructure configStructure;
+	protected final FileStructure fileStructure;
 
 	/**
 	 * Initialize the file location where the application should look to find the active configuration file.
 	 */
-	protected ProjectCreatorFileManager(final String fileLocation, final ConfigStructure configStructure) {
+	protected ProjectCreatorFileManager(final String fileLocation, final FileStructure fileStructure) {
 		this.fileLocation = fileLocation;
-		this.configStructure = configStructure;
+		this.fileStructure = fileStructure;
 	}
 
 	/**

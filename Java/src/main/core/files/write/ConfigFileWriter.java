@@ -18,7 +18,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import main.core.enumerations.ProgrammingLanguage;
-import main.core.files.enumerations.ConfigStructure;
 import main.models.Configuration;
 
 /**
@@ -43,10 +42,10 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	 * @param configuration The configuration settings.
 	 * @param structure     The structure used for the writing of the Configuration file.
 	 */
-	public ConfigFileWriter(final Configuration configuration, final ConfigStructure structure) {
-		super(configuration.getConfigLocation(), structure);
+	public ConfigFileWriter(final Configuration configuration, final String location) {
+		super(location, configuration.getFileStructure());
 		this.config = configuration;
-		this.configFile = new File(this.config.getConfigLocation() + "/.config");
+		this.configFile = new File(location + "/.config");
 	}
 
 	/**
@@ -60,10 +59,12 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 		// writer.write("Will this be line two?");
 		// writer.close();
 
-		switch(this.configStructure) {
+		switch(this.fileStructure) {
 			case XML:
 				this.writeXML();
 				break;
+			case KEYVALUE: 
+				throw new UnsupportedOperationException();
 		}
 		System.out.println("Config file written."); // TODO: Replace with log component.
 	}
@@ -76,15 +77,6 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 
 			final Element root = document.createElement("configuration");
 			document.appendChild(root);
-
-			final Element project = document.createElement("project");
-			final Attr projectName = document.createAttribute("name");
-			projectName.setValue(this.config.getProjectName());
-			project.setAttributeNode(projectName);
-			final Attr projectLocation = document.createAttribute("location");
-			projectLocation.setValue(this.config.getConfigLocation());
-			project.setAttributeNode(projectLocation);
-			root.appendChild(project);
 
 			final Element programming = document.createElement("languages");
 			root.appendChild(programming);

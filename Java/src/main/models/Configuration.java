@@ -1,11 +1,14 @@
 package main.models;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import main.core.enumerations.ProgrammingLanguage;
-import main.core.files.enumerations.ConfigStructure;
+import main.core.files.enumerations.FileStructure;
+import main.core.files.read.ConfigFileReader;
+import main.core.files.read.ProjectCreatorFileReader;
 import main.core.files.write.ConfigFileWriter;
 import main.core.files.write.ProjectCreatorFileWriter;
 
@@ -16,36 +19,38 @@ import main.core.files.write.ProjectCreatorFileWriter;
  */
 public final class Configuration {
 	/**
-	 * The name provided by the user to give to the projects created.
-	 */
-	private String projectName;
-	/**
-	 * The location where files related to configuration are stored.
-	 */
-	private String configLocation;
-	/**
 	 * A list of all programming languages of which to make a software project.
 	 */
 	private final List<ProgrammingLanguage> selectedProgrammingLanguage;
+	/**
+	 * Read and write the configuration using this structure.
+	 */
+	private final FileStructure fileStructure;
 
 	/**
 	 * Initialize configuration settings.
 	 */
-	public Configuration() { this.selectedProgrammingLanguage = new ArrayList<>(); }
+	public Configuration() {
+		this.selectedProgrammingLanguage = new ArrayList<>();
+		fileStructure = FileStructure.XML;
+	}
 
 	/**
 	 * Initialize configuration settings from a configuration source.
-	 *
-	 * @param projectName                  The name of the project, as loaded from the source.
-	 * @param configLocation               The location where the configuration is stored.
+	 * @param project The project object keeping the name and location of a project.
 	 * @param selectedProgrammingLanguages The various programming languages that have been selected in the source.
 	 */
-	public Configuration(final String projectName, final String configLocation, final List<ProgrammingLanguage> selectedProgrammingLanguages) {
+	public Configuration(final List<ProgrammingLanguage> selectedProgrammingLanguages) {
 		this();
-		this.setProjectName(projectName);
-		this.setConfigLocation(configLocation);
-		Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
+		if(selectedProgrammingLanguages != null) Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
 	}
+
+	/**
+	 * Get the file structure used by the files for this configuration.
+	 * 
+	 * @return Returns the file structure of this configuration file.
+	 */
+	public FileStructure getFileStructure() { return this.fileStructure; }
 
 	/**
 	 * Add a new language to the list of programming languages.
@@ -60,20 +65,6 @@ public final class Configuration {
 
 		this.selectedProgrammingLanguage.add(programmingLanguage);
 	}
-
-	/**
-	 * Get the path to the location where configuration files are stored.
-	 *
-	 * @return Returns the path where the config files are stored.
-	 */
-	public String getConfigLocation() { return this.configLocation; }
-
-	/**
-	 * Get the project name.
-	 *
-	 * @return Returns the name of the project.
-	 */
-	public String getProjectName() { return this.projectName; }
 
 	/**
 	 * Get a list of selected programming languages.
@@ -94,45 +85,22 @@ public final class Configuration {
 	 *
 	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
-	public void safe() {
+	public void safe(String location) {
 		if(this.validate()) {
 			// TODO: Write the configuration information into a file.
-			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, ConfigStructure.XML);
+			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, location);
 			fileWriter.write();
 		} else
 			throw new IllegalArgumentException("Could not write file. Please make sure the given input is valid.");
 	}
 
-	/**
-	 * Set the path where the configuration files will be stored.
-	 *
-	 * @param configLocation The path where the config files are to be stored.
-	 */
-	public void setConfigLocation(String configLocation) {
-		if(configLocation != null) configLocation = configLocation.trim();
-		if(!configLocation.contentEquals("")) {
-			this.configLocation = configLocation;
-			return;
+	public Configuration read(String location) throws FileNotFoundException {
+		try {
+			ProjectCreatorFileReader configReader = new ConfigFileReader(location, this.fileStructure);
+			return (Configuration)configReader.read();
+		} catch(FileNotFoundException e) {
+			throw new FileNotFoundException("Could not read configuration file.");
 		}
-		throw new IllegalArgumentException("The given location is invalid.");
-
-	}
-
-	/**
-	 * Set the name of the project.
-	 *
-	 * @param  projectName              The project's name.
-	 * @throws IllegalArgumentException Thrown when the name is null or empty.
-	 */
-	public void setProjectName(String projectName) {
-		if(projectName != null) {
-			projectName = projectName.trim();
-			if(!projectName.contentEquals("")) {
-				this.projectName = projectName;
-				return;
-			}
-		}
-		throw new IllegalArgumentException("The given name is invalid.");
 	}
 
 	/**
@@ -153,20 +121,7 @@ public final class Configuration {
 	 * @return Returns true if the configuration is valid. Returns false if any input is invalid.
 	 */
 	public boolean validate() {
-		final String emptyString = "";
 		boolean isValid = true;
-		try {
-			if(this.projectName == null || emptyString.contentEquals(this.projectName)) throw new IllegalArgumentException("The provided project name is invalid.");
-		} catch(final IllegalArgumentException e) {
-			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			isValid = false;
-		}
-		try {
-			if(this.configLocation == null || emptyString.contentEquals(this.configLocation)) throw new IllegalArgumentException("The provided configuration file location is invalid.");
-		} catch(final IllegalArgumentException e) {
-			System.out.println(e.getMessage()); // TODO: Replace with log component.
-			isValid = false;
-		}
 		try {
 			if(this.selectedProgrammingLanguage.size() < 1) throw new IllegalArgumentException("At least one programming language must be selected.");
 		} catch(final IllegalArgumentException e) {
