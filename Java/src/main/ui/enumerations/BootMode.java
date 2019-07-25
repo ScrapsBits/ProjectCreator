@@ -7,10 +7,6 @@ package main.ui.enumerations;
  */
 public enum BootMode {
 	/**
-	 * The default boot mode. This must be defined upon boot.
-	 */
-	DEFAULT,
-	/**
 	 * The normal boot mode. This will launch everything as "normal".
 	 */
 	NORMAL,
