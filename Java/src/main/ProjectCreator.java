@@ -1,10 +1,15 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.ui.BootModule;
+import main.core.boot.BootModule;
 import main.ui.enumerations.BootMode;
 import main.ui.single_view.SingleViewElementDesigner;
 
@@ -26,7 +31,7 @@ public final class ProjectCreator extends Application {
 	/**
 	 * Keep track of all boot commands supported by the module. Commands are stored in a HashMap.
 	 */
-	private static final BootModule BOOT_MODULE = new BootModule();
+	public static final BootModule BOOT = new BootModule();
 	/**
 	 * Set the width of the stage.
 	 */
@@ -41,7 +46,7 @@ public final class ProjectCreator extends Application {
 	 *
 	 * @return Returns true if the launch mode is "safe". Returns false if the launch mode is "full".
 	 */
-	public static final BootMode bootMode() { return ProjectCreator.BOOT_MODULE.getCurrentBootMode(); }
+	public static final BootMode bootMode() { return ProjectCreator.BOOT.getCurrentBootMode(); }
 
 	/**
 	 * Read the application name.
@@ -56,24 +61,46 @@ public final class ProjectCreator extends Application {
 	 * @param args Console arguments that may be provided upon launch.
 	 */
 	public static final void main(final String[] args) {
+		HashMap<String, String[]> groupedArgs = filterCommands(args);
 		try {
-			String bootCommand = null;
-			for(final String arg : args) {
-				if(ProjectCreator.BOOT_MODULE.hasCommand(arg)) {
-					System.out.println("Received command \"" + arg + "\"."); // TODO: Replace with log component.
-					if(bootCommand != null) throw new IllegalArgumentException("Too many boot mode arguments have been provided.");
-					bootCommand = arg;
-				}
+			String[] bootCommands = groupedArgs.get("boot");
+			if(bootCommands.length == 1) {
+				ProjectCreator.BOOT.setBootMode(bootCommands[0]);
+			} else if(bootCommands.length == 0) {
+				throw new IllegalArgumentException("No boot mode arguments have been provided.");
+			} else if(bootCommands.length > 1) {
+				throw new IllegalArgumentException("Too many boot mode arguments have been provided.");
 			}
-			if(bootCommand == null) throw new IllegalArgumentException("No boot mode arguments have been provided."); // TODO: Replace with log component.
-			ProjectCreator.BOOT_MODULE.setBootMode(bootCommand);
 		} catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage() + " Applying default boot mode."); // TODO: Replace with log component.
-			System.out.println("Default boot mode is " + ProjectCreator.BOOT_MODULE.getDefaultBootMode() + "."); // TODO: Replace with log component.
 		} finally {
-			System.out.println("Launching app in " + ProjectCreator.BOOT_MODULE.getCurrentBootMode() + " boot mode."); // TODO: Replace with log component.
+			if(ProjectCreator.BOOT.isDefault()) System.out.println("Default boot mode is " + ProjectCreator.BOOT.getDefaultBootMode() + "."); // TODO: Replace with log component.
+			System.out.println("Launching app in " + ProjectCreator.BOOT.getCurrentBootMode() + " boot mode."); // TODO: Replace with log component.
 			Application.launch(args);
 		}
+	}
+	
+	private static final HashMap<String, String[]> filterCommands(String[] args) {
+		HashMap<String, String[]> groupedCommandsArray = new HashMap<>();
+		HashMap<String, List<String>> groupedCommandsList = new HashMap<>(); 
+		if(args.length != 0) {
+			for(String arg : args) {
+				if(ProjectCreator.BOOT.supportsCommand(arg)) {
+					List<String> bootCommands = new ArrayList<>();
+					if(groupedCommandsList.containsKey("boot")) {
+						(bootCommands = groupedCommandsList.get("boot")).add(arg);
+					}
+					groupedCommandsList.put("boot", bootCommands);
+				} else {
+					System.out.println("Provided arg \"" + arg + "\" is unknown. Ignoring argument.");
+				}
+			}
+		}
+		for(String key : groupedCommandsList.keySet()) {
+			List<String> values = groupedCommandsList.get(key);
+			groupedCommandsArray.put(key, Arrays.copyOf(values.toArray(), values.size(), String[].class));
+		}
+		return groupedCommandsArray;
 	}
 
 	/**

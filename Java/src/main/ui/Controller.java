@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import main.ProjectCreator;
 import main.core.files.read.ProjectsFileReader;
 import main.models.Configuration;
+import main.models.Project;
 
 /**
  * Hold fields and values important to all controllers.
@@ -17,11 +18,17 @@ public abstract class Controller {
 	 * Keep a reference to the configuration object.
 	 */
 	private final Configuration config;
+	/**
+	 * Keep a reference to a currently opened project.
+	 */
+	private Project project;
 
 	/**
 	 * Initialize a controller. Load in a configuration file.
 	 */
 	protected Controller() {
+		// TODO: Check if the boot mode allows file reading. If yes, search and read the "projects" file.
+		
 		Configuration configHolder;
 		switch(ProjectCreator.bootMode()) {
 			case SAFE:
