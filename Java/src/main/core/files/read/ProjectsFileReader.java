@@ -24,19 +24,21 @@ public class ProjectsFileReader extends ProjectCreatorFileReader {
 	public Project[] read() throws FileNotFoundException {
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(new File(super.getFileLocation() + "\\" + FILE_NAME));
+			scanner = new Scanner(new File(super.getFileLocation() + "\\" + ProjectsFileReader.FILE_NAME));
 			System.out.println("Reading file \"" + ProjectsFileReader.FILE_NAME + "\" at " + super.getFileLocation() + "."); // TODO: Replace with log component.
 			final List<String> lines = new ArrayList<>();
 			while(scanner.hasNextLine()) lines.add(scanner.nextLine());
-			if(lines.size() == 0) { throw new NullPointerException("Could not find any projects."); } else {
-				List<Project> projects = new ArrayList<>();
-				for(String line : lines) {
-					String[] project = line.split("=");
+			if(lines.size() == 0)
+				throw new NullPointerException("Could not find any projects.");
+			else {
+				final List<Project> projects = new ArrayList<>();
+				for(final String line : lines) {
+					final String[] project = line.split("=");
 					projects.add(new Project(project[0], project[1]));
 				}
 				return Arrays.copyOf(projects.toArray(), projects.size(), Project[].class);
 			}
-		} catch(FileNotFoundException e) {
+		} catch(final FileNotFoundException e) {
 			throw new FileNotFoundException("Cannot find \"projects\" file.");
 		} finally {
 			if(scanner != null) scanner.close();

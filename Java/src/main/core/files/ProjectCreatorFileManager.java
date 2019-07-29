@@ -28,12 +28,6 @@ public abstract class ProjectCreatorFileManager {
 		if(!fileDirectory.isDirectory()) fileDirectory.mkdir();
 		return directory;
 	}
-	
-	public boolean isValidLocation(String location) {
-		if(location == null || location.isEmpty()) return false;
-		File directory = new File(location);
-		return directory.isDirectory();
-	}
 
 	/**
 	 * The location where files will be read from.
@@ -59,4 +53,10 @@ public abstract class ProjectCreatorFileManager {
 	 * @return Returns the location where all files will be written.
 	 */
 	protected final String getFileLocation() { return this.fileLocation; }
+
+	public boolean isValidLocation(final String location) {
+		if(location == null || location.isEmpty()) return false;
+		final File directory = new File(location);
+		return directory.isDirectory();
+	}
 }

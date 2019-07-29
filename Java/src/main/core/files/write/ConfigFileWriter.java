@@ -63,7 +63,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 			case XML:
 				this.writeXML();
 				break;
-			case KEYVALUE: 
+			case KEYVALUE:
 				throw new UnsupportedOperationException();
 		}
 		System.out.println("Config file written."); // TODO: Replace with log component.

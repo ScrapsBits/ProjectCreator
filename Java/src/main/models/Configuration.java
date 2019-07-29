@@ -19,38 +19,32 @@ import main.core.files.write.ProjectCreatorFileWriter;
  */
 public final class Configuration {
 	/**
-	 * A list of all programming languages of which to make a software project.
-	 */
-	private final List<ProgrammingLanguage> selectedProgrammingLanguage;
-	/**
 	 * Read and write the configuration using this structure.
 	 */
 	private final FileStructure fileStructure;
+	/**
+	 * A list of all programming languages of which to make a software project.
+	 */
+	private final List<ProgrammingLanguage> selectedProgrammingLanguage;
 
 	/**
 	 * Initialize configuration settings.
 	 */
 	public Configuration() {
 		this.selectedProgrammingLanguage = new ArrayList<>();
-		fileStructure = FileStructure.XML;
+		this.fileStructure = FileStructure.XML;
 	}
 
 	/**
 	 * Initialize configuration settings from a configuration source.
-	 * @param project The project object keeping the name and location of a project.
+	 *
+	 * @param project                      The project object keeping the name and location of a project.
 	 * @param selectedProgrammingLanguages The various programming languages that have been selected in the source.
 	 */
 	public Configuration(final List<ProgrammingLanguage> selectedProgrammingLanguages) {
 		this();
 		if(selectedProgrammingLanguages != null) Collections.copy(this.selectedProgrammingLanguage, selectedProgrammingLanguages);
 	}
-
-	/**
-	 * Get the file structure used by the files for this configuration.
-	 * 
-	 * @return Returns the file structure of this configuration file.
-	 */
-	public FileStructure getFileStructure() { return this.fileStructure; }
 
 	/**
 	 * Add a new language to the list of programming languages.
@@ -67,11 +61,27 @@ public final class Configuration {
 	}
 
 	/**
+	 * Get the file structure used by the files for this configuration.
+	 *
+	 * @return Returns the file structure of this configuration file.
+	 */
+	public FileStructure getFileStructure() { return this.fileStructure; }
+
+	/**
 	 * Get a list of selected programming languages.
 	 *
 	 * @return Returns a list of selected programming languages.
 	 */
 	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return this.selectedProgrammingLanguage; }
+
+	public Configuration read(final String location) throws FileNotFoundException {
+		try {
+			final ProjectCreatorFileReader configReader = new ConfigFileReader(location, this.fileStructure);
+			return (Configuration)configReader.read();
+		} catch(final FileNotFoundException e) {
+			throw new FileNotFoundException("Could not read configuration file.");
+		}
+	}
 
 	/**
 	 * Remove a language from the list of programming languages.
@@ -85,22 +95,13 @@ public final class Configuration {
 	 *
 	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
-	public void safe(String location) {
+	public void safe(final String location) {
 		if(this.validate()) {
 			// TODO: Write the configuration information into a file.
 			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, location);
 			fileWriter.write();
 		} else
 			throw new IllegalArgumentException("Could not write file. Please make sure the given input is valid.");
-	}
-
-	public Configuration read(String location) throws FileNotFoundException {
-		try {
-			ProjectCreatorFileReader configReader = new ConfigFileReader(location, this.fileStructure);
-			return (Configuration)configReader.read();
-		} catch(FileNotFoundException e) {
-			throw new FileNotFoundException("Could not read configuration file.");
-		}
 	}
 
 	/**

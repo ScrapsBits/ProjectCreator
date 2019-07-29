@@ -7,10 +7,6 @@ package main.core.enumerations;
  */
 public enum ProgrammingLanguage {
 	/**
-	 * An unknown or custom language. It's not supported by the application.
-	 */
-	UNKNOWN("", "", false, false),
-	/**
 	 * Represents the language "C++". It's considered a functional language. It's not supported by the application.
 	 */
 	CPLUSPLUS("CPlusPlus", "C++", true, false),
@@ -21,16 +17,16 @@ public enum ProgrammingLanguage {
 	/**
 	 * Represents the language "Java". It's considered an object oriented language.
 	 */
-	JAVA("Java", "Java", false, true);
+	JAVA("Java", "Java", false, true),
+	/**
+	 * An unknown or custom language. It's not supported by the application.
+	 */
+	UNKNOWN("", "", false, false);
 
 	/**
 	 * Each language has a unique ID. It may not contain any special characters.
 	 */
 	private String id;
-	/**
-	 * The name of the language. It may contain any character.
-	 */
-	private String name;
 	/**
 	 * Define if the language is functional. If true, it's functional. If false, it's object oriented.
 	 */
@@ -39,6 +35,10 @@ public enum ProgrammingLanguage {
 	 * Define if the language is supported by the application.
 	 */
 	private boolean isSupported;
+	/**
+	 * The name of the language. It may contain any character.
+	 */
+	private String name;
 
 	/**
 	 * Set all values for the language.

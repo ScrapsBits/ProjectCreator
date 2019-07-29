@@ -172,16 +172,19 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 				case "diagrams":
 					generateTab.setContent(this.generateDiagramsTabContent());
 					break;
-				case "additionalSources":
+				case "additionalsources":
 					generateTab.setContent(this.generateAdditionalSourcesTabContent());
 					break;
 				case "finalize":
 					generateTab.setContent(this.generateFinalizeTabContent());
 					break;
+					default:
+						System.out.println("Could not recognize tab \"" + menuItem.getId().toLowerCase() + "\".");
+						break;
 			}
 			tabPane.getTabs().add(generateTab);
 		}
-		System.out.println("Size tabpane: " + tabPane.getTabs().size());
+		System.out.println("Size tabpane: " + tabPane.getTabs().size() + ". Sorting tabs.");
 		return tabPane;
 	}
 

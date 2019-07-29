@@ -6,10 +6,10 @@ package main.ui;
  * @author ScrapsBits
  */
 public abstract class ElementDesigner {
-	private final double frameWidth;
 	private final double frameHeight;
 	private final double frameMarginX;
 	private final double frameMarginY;
+	private final double frameWidth;
 	private final double innerMarginX;
 	private final double innerMarginY;
 
