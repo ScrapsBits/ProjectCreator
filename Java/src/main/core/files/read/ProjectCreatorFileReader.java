@@ -3,7 +3,7 @@ package main.core.files.read;
 import java.io.FileNotFoundException;
 
 import main.core.files.ProjectCreatorFileManager;
-import main.core.files.enumerations.ConfigStructure;
+import main.core.files.enumerations.FileStructure;
 
 /**
  * Read a file from storage.
@@ -20,8 +20,8 @@ public abstract class ProjectCreatorFileReader extends ProjectCreatorFileManager
 	 * @throws IllegalArgumentException Thrown when the location does not exist AND cannot be created by the client device.
 	 * @throws FileNotFoundException    Thrown when the .config file does not exist.
 	 */
-	protected ProjectCreatorFileReader(final String fileLocation, final ConfigStructure configStructure) {
-		super(fileLocation, configStructure);
+	protected ProjectCreatorFileReader(final String fileLocation, final FileStructure fileStructure) {
+		super(fileLocation, fileStructure);
 		if(fileLocation == null || fileLocation.contentEquals("")) throw new IllegalArgumentException("The provided location is not allowed.");
 	}
 

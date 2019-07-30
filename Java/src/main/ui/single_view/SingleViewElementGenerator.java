@@ -162,7 +162,6 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 			switch(menuItem.getId().toLowerCase()) {
 				case "project":
 					generateTab.setContent(this.generateProjectTabContent());
-					this.singleViewController.setActiveTab(generateTab);
 					break;
 				case "programming":
 					generateTab.setContent(this.generateProgrammingTabContent());
@@ -173,16 +172,19 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 				case "diagrams":
 					generateTab.setContent(this.generateDiagramsTabContent());
 					break;
-				case "additionalSources":
+				case "additionalsources":
 					generateTab.setContent(this.generateAdditionalSourcesTabContent());
 					break;
 				case "finalize":
 					generateTab.setContent(this.generateFinalizeTabContent());
 					break;
+					default:
+						System.out.println("Could not recognize tab \"" + menuItem.getId().toLowerCase() + "\".");
+						break;
 			}
-			tabPane.getTabs().add(generateTab);
+			tabPane.getTabs().add(generateTab); // TODO: Sort tabs so received order no longer matters.
 		}
-		System.out.println("Size tabpane: " + tabPane.getTabs().size());
+		System.out.println("Size tabpane: " + tabPane.getTabs().size() + ". Sorting tabs.");
 		return tabPane;
 	}
 
@@ -261,13 +263,8 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		nodes.add(this.generateLabel("ProjectGenerationOptions", "Create files for: "));
 
 		System.out.println("Generating TextField components."); // TODO: Replace with log component.
-		try {
-			nodes.add(this.generateTextField("ProjectName", "My New Project", super.getConfig().getProjectName()));
-			nodes.add(this.generateTextField("ProjectLocation", "Documents/", super.getConfig().getConfigLocation()));
-		} catch(final NullPointerException e) {
-			nodes.add(this.generateTextField("ProjectName", "My New Project"));
-			nodes.add(this.generateTextField("ProjectLocation", "Documents/"));
-		}
+		nodes.add(this.generateTextField("ProjectName", "My New Project"));
+		nodes.add(this.generateTextField("ProjectLocation", "Documents/"));
 
 		System.out.println("Generating CheckBox components."); // TODO: Replace with log component.
 		final CheckBox chbProgramming = this.generateCheckBox("Programming", "Programming", true);

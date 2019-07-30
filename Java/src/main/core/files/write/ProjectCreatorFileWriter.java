@@ -1,7 +1,7 @@
 package main.core.files.write;
 
 import main.core.files.ProjectCreatorFileManager;
-import main.core.files.enumerations.ConfigStructure;
+import main.core.files.enumerations.FileStructure;
 
 /**
  * Write a file to storage.
@@ -16,8 +16,8 @@ public abstract class ProjectCreatorFileWriter extends ProjectCreatorFileManager
 	 * @param  fileLocation             The location where new files will be stored.
 	 * @throws IllegalArgumentException Thrown when the location does not exist AND cannot be created by the client device.
 	 */
-	protected ProjectCreatorFileWriter(final String fileLocation, final ConfigStructure configStructure) {
-		super(fileLocation, configStructure);
+	protected ProjectCreatorFileWriter(final String fileLocation, final FileStructure fileStructure) {
+		super(fileLocation, fileStructure);
 		if(fileLocation == null || fileLocation.contentEquals("")) throw new IllegalArgumentException("The provided location is not allowed.");
 	}
 

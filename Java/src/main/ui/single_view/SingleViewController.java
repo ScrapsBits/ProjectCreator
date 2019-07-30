@@ -15,9 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import main.ProjectCreator;
-import main.core.enumerations.BootMode;
+import main.core.boot.enums.BootMode;
 import main.core.enumerations.ProgrammingLanguage;
 import main.ui.Controller;
+import main.ui.ElementGenerator;
 import main.ui.enumerations.UIElements;
 
 /**
@@ -34,16 +35,6 @@ public final class SingleViewController extends Controller {
 	private StackPane stpFrame;
 
 	/**
-	 * The tab that's currently open.
-	 */
-	private Tab activeTab;
-
-	/**
-	 * Initialize the controller for the Single View user interface.
-	 */
-	public SingleViewController() { super(); }
-
-	/**
 	 * Handle a click on the Finalize button.
 	 *
 	 * @param event The event triggering this function.
@@ -51,7 +42,7 @@ public final class SingleViewController extends Controller {
 	public void handleBtnFinalizeClick(final MouseEvent event) {
 		System.out.println("Handling a click on button " + ((Node)event.getSource()).getId());
 		if(event.getSource() instanceof Button) try {
-			super.config.safe();
+			super.getConfig().safe(((TextField)((Button)event.getSource()).getScene().lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
 		} catch(final IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
@@ -73,7 +64,6 @@ public final class SingleViewController extends Controller {
 				try {
 					final String directory = selectedDirectory.getCanonicalPath();
 					txf.setText(directory);
-					this.setProjectLocation(directory);
 				} catch(final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -149,13 +139,13 @@ public final class SingleViewController extends Controller {
 		final String id = source.getId().substring(3);
 		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language.getId().contentEquals(id)) if(source.isSelected())
 			try {
-				this.config.addProgrammingLanguage(language);
+				this.getConfig().addProgrammingLanguage(language);
 			} catch(final IllegalArgumentException e) {
 				source.setDisable(true);
 				source.setSelected(false);
 			}
 		else
-			this.config.removeProgrammingLanguage(language);
+			this.getConfig().removeProgrammingLanguage(language);
 	}
 
 	/**
@@ -163,9 +153,9 @@ public final class SingleViewController extends Controller {
 	 */
 	@Override
 	public void initialize() {
-		super.initialize();
+		System.out.println("Initializing user interface..."); // TODO: Replace with log component.
 		System.out.println("Generating user interface."); // TODO: Replace with log component.
-		final SingleViewElementGenerator generator = new SingleViewElementGenerator(this);
+		final ElementGenerator generator = new SingleViewElementGenerator(this);
 		generator.populate(this.stpFrame);
 		System.out.println("User interface generated."); // TODO: Replace with log component.
 	}
@@ -177,37 +167,6 @@ public final class SingleViewController extends Controller {
 	 * @param tabMenu The tab pane object that triggers the function.
 	 */
 	public void listenMenuTabChange(final Observable tabPane, final TabPane tabMenu) {
-		System.out.println("Changing tab.");
-		// Input checks from the previous tab.
-		switch(this.activeTab.getId()) {
-			case "tabProject":
-				try {
-					try {
-						super.getConfig().setProjectName(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName")).getText());
-					} catch(final IllegalArgumentException e) {
-						System.out.println(e.getMessage()); // TODO: Replace with log component.
-					}
-					try {
-						super.getConfig().setConfigLocation(((TextField)this.stpFrame.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation")).getText());
-					} catch(final IllegalArgumentException e) {
-						System.out.println(e.getMessage()); // TODO: Replace with log component.
-					}
-				} catch(final NullPointerException e) {
-					System.out.println("Running first initialization."); // TODO: Replace with log component.
-				}
-				break;
-			case "tabProgramming":
-				break;
-			case "tabDocumentation":
-				break;
-			case "tabDiagrams":
-				break;
-			case "tabAdditionalSources":
-				break;
-			case "tabFinalize":
-				break;
-		}
-
 		final Tab newTab = tabMenu.getSelectionModel().getSelectedItem();
 		switch(newTab.getId()) {
 			case "tabProject":
@@ -229,53 +188,5 @@ public final class SingleViewController extends Controller {
 				System.out.println("Switched to tab Finalization"); // TODO: Replace with log component.
 				break;
 		}
-
-		// if("tabProject".contentEquals(activeTab.getId()) && !"tabProject".contentEquals(newTab.getId())) {
-		// Node[] inputs = new Node[2];
-		// boolean[] validInputs = new boolean[inputs.length];
-		// for(int i = 0; i < inputs.length; i += 1) {
-		// validInputs[i] = false;
-		// }
-		// Tab projectTab = (Tab)((TabPane)this.stpFrame.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs().filtered((tab) -> "tabProject".contentEquals(tab.getId()))
-		// .get(0);
-		// AnchorPane projectTabContent = (AnchorPane)projectTab.getContent();
-		// try {
-		// int inputSlot = 0;
-		// TextField txfProjectName = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectName");
-		// this.config.setProjectName(txfProjectName.getText());
-		// inputs[inputSlot] = txfProjectName;
-		// validInputs[inputSlot] = true;
-		// } catch(IllegalArgumentException e) {
-		// System.out.println(e.getMessage());
-		// }
-		//
-		// try {
-		// int inputSlot = 1;
-		// TextField txfConfigLocation = (TextField)projectTabContent.lookup("#" + UIElements.TEXTFIELD.getPrefix() + "ProjectLocation");
-		// this.config.setConfigLocation(txfConfigLocation.getText());
-		// inputs[inputSlot] = txfConfigLocation;
-		// validInputs[inputSlot] = true;
-		// } catch(IllegalArgumentException e) {
-		// System.out.println(e.getMessage());
-		// }
-		//
-		// boolean isValid = true;
-		// for(int i = 0; i < inputs.length; i += 1) {
-		// if(!validInputs[i]) {
-		// // TODO: Mark input[i] as invalid.. Somehow
-		// isValid = false;
-		// }
-		// }
-		// if(!isValid) { tabMenu.getSelectionModel().select(projectTab); }
-		// }
-		this.setActiveTab(newTab);
-		System.out.println("Active tab: " + this.activeTab.getId());
 	}
-
-	/**
-	 * Replace the active tab with the one that's currently open.
-	 *
-	 * @param newTab The newly opened tab.
-	 */
-	public void setActiveTab(final Tab newTab) { this.activeTab = newTab; }
 }

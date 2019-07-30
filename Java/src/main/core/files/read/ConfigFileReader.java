@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import main.core.enumerations.ProgrammingLanguage;
-import main.core.files.enumerations.ConfigStructure;
+import main.core.files.enumerations.FileStructure;
 import main.models.Configuration;
 
 public class ConfigFileReader extends ProjectCreatorFileReader {
@@ -26,7 +26,7 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 	 * @param fileLocation           The location where the files are stored.
 	 * @param configurationStructure The structure used by the files being read.
 	 */
-	public ConfigFileReader(final String fileLocation, final ConfigStructure configurationStructure) { super(fileLocation, configurationStructure); }
+	public ConfigFileReader(final String fileLocation, final FileStructure configurationStructure) { super(fileLocation, configurationStructure); }
 
 	/**
 	 * {@inheritDoc}
@@ -34,7 +34,7 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 	@Override
 	public Configuration read() throws FileNotFoundException {
 		final Configuration config = new Configuration();
-		switch(this.configStructure) {
+		switch(this.fileStructure) {
 			case XML:
 				final File configFile = new File(this.getFileLocation() + "\\.config");
 				if(!configFile.isFile()) throw new FileNotFoundException("The requested .config file does not exist.");
@@ -45,7 +45,7 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 					DocumentBuilder documentBuilder;
 					documentBuilder = documentBuilderFactory.newDocumentBuilder();
 					final Document document = documentBuilder.parse(configFile);
-					System.out.println("Opening file " + document.getLocalName() + "."); // TODO: Replace with log component.
+					System.out.println("Opening file \"" + configFile.getName() + "\"."); // TODO: Replace with log component.
 
 					document.getDocumentElement().normalize();
 					System.out.println("Found node " + document.getDocumentElement().getNodeName() + "."); // TODO: Replace with log component.
@@ -59,11 +59,6 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 
 							switch(node.getNodeName()) {
 								case "project":
-									final NamedNodeMap projectMap = node.getAttributes();
-									final Node projectLocationNode = projectMap.getNamedItem("location");
-									config.setConfigLocation(projectLocationNode.getNodeValue());
-									final Node projectNameNode = projectMap.getNamedItem("name");
-									config.setProjectName(projectNameNode.getNodeValue());
 									break;
 								case "languages":
 									final NodeList languages = node.getChildNodes();
@@ -94,6 +89,8 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 				}
 
 				return config;
+			case KEYVALUE:
+				throw new UnsupportedOperationException();
 		}
 		return null;
 	}

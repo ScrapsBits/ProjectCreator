@@ -1,7 +1,7 @@
 package main.ui.enumerations;
 
 public enum UIElements {
-	STACKPANE("stp"), BUTTON("btn"), LABEL("lbl"), TEXTFIELD("txf"), CHECKBOX("chb"), ANCHORPANE("acp"), TAB("tab"), TABPANE("tbp");
+	ANCHORPANE("acp"), BUTTON("btn"), CHECKBOX("chb"), LABEL("lbl"), STACKPANE("stp"), TAB("tab"), TABPANE("tbp"), TEXTFIELD("txf");
 
 	private String prefix;
 

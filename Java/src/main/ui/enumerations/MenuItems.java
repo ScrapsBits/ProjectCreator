@@ -36,13 +36,13 @@ public enum MenuItems {
 	 */
 	private String id;
 	/**
-	 * The name of the menu item.
-	 */
-	private String name;
-	/**
 	 * Define if the menu item is supported.
 	 */
 	private boolean isSupported;
+	/**
+	 * The name of the menu item.
+	 */
+	private String name;
 
 	private MenuItems(final String id, final String name, final boolean isSupported) {
 		this.id = id;

@@ -1,5 +1,7 @@
 package main.ui.single_view;
 
+import java.util.List;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -20,13 +22,13 @@ import main.ui.enumerations.UIElements;
  */
 public final class SingleViewElementDesigner extends ElementDesigner {
 	/**
-	 * The scene displayed by the user interface.
-	 */
-	private final Scene scene;
-	/**
 	 * The width of any and all labels.
 	 */
 	private final double labelWidth;
+	/**
+	 * The scene displayed by the user interface.
+	 */
+	private final Scene scene;
 
 	/**
 	 * Instantiate the element designer class.
@@ -45,18 +47,24 @@ public final class SingleViewElementDesigner extends ElementDesigner {
 	@Override
 	public void design() {
 		System.out.println("Positioning and styling elements."); // TODO: Replace with log component.
-		final String tabPrefix = UIElements.TAB.getPrefix();
-		for(final Tab tab : ((TabPane)this.scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs()) if(tab.getId().contentEquals(tabPrefix + MenuItems.PROJECT.getId()))
-			this.designProjectTab();
-		else if(tab.getId().contentEquals(tabPrefix + MenuItems.PROGRAMMING.getId()))
-			this.designProgrammingTab();
-		else if(tab.getId().contentEquals(tabPrefix + MenuItems.DOCUMENTATION.getId()))
-			this.designDocumentationTab();
-		else if(tab.getId().contentEquals(tabPrefix + MenuItems.DIAGRAMS.getId()))
-			this.designDiagramsTab();
-		else if(tab.getId().contentEquals(tabPrefix + MenuItems.ADDITIONAL_SOURCES.getId()))
-			this.designAdditionalSourcesTab();
-		else if(tab.getId().contentEquals(tabPrefix + MenuItems.FINALIZATION.getId())) this.designFinalizationTab();
+		List<Tab> tabs = ((TabPane)this.scene.lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs();
+		int tabIndex = tabs.size() - 1;
+		for(final Tab tab : tabs) {
+			if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.PROJECT.getId())) {
+				this.designProjectTab();
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.PROGRAMMING.getId())) {
+				this.designProgrammingTab();
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.DOCUMENTATION.getId())) {
+				this.designDocumentationTab();
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.DIAGRAMS.getId())) {
+				this.designDiagramsTab();
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.ADDITIONAL_SOURCES.getId())) {
+				this.designAdditionalSourcesTab();
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.FINALIZATION.getId())) {
+				this.designFinalizationTab();
+			}
+		}
+
 		System.out.println("All elements have been positioned and styled."); // TODO: Replace with log component.
 	}
 
