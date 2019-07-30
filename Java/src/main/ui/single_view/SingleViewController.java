@@ -18,7 +18,6 @@ import main.ProjectCreator;
 import main.core.boot.enums.BootMode;
 import main.core.enumerations.ProgrammingLanguage;
 import main.ui.Controller;
-import main.ui.ElementGenerator;
 import main.ui.enumerations.UIElements;
 
 /**
@@ -136,8 +135,7 @@ public final class SingleViewController extends Controller {
 	public void handleProgrammingLanguageClick(final MouseEvent event) {
 		final CheckBox source = (CheckBox)event.getSource();
 		System.out.println("Handling a click on checkbox " + source.getId() + ".");
-		final String id = source.getId().substring(3);
-		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(language.getId().contentEquals(id)) if(source.isSelected())
+		for(final ProgrammingLanguage language : ProgrammingLanguage.values()) if(source.getUserData().equals(language) && source.isSelected())
 			try {
 				this.getConfig().addProgrammingLanguage(language);
 			} catch(final IllegalArgumentException e) {
@@ -149,14 +147,12 @@ public final class SingleViewController extends Controller {
 	}
 
 	/**
-	 * Initialize the user interface and define actions.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void initialize() {
-		System.out.println("Initializing user interface..."); // TODO: Replace with log component.
 		System.out.println("Generating user interface."); // TODO: Replace with log component.
-		final ElementGenerator generator = new SingleViewElementGenerator(this);
-		generator.populate(this.stpFrame);
+		new SingleViewElementGenerator(this).populate(this.stpFrame);
 		System.out.println("User interface generated."); // TODO: Replace with log component.
 	}
 
@@ -168,25 +164,6 @@ public final class SingleViewController extends Controller {
 	 */
 	public void listenMenuTabChange(final Observable tabPane, final TabPane tabMenu) {
 		final Tab newTab = tabMenu.getSelectionModel().getSelectedItem();
-		switch(newTab.getId()) {
-			case "tabProject":
-				System.out.println("Switched to tab Project"); // TODO: Replace with log component.
-				break;
-			case "tabProgramming":
-				System.out.println("Switched to tab Programming"); // TODO: Replace with log component.
-				break;
-			case "tabDocumentation":
-				System.out.println("Switched to tab Documentation"); // TODO: Replace with log component.
-				break;
-			case "tabDiagrams":
-				System.out.println("Switched to tab Diagrams"); // TODO: Replace with log component.
-				break;
-			case "tabAdditionalSources":
-				System.out.println("Switched to tab Additional Sources"); // TODO: Replace with log component.
-				break;
-			case "tabFinalize":
-				System.out.println("Switched to tab Finalization"); // TODO: Replace with log component.
-				break;
-		}
+		System.out.println("Switched to tab " + newTab.getText() + "."); // TODO: Replace with log component.
 	}
 }

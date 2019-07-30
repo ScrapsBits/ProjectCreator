@@ -236,6 +236,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 		} catch(final NullPointerException e) {
 			chbLanguage = this.generateCheckBox(language.getId(), language.getName());
 		} finally {
+			chbLanguage.setUserData(language);
 			chbLanguage.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> this.singleViewController.handleProgrammingLanguageClick(event));
 			nodes.add(chbLanguage);
 		}
