@@ -182,7 +182,7 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 						System.out.println("Could not recognize tab \"" + menuItem.getId().toLowerCase() + "\".");
 						break;
 			}
-			tabPane.getTabs().add(generateTab);
+			tabPane.getTabs().add(generateTab); // TODO: Sort tabs so received order no longer matters.
 		}
 		System.out.println("Size tabpane: " + tabPane.getTabs().size() + ". Sorting tabs.");
 		return tabPane;

@@ -31,6 +31,11 @@ public final class SingleViewBootModeManager extends BootModeManager {
 		}, new AppPermission[] {
 				AppPermission.FILE_READ_WRITE, AppPermission.INTERNET_CONNECTION
 		});
+		this.addBootMode(BootMode.OFFLINE, new String[] {
+				"offline"
+		}, new AppPermission[] {
+				AppPermission.FILE_READ_WRITE
+		});
 		this.addBootMode(BootMode.SAFE, new String[] {
 				"safe", "safemode"
 		}, new AppPermission[] {
