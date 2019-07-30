@@ -7,25 +7,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import main.core.files.ProjectCreatorFileManager;
+import main.core.files.AppFileManager;
+import main.core.files.FileManager;
 import main.core.files.enumerations.FileStructure;
 import main.models.Project;
 
-public class ProjectsFileReader extends ProjectCreatorFileReader {
+public class ProjectsFileReader implements AppFileReader {
+	private final AppFileManager fileManager;
 
-	private static final String FILE_NAME = "projects";
+	private final String fileName = "projects";
 
-	public ProjectsFileReader() throws IllegalArgumentException {
-		super(ProjectCreatorFileManager.getApplicationFilesDirectory(), FileStructure.KEYVALUE);
-		if(!super.isValidLocation(super.getFileLocation())) throw new IllegalArgumentException("Project location does not exist.");
+	public ProjectsFileReader() {
+		this.fileManager = new FileManager(new File(FileManager.getApplicationDataDirectory() + "\\" + this.fileName), FileStructure.KEY_VALUE);
 	}
 
 	@Override
 	public Project[] read() throws FileNotFoundException {
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(new File(super.getFileLocation() + "\\" + ProjectsFileReader.FILE_NAME));
-			System.out.println("Reading file \"" + ProjectsFileReader.FILE_NAME + "\" at " + super.getFileLocation() + "."); // TODO: Replace with log component.
+			scanner = new Scanner(this.fileManager.getFile());
+			System.out.println("Reading file \"" + this.fileName + "\" at " + this.fileManager.getDirectory() + "."); // TODO: Replace with log component.
 			final List<String> lines = new ArrayList<>();
 			while(scanner.hasNextLine()) lines.add(scanner.nextLine());
 			if(lines.size() == 0)
@@ -39,7 +40,7 @@ public class ProjectsFileReader extends ProjectCreatorFileReader {
 				return Arrays.copyOf(projects.toArray(), projects.size(), Project[].class);
 			}
 		} catch(final FileNotFoundException e) {
-			throw new FileNotFoundException("Cannot find \"projects\" file.");
+			throw new FileNotFoundException("Cannot find \"" + this.fileName +"\" file.");
 		} finally {
 			if(scanner != null) scanner.close();
 		}

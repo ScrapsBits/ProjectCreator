@@ -60,9 +60,7 @@ public final class SingleViewElementDesigner extends ElementDesigner {
 				this.designDiagramsTab();
 			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.ADDITIONAL_SOURCES.getId())) {
 				this.designAdditionalSourcesTab();
-			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.FINALIZATION.getId())) {
-				this.designFinalizationTab();
-			}
+			} else if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + MenuItems.FINALIZATION.getId())) { this.designFinalizationTab(); }
 		}
 
 		System.out.println("All elements have been positioned and styled."); // TODO: Replace with log component.

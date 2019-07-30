@@ -178,9 +178,9 @@ public final class SingleViewElementGenerator extends ElementGenerator {
 				case "finalize":
 					generateTab.setContent(this.generateFinalizeTabContent());
 					break;
-					default:
-						System.out.println("Could not recognize tab \"" + menuItem.getId().toLowerCase() + "\".");
-						break;
+				default:
+					System.out.println("Could not recognize tab \"" + menuItem.getId().toLowerCase() + "\".");
+					break;
 			}
 			tabPane.getTabs().add(generateTab); // TODO: Sort tabs so received order no longer matters.
 		}

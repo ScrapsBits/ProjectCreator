@@ -82,7 +82,7 @@ public final class SingleViewController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "AdditionalSources")) if(ProjectCreator.BOOT.getBootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
@@ -96,7 +96,7 @@ public final class SingleViewController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Diagrams")) if(ProjectCreator.BOOT.getBootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
@@ -110,7 +110,7 @@ public final class SingleViewController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Documentation")) if(ProjectCreator.BOOT.getBootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 
@@ -124,7 +124,7 @@ public final class SingleViewController extends Controller {
 		if(event.getSource() instanceof CheckBox) {
 			final CheckBox chb = (CheckBox)event.getSource();
 			for(final Tab tab : ((TabPane)chb.getScene().lookup("#" + UIElements.TABPANE.getPrefix() + "Menu")).getTabs())
-				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) if(ProjectCreator.bootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
+				if(tab.getId().contentEquals(UIElements.TAB.getPrefix() + "Programming")) if(ProjectCreator.BOOT.getBootMode() == BootMode.DEVELOPMENT) tab.setDisable(!chb.isSelected());
 		}
 	}
 

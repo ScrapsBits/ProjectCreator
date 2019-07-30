@@ -25,7 +25,7 @@ public abstract class Controller {
 		// TODO: Check if the boot mode allows file reading. If yes, search and read the "projects" file.
 
 		Configuration configHolder;
-		switch(ProjectCreator.bootMode()) {
+		switch(ProjectCreator.BOOT.getBootMode()) {
 			case SAFE:
 				System.out.println("SAFE mode detected. Using default values."); // TODO: Replace with log component.
 				configHolder = new Configuration();
@@ -33,7 +33,7 @@ public abstract class Controller {
 			default:
 				try {
 					// TODO: Move code to "load configuration".
-					configHolder = new Configuration().read(new ProjectsFileReader().read()[0].getLocation());
+					configHolder = new Configuration().read(new ProjectsFileReader().read()[0].getLocation()); // TODO: Remove read function from Configuration model.
 				} catch(NullPointerException | FileNotFoundException | IllegalArgumentException e) {
 					System.out.println(e.getMessage() + " Applying default values."); // TODO: Replace with log component.
 					configHolder = new Configuration();

@@ -48,5 +48,10 @@ public class SingleViewBootPermissions implements AppBootPermissions {
 	public AppPermission[] getAppPermissions(final BootMode bootMode) { return this.bootPermissions.get(bootMode); }
 
 	@Override
-	public boolean isAllowed(final AppPermission permission) { return Arrays.stream(this.bootPermissions.get(ProjectCreator.bootMode())).anyMatch(permission::equals); }
+	public boolean isAllowed(final AppPermission permission) {
+		// If the permission requested is read or write, check if it's covered by FILE_READ_WRITE or its regular value.
+		if(AppPermission.FILE_READ.equals(permission) || AppPermission.FILE_WRITE.equals(permission)) {
+			return Arrays.stream(this.bootPermissions.get(ProjectCreator.BOOT.getBootMode())).anyMatch((checkPermission) -> checkPermission.equals(permission) || checkPermission.equals(AppPermission.FILE_READ_WRITE));
+		}
+		return Arrays.stream(this.bootPermissions.get(ProjectCreator.BOOT.getBootMode())).anyMatch(permission::equals); }
 }
