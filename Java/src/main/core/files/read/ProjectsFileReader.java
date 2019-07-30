@@ -33,8 +33,12 @@ public class ProjectsFileReader extends ProjectCreatorFileReader {
 			else {
 				final List<Project> projects = new ArrayList<>();
 				for(final String line : lines) {
+					try {
 					final String[] project = line.split("=");
 					projects.add(new Project(project[0], project[1]));
+					} catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("Could not load in project on line " + lines.indexOf(lines) + "."); // TODO: Replace with log component.
+					}
 				}
 				return Arrays.copyOf(projects.toArray(), projects.size(), Project[].class);
 			}

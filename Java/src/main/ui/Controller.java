@@ -1,10 +1,13 @@
-package main.ui;
+ package main.ui;
 
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
+import javafx.scene.control.ChoiceDialog;
 import main.ProjectCreator;
 import main.core.files.read.ProjectsFileReader;
 import main.models.Configuration;
+import main.models.Project;
 
 /**
  * Hold fields and values important to all controllers.
@@ -33,7 +36,15 @@ public abstract class Controller {
 			default:
 				try {
 					// TODO: Move code to "load configuration".
-					configHolder = new Configuration().read(new ProjectsFileReader().read()[0].getLocation());
+					Project[] projects = new ProjectsFileReader().read();
+					ChoiceDialog<Project> dialog = new ChoiceDialog<>(projects[0], projects);
+					Optional<Project> result = dialog.showAndWait();
+					if(result.isPresent()) {
+						System.out.println("Locating .config file at " + result.get().getLocation() + ".");
+						configHolder = new Configuration().read(result.get().getLocation());
+					} else {
+						configHolder = new Configuration().read(new ProjectsFileReader().read()[0].getLocation());
+					}
 				} catch(NullPointerException | FileNotFoundException | IllegalArgumentException e) {
 					System.out.println(e.getMessage() + " Applying default values."); // TODO: Replace with log component.
 					configHolder = new Configuration();
