@@ -28,7 +28,7 @@ public abstract class Controller {
 		// TODO: Check if the boot mode allows file reading. If yes, search and read the "projects" file.
 
 		Configuration configHolder;
-		switch(ProjectCreator.bootMode()) {
+		switch(ProjectCreator.BOOT.getBootMode()) {
 			case SAFE:
 				System.out.println("SAFE mode detected. Using default values."); // TODO: Replace with log component.
 				configHolder = new Configuration();

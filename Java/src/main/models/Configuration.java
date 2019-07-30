@@ -6,9 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import main.core.enumerations.ProgrammingLanguage;
-import main.core.files.enumerations.FileStructure;
 import main.core.files.read.ConfigFileReader;
-import main.core.files.read.ProjectCreatorFileReader;
 import main.core.files.write.ConfigFileWriter;
 import main.core.files.write.ProjectCreatorFileWriter;
 
@@ -19,10 +17,6 @@ import main.core.files.write.ProjectCreatorFileWriter;
  */
 public final class Configuration {
 	/**
-	 * Read and write the configuration using this structure.
-	 */
-	private final FileStructure fileStructure;
-	/**
 	 * A list of all programming languages of which to make a software project.
 	 */
 	private final List<ProgrammingLanguage> selectedProgrammingLanguage;
@@ -32,7 +26,6 @@ public final class Configuration {
 	 */
 	public Configuration() {
 		this.selectedProgrammingLanguage = new ArrayList<>();
-		this.fileStructure = FileStructure.XML;
 	}
 
 	/**
@@ -61,22 +54,15 @@ public final class Configuration {
 	}
 
 	/**
-	 * Get the file structure used by the files for this configuration.
-	 *
-	 * @return Returns the file structure of this configuration file.
-	 */
-	public FileStructure getFileStructure() { return this.fileStructure; }
-
-	/**
 	 * Get a list of selected programming languages.
 	 *
 	 * @return Returns a list of selected programming languages.
 	 */
 	public List<ProgrammingLanguage> getSelectedProgrammingLanguages() { return this.selectedProgrammingLanguage; }
 
-	public Configuration read(final String location) throws FileNotFoundException {
+	public Configuration read(final String location) throws FileNotFoundException { // TODO: Remove this function.
 		try {
-			final ProjectCreatorFileReader configReader = new ConfigFileReader(location, this.fileStructure);
+			final ConfigFileReader configReader = new ConfigFileReader(location);
 			return (Configuration)configReader.read();
 		} catch(final FileNotFoundException e) {
 			throw new FileNotFoundException("Could not read configuration file.");
@@ -95,7 +81,7 @@ public final class Configuration {
 	 *
 	 * @throws IllegalArgumentException Thrown when the provided input is invalid.
 	 */
-	public void safe(final String location) {
+	public void safe(final String location) { // TODO: Remove this function.
 		if(this.validate()) {
 			// TODO: Write the configuration information into a file.
 			final ProjectCreatorFileWriter fileWriter = new ConfigFileWriter(this, location);

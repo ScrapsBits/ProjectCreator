@@ -1,6 +1,8 @@
 package main.core.files.write;
 
-import main.core.files.ProjectCreatorFileManager;
+import java.io.File;
+
+import main.core.files.FileManager;
 import main.core.files.enumerations.FileStructure;
 
 /**
@@ -8,7 +10,7 @@ import main.core.files.enumerations.FileStructure;
  *
  * @author ScrapsBits
  */
-public abstract class ProjectCreatorFileWriter extends ProjectCreatorFileManager {
+public abstract class ProjectCreatorFileWriter extends FileManager {
 
 	/**
 	 * Initialize the File Writer.
@@ -16,9 +18,9 @@ public abstract class ProjectCreatorFileWriter extends ProjectCreatorFileManager
 	 * @param  fileLocation             The location where new files will be stored.
 	 * @throws IllegalArgumentException Thrown when the location does not exist AND cannot be created by the client device.
 	 */
-	protected ProjectCreatorFileWriter(final String fileLocation, final FileStructure fileStructure) {
-		super(fileLocation, fileStructure);
-		if(fileLocation == null || fileLocation.contentEquals("")) throw new IllegalArgumentException("The provided location is not allowed.");
+	protected ProjectCreatorFileWriter(final File file, final FileStructure fileStructure) {
+		super(file, fileStructure);
+		if(file == null) throw new IllegalArgumentException("The provided location is not allowed.");
 	}
 
 	/**

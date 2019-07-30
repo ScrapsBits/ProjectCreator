@@ -10,8 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.core.boot.AppBootMode;
-import main.core.boot.enums.AppPermission;
-import main.core.boot.enums.BootMode;
 import main.ui.single_view.SingleViewElementDesigner;
 import main.ui.single_view.boot.SingleViewBootModeManager;
 
@@ -29,7 +27,7 @@ public final class ProjectCreator extends Application {
 	/**
 	 * Keep track of all boot commands supported by the module. Commands are stored in a HashMap.
 	 */
-	private static final AppBootMode BOOT = new SingleViewBootModeManager();
+	public static final AppBootMode BOOT = new SingleViewBootModeManager();
 	/**
 	 * Define all supported command types.
 	 */
@@ -48,13 +46,6 @@ public final class ProjectCreator extends Application {
 	 * Find the location of the Single View used by the application.
 	 */
 	private static final String UI_FILE_LOCATION = "./ui/single_view/single-view.fxml";
-
-	/**
-	 * Get the boot mode set by the application upon launch.
-	 *
-	 * @return Returns the boot mode used by the application upon launch.
-	 */
-	public static BootMode bootMode() { return ProjectCreator.BOOT.getBootMode(); }
 
 	private static HashMap<String, String[]> filterCommands(final String[] args) {
 		final HashMap<String, List<String>> groupedCommandsList = new HashMap<>();
@@ -108,16 +99,9 @@ public final class ProjectCreator extends Application {
 				break;
 		}
 		if(ProjectCreator.BOOT.isDefault()) System.out.println("Default boot mode is " + ProjectCreator.BOOT.getDefaultBootMode() + "."); // TODO: Replace with log component.
-		System.out.println("Launching app in " + ProjectCreator.bootMode() + " boot mode."); // TODO: Replace with log component.
+		System.out.println("Launching app in " + ProjectCreator.BOOT.getBootMode() + " boot mode."); // TODO: Replace with log component.
 		Application.launch(args);
 	}
-
-	/**
-	 * Get all permissions with the current boot mode.
-	 *
-	 * @return Returns an array of all permissions used by the application upon launch.
-	 */
-	public static AppPermission[] permissions() { return ProjectCreator.BOOT.getPermissions(); }
 
 	/**
 	 * Launch the user interface.

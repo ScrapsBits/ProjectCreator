@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import main.core.enumerations.ProgrammingLanguage;
+import main.core.files.enumerations.FileStructure;
 import main.models.Configuration;
 
 /**
@@ -32,20 +33,14 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 	private final Configuration config;
 
 	/**
-	 * Represents an in-memory version of the configuration file.
-	 */
-	private final File configFile;
-
-	/**
 	 * Prepare the writing of the configuration into a file.
 	 *
 	 * @param configuration The configuration settings.
 	 * @param structure     The structure used for the writing of the Configuration file.
 	 */
 	public ConfigFileWriter(final Configuration configuration, final String location) {
-		super(location, configuration.getFileStructure());
+		super(new File(location + "/.config"), FileStructure.XML);
 		this.config = configuration;
-		this.configFile = new File(location + "/.config");
 	}
 
 	/**
@@ -59,12 +54,16 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 		// writer.write("Will this be line two?");
 		// writer.close();
 
-		switch(this.fileStructure) {
+		switch(this.getFileStructure()) {
 			case XML:
 				this.writeXML();
 				break;
-			case KEYVALUE:
+			case KEY_VALUE:
 				throw new UnsupportedOperationException();
+			case PLAIN:
+				break;
+			default:
+				break;
 		}
 		System.out.println("Config file written."); // TODO: Replace with log component.
 	}
@@ -99,7 +98,7 @@ public final class ConfigFileWriter extends ProjectCreatorFileWriter {
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
 			final DOMSource domSource = new DOMSource(document);
-			final StreamResult streamResult = new StreamResult(this.configFile);
+			final StreamResult streamResult = new StreamResult(super.getFile());
 			transformer.transform(domSource, streamResult);
 		} catch(final ParserConfigurationException e) {
 			// TODO Auto-generated catch block

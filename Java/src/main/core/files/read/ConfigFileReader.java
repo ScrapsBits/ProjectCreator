@@ -15,10 +15,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import main.core.enumerations.ProgrammingLanguage;
+import main.core.files.AppFileManager;
+import main.core.files.FileManager;
 import main.core.files.enumerations.FileStructure;
 import main.models.Configuration;
 
-public class ConfigFileReader extends ProjectCreatorFileReader {
+public class ConfigFileReader implements AppFileReader {
+	private final AppFileManager fileManager;
 
 	/**
 	 * Read a file from the provided location.
@@ -26,7 +29,7 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 	 * @param fileLocation           The location where the files are stored.
 	 * @param configurationStructure The structure used by the files being read.
 	 */
-	public ConfigFileReader(final String fileLocation, final FileStructure configurationStructure) { super(fileLocation, configurationStructure); }
+	public ConfigFileReader(final String fileLocation) { this.fileManager = new FileManager(new File(fileLocation), FileStructure.XML); }
 
 	/**
 	 * {@inheritDoc}
@@ -34,64 +37,56 @@ public class ConfigFileReader extends ProjectCreatorFileReader {
 	@Override
 	public Configuration read() throws FileNotFoundException {
 		final Configuration config = new Configuration();
-		switch(this.fileStructure) {
-			case XML:
-				final File configFile = new File(this.getFileLocation() + "\\.config");
-				if(!configFile.isFile()) throw new FileNotFoundException("The requested .config file does not exist.");
+		final File configFile = new File(this.fileManager.getFile() + "\\.config");
+		if(!configFile.isFile()) throw new FileNotFoundException("The requested .config file does not exist.");
 
-				try {
-					final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-					documentBuilderFactory.setIgnoringElementContentWhitespace(true);
-					DocumentBuilder documentBuilder;
-					documentBuilder = documentBuilderFactory.newDocumentBuilder();
-					final Document document = documentBuilder.parse(configFile);
-					System.out.println("Opening file \"" + configFile.getName() + "\"."); // TODO: Replace with log component.
+		try {
+			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			documentBuilderFactory.setIgnoringElementContentWhitespace(true);
+			DocumentBuilder documentBuilder;
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			final Document document = documentBuilder.parse(configFile);
+			System.out.println("Opening file \"" + configFile.getName() + "\"."); // TODO: Replace with log component.
 
-					document.getDocumentElement().normalize();
-					System.out.println("Found node " + document.getDocumentElement().getNodeName() + "."); // TODO: Replace with log component.
+			document.getDocumentElement().normalize();
+			System.out.println("Found node " + document.getDocumentElement().getNodeName() + "."); // TODO: Replace with log component.
 
-					final NodeList nodes = document.getDocumentElement().getChildNodes();
-					System.out.println("Found " + nodes.getLength() + " children.");
-					for(int i = 0; i < nodes.getLength(); i += 1) {
-						final Node node = nodes.item(i);
-						if(node.getNodeType() == Node.ELEMENT_NODE) {
-							System.out.println("Reading child node " + node.getNodeName() + "."); // TODO: Replace with log component.
+			final NodeList nodes = document.getDocumentElement().getChildNodes();
+			System.out.println("Found " + nodes.getLength() + " children.");
+			for(int i = 0; i < nodes.getLength(); i += 1) {
+				final Node node = nodes.item(i);
+				if(node.getNodeType() == Node.ELEMENT_NODE) {
+					System.out.println("Reading child node " + node.getNodeName() + "."); // TODO: Replace with log component.
 
-							switch(node.getNodeName()) {
-								case "project":
-									break;
-								case "languages":
-									final NodeList languages = node.getChildNodes();
-									System.out.println("Found " + languages.getLength() + " languages.");
-									for(int r = 0; r < languages.getLength(); r += 1) if(languages.item(r).getNodeType() == Node.ELEMENT_NODE) {
-										final NamedNodeMap languagesMap = languages.item(r).getAttributes();
-										for(final ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values())
-											if(languagesMap.getNamedItem("name").getNodeValue().contentEquals(programmingLanguage.getName())) {
-												System.out
-														.println("Found " + (programmingLanguage.isFunctional() ? "functional" : "object-oriented") + " language " + programmingLanguage.getName() + ".");
-												config.addProgrammingLanguage(programmingLanguage);
-											}
+					switch(node.getNodeName()) {
+						case "project":
+							break;
+						case "languages":
+							final NodeList languages = node.getChildNodes();
+							System.out.println("Found " + languages.getLength() + " languages.");
+							for(int r = 0; r < languages.getLength(); r += 1) if(languages.item(r).getNodeType() == Node.ELEMENT_NODE) {
+								final NamedNodeMap languagesMap = languages.item(r).getAttributes();
+								for(final ProgrammingLanguage programmingLanguage : ProgrammingLanguage.values())
+									if(languagesMap.getNamedItem("name").getNodeValue().contentEquals(programmingLanguage.getName())) {
+										System.out.println("Found " + (programmingLanguage.isFunctional() ? "functional" : "object-oriented") + " language " + programmingLanguage.getName() + ".");
+										config.addProgrammingLanguage(programmingLanguage);
 									}
-									break;
 							}
-						}
+							break;
 					}
-
-				} catch(final SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch(final IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch(final ParserConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
-				return config;
-			case KEYVALUE:
-				throw new UnsupportedOperationException();
+			}
+		} catch(final SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(final IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(final ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+
+		return config;
 	}
 }
