@@ -3,8 +3,6 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view;
 import eu.electricfrog.projectcreator.ApplicationLauncher;
 import eu.electricfrog.projectcreator.core.application.boot.BootMode;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXGenerator;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -92,25 +90,19 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	private final void generateProgrammingTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
 		System.out.println("Generating content on Programming.");
-		controller.lblProgrammingAvailableLanguages = super.generateLabel("AvailableLanguages", "Supported languages:");
-		controller.lblProgrammingSelectedLanguages = super.generateLabel("SelectedLanguages", "Selected for use: ");
+		controller.lblProgrammingLanguages = super.generateLabel("AvailableLanguages", "Available languages:");
 		controller.lsvLanguages = super.generateListView("Languages");
-		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((language) -> {
-			// TODO: Replace with observable ProgrammingLanguage.
-			BooleanProperty observable = new SimpleBooleanProperty();
-			observable.addListener((obj, oldValue, newValue) -> {
-				System.out.println(obj.getValue());
-			});
-			return observable;
-		}));
-		controller.lsvSelectedLanguages = super.generateListView("SelectedLanguages");
-		controller.btnSelectLanguage = super.generateButton("SelectLanguage", "---->");
+		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((observableLanguage) -> observableLanguage.getObservableProperty()));
+//		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((language) -> {
+//			// TODO: Replace with observable ProgrammingLanguage.
+//			BooleanProperty observable = new SimpleBooleanProperty();
+//			observable.addListener((obj, oldValue, newValue) -> {
+//				System.out.println(obj.getValue());
+//			});
+//			return observable;
+//		}));
 		// TODO: Change into method reference.
-		controller.btnSelectLanguage.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnSelectLanguageClick(event));
-		controller.btnRemoveLanguage = super.generateButton("UnselectedLanguage", "<----");
-		// TODO: Change into method reference.
-		controller.btnRemoveLanguage.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnDeselectLanguageClick(event));
-		controller.acpProgramming.getChildren().addAll(controller.lblProgrammingAvailableLanguages, controller.lblProgrammingSelectedLanguages, controller.lsvLanguages, controller.lsvSelectedLanguages, controller.btnSelectLanguage, controller.btnRemoveLanguage);
+		controller.acpProgramming.getChildren().addAll(controller.lblProgrammingLanguages, controller.lsvLanguages);
 		System.out.println("Content on Programming has been generated.");
 	}
 
@@ -247,10 +239,8 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	private final void positionProgrammingTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
 		System.out.println("Positioning generated Programming content.");
-		controller.lblProgrammingAvailableLanguages.setLayoutX(this.padding + this.labelJump);
-		controller.lblProgrammingAvailableLanguages.setLayoutY(this.padding);
-		controller.lblProgrammingSelectedLanguages.setLayoutX(3 * this.padding + 3 * this.columnSize + this.labelJump);
-		controller.lblProgrammingSelectedLanguages.setLayoutY(this.padding);
+		controller.lblProgrammingLanguages.setLayoutX(this.padding + this.labelJump);
+		controller.lblProgrammingLanguages.setLayoutY(this.padding);
 
 		controller.lsvLanguages.setLayoutX(this.padding);
 		controller.lsvLanguages.setLayoutY(this.padding + this.rowSize);
@@ -258,18 +248,6 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lsvLanguages.setPrefHeight(controller.acpProgramming.getHeight() - 2 * this.padding - this.rowSize);
 		controller.lsvLanguages.setMaxWidth(this.columnSize * 2);
 		controller.lsvLanguages.setMaxHeight(controller.acpProgramming.getHeight() - 2 * this.padding - this.rowSize);
-		
-		controller.lsvSelectedLanguages.setLayoutX(3 * this.padding + 3 * this.columnSize);
-		controller.lsvSelectedLanguages.setLayoutY(this.padding + this.rowSize);
-		controller.lsvSelectedLanguages.setPrefWidth(this.columnSize * 2);
-		controller.lsvSelectedLanguages.setPrefHeight(controller.acpProgramming.getHeight() - 2 * this.padding - this.rowSize);
-		controller.lsvSelectedLanguages.setMaxWidth(this.columnSize * 2);
-		controller.lsvSelectedLanguages.setMaxHeight(controller.acpProgramming.getHeight() - 2 * this.padding - this.rowSize);
-		
-		controller.btnSelectLanguage.setLayoutX(2 * this.padding + 2.5 * this.columnSize - .5 * controller.btnSelectLanguage.getWidth());
-		controller.btnSelectLanguage.setLayoutY(this.padding + (.5 * controller.acpProgramming.getHeight() - this.rowSize));
-		controller.btnRemoveLanguage.setLayoutX(2 * this.padding + 2.5 * this.columnSize - .5 * controller.btnRemoveLanguage.getWidth());
-		controller.btnRemoveLanguage.setLayoutY(this.padding + (.5 * controller.acpProgramming.getHeight() + this.rowSize - this.padding));
 
 		System.out.println("Generated Programming content positioned.");
 	}

@@ -23,7 +23,7 @@ public class Project {
 	/**
 	 * The language connected to this project.
 	 */
-	private final List<ProgrammingLanguage> programmingLanguages;
+	private final List<? extends ProgrammingLanguage> programmingLanguages;
 	
 	/**
 	 * Initialize a new project.
@@ -31,7 +31,7 @@ public class Project {
 	 * @param name The project's name.
 	 * @param configFile The directory where this project's .config file is stored.
 	 */
-	public Project(String directory, String name, String configFile, List<ProgrammingLanguage> programmingLanguage) {
+	public Project(String directory, String name, String configFile, List<? extends ProgrammingLanguage> programmingLanguage) {
 		this.directory = directory;
 		this.name = name;
 		this.configFile = configFile;
@@ -67,7 +67,7 @@ public class Project {
 	 * Get the language this project is written in.
 	 * @return Returns the language of the project.
 	 */
-	public final List<ProgrammingLanguage> getProgrammingLanguages() {
+	public final List<? extends ProgrammingLanguage> getProgrammingLanguages() {
 		return this.programmingLanguages;
 	}
 }

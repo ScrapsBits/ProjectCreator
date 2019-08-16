@@ -7,6 +7,7 @@ import eu.electricfrog.projectcreator.ApplicationLauncher;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguageType;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXLauncher;
+import eu.electricfrog.projectcreator.ui.javafx.single_view.models.ObservableProgrammingLanguage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -52,15 +53,11 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 		System.out.println("User interface displayed."); // TODO: Replace with log component.
 
 		// TODO: Load in various data sets and display them on the controller.
-		List<ProgrammingLanguage> availableLanguages = new ArrayList<>();
-		availableLanguages.add(new ProgrammingLanguage("C#", "7.3", ProgrammingLanguageType.OBJECT_ORIENTED));
-		availableLanguages.add(new ProgrammingLanguage("PHP", "7.0.0", ProgrammingLanguageType.FUNCTIONAL));
-		
-		List<ProgrammingLanguage> selectedLanguages = new ArrayList<>();
-		selectedLanguages.add(new ProgrammingLanguage("Java", "11", ProgrammingLanguageType.OBJECT_ORIENTED));
-		
+		// TODO: Move this to a more appropriate location.
+		List<ObservableProgrammingLanguage> availableLanguages = new ArrayList<>();
+		availableLanguages.add(new ObservableProgrammingLanguage("C#", "7.3", ProgrammingLanguageType.OBJECT_ORIENTED));
+		availableLanguages.add(new ObservableProgrammingLanguage("PHP", "7.0.0", ProgrammingLanguageType.FUNCTIONAL));
+		availableLanguages.add(new ObservableProgrammingLanguage("Java", "11", ProgrammingLanguageType.OBJECT_ORIENTED));
 		controller.fillAvailableLanguages(availableLanguages);
-		controller.fillSelectedLanguages(selectedLanguages);
-		// TODO: Load in previous project information if available.
 	}
 }

@@ -2,6 +2,7 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import eu.electricfrog.projectcreator.core.files.read.project.ConfigFileReader;
@@ -9,6 +10,7 @@ import eu.electricfrog.projectcreator.core.files.write.project.ConfigFileWriter;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXController;
+import eu.electricfrog.projectcreator.ui.javafx.single_view.models.ObservableProgrammingLanguage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -47,7 +49,7 @@ public final class SingleViewController extends JavaFXController {
 	/**
 	 * Labels to explain what is displayed on the Programming tab.
 	 */
-	Label lblProgrammingAvailableLanguages, lblProgrammingSelectedLanguages;
+	Label lblProgrammingLanguages;
 	/**
 	 * Labels to explain what is displayed on the Documentation tab.
 	 */
@@ -63,11 +65,11 @@ public final class SingleViewController extends JavaFXController {
 	/**
 	 * All buttons on the user interface.
 	 */
-	Button btnDirectory, btnLoad, btnSelectLanguage, btnRemoveLanguage, btnSave;
+	Button btnDirectory, btnLoad, btnSave;
 	/**
 	 * Keeps a list of the programming languages.
 	 */
-	ListView<ProgrammingLanguage> lsvLanguages, lsvSelectedLanguages;
+	ListView<ObservableProgrammingLanguage> lsvLanguages;
 	/**
 	 * Keeps the supported documentation file types.
 	 */
@@ -102,10 +104,15 @@ public final class SingleViewController extends JavaFXController {
 			this.txfProjectName.setText(project.getName());
 			this.txfProjectLocation.setText(project.getConfigFile());
 			
-			this.lsvLanguages.getItems().addAll(this.lsvSelectedLanguages.getItems());
-			this.lsvSelectedLanguages.getItems().clear();
-			this.lsvLanguages.getItems().removeIf((language) -> project.getProgrammingLanguages().contains(language));
-			this.lsvSelectedLanguages.getItems().addAll(project.getProgrammingLanguages());
+			for(ObservableProgrammingLanguage observableLanguage : this.lsvLanguages.getItems()) {
+				for(ProgrammingLanguage language : project.getProgrammingLanguages()) {
+					if(observableLanguage.equals(language)) {
+						observableLanguage.getObservableProperty().set(true);
+					} else {
+						observableLanguage.getObservableProperty().set(false);
+					}
+				}
+			}
 		}
 	}
 
@@ -115,8 +122,11 @@ public final class SingleViewController extends JavaFXController {
 	 * @param event The click event.
 	 */
 	public final void handleBtnSaveClick(final MouseEvent event) {
-		// TODO: Save project(s) to the provided locations.
-		Project project = new Project(null, this.txfProjectName.getText(), this.txfProjectLocation.getText(), this.lsvSelectedLanguages.getItems());
+		List<ObservableProgrammingLanguage> observableLanguages = new ArrayList<>();
+		for(ObservableProgrammingLanguage language : this.lsvLanguages.getItems()) {
+			if(language.isChecked()) observableLanguages.add(language);
+		}
+		Project project = new Project(null, this.txfProjectName.getText(), this.txfProjectLocation.getText(), observableLanguages);
 		new ConfigFileWriter(project).write();
 	}
 
@@ -138,47 +148,14 @@ public final class SingleViewController extends JavaFXController {
 	}
 
 	/**
-	 * Move the language selected on the list of available languages to the list of selected language.
-	 * 
-	 * @param event The click event.
-	 */
-	public final void handleBtnSelectLanguageClick(final MouseEvent event) {
-		ProgrammingLanguage item = this.lsvLanguages.getSelectionModel().getSelectedItem();
-		if(item != null) {
-			this.lsvLanguages.getItems().remove(item);
-			this.lsvSelectedLanguages.getItems().add(item);
-		}
-	}
-
-	/**
-	 * Move the language selected on the list of selected languages to the list of available languages.
-	 * 
-	 * @param event The click event.
-	 */
-	public final void handleBtnDeselectLanguageClick(final MouseEvent event) {
-		ProgrammingLanguage item = this.lsvSelectedLanguages.getSelectionModel().getSelectedItem();
-		if(item != null) {
-			this.lsvLanguages.getItems().add(item);
-			this.lsvSelectedLanguages.getItems().remove(item);
-		}
-	}
-
-	/**
 	 * Fill the list of available languages.
 	 * 
 	 * @param languages A list of languages available to making projects for.
 	 */
-	public void fillAvailableLanguages(List<ProgrammingLanguage> languages) { this.lsvLanguages.getItems().addAll(languages); }
-
-	/**
-	 * Fill the list of selected languages.
-	 * 
-	 * @param languages A list with languages to make project files for.
-	 */
-	public void fillSelectedLanguages(List<ProgrammingLanguage> languages) { 
-		this.lsvSelectedLanguages.getItems().addAll(languages); 
-		}
-
+	public void fillAvailableLanguages(List<ObservableProgrammingLanguage> languages) {
+		this.lsvLanguages.getItems().addAll(languages);
+	}
+	
 	@Override
 	public void initialize() {
 		super.generator = new SingleViewGenerator(this);
