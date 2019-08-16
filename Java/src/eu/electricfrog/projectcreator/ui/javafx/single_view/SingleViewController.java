@@ -7,6 +7,7 @@ import java.util.List;
 
 import eu.electricfrog.projectcreator.core.files.read.project.ConfigFileReader;
 import eu.electricfrog.projectcreator.core.files.write.project.ConfigFileWriter;
+import eu.electricfrog.projectcreator.core.files.write.project.languages.JavaProjectFileWriter;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXController;
@@ -65,7 +66,7 @@ public final class SingleViewController extends JavaFXController {
 	/**
 	 * All buttons on the user interface.
 	 */
-	Button btnDirectory, btnLoad, btnSave;
+	Button btnDirectory, btnLoad, btnSave, btnGenerateProjects;
 	/**
 	 * Keeps a list of the programming languages.
 	 */
@@ -128,6 +129,25 @@ public final class SingleViewController extends JavaFXController {
 		}
 		Project project = new Project(null, this.txfProjectName.getText(), this.txfProjectLocation.getText(), observableLanguages);
 		new ConfigFileWriter(project).write();
+	}
+	
+	/**
+	 * Create the files and folders for the selected programming languages.
+	 * @param event The click event.
+	 */
+	public final void handleBtnGenerateProjectsClick(final MouseEvent event) {
+		List<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
+		for(ObservableProgrammingLanguage programmingLanguage : this.lsvLanguages.getItems()) {
+			if(programmingLanguage.isChecked()) programmingLanguages.add(programmingLanguage);
+		}
+		Project project = new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), programmingLanguages);
+		for(ProgrammingLanguage selectedLanguage : project.getProgrammingLanguages()) {
+			switch(selectedLanguage.getName()) {
+				case "Java":
+					new JavaProjectFileWriter(project).write();
+					break;
+			}
+		}
 	}
 
 	/**
