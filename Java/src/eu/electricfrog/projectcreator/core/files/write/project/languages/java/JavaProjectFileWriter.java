@@ -1,4 +1,4 @@
-package eu.electricfrog.projectcreator.core.files.write.project.languages;
+package eu.electricfrog.projectcreator.core.files.write.project.languages.java;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,7 +9,7 @@ import eu.electricfrog.projectcreator.core.files.write.project.ProjectFileWriter
 import eu.electricfrog.projectcreator.core.models.Project;
 
 /**
- * Write a directory and all necessary files for a Java project.
+ * Write a directory and all necessary files required for a Java project.
  * @author ScrapsBits
  * @version 1.0
  */
@@ -28,17 +28,17 @@ public class JavaProjectFileWriter extends ProjectFileWriter {
 	@Override
 	public void write() {
 		System.out.println("Creating Java mandatory files."); // TODO: Replace with log component.
-		String projectNameDirectory = project.getName().replaceAll("\\s", "").replaceAll("\\\\", "").replaceAll("/", "-");
-		System.out.println(projectNameDirectory);
-		File directory = new File(project.getDirectory().replaceAll("\\.config", "") + "/" + projectNameDirectory + "/Java/" + projectNameDirectory + "/src");
+		File directory = new File(project.getDirectory().replaceAll("\\.config", "") + "\\" + project.getSafeName() + "\\" + "Java");
 		directory.mkdirs();
-		super.file = new File(directory.getAbsolutePath() + "/" + projectNameDirectory + ".java");
+		File srcDirectory = new File(directory.getAbsolutePath() + "/src");
+		srcDirectory.mkdir();
+		super.file = new File(srcDirectory + "/" + project.getSafeName() + ".java");
 		
 		try {
 			// TODO: Check for write permissions
 			BufferedWriter writer = new BufferedWriter(new FileWriter(super.file));
 			// TODO: Allow programmers to set their own package name(s).
-			writer.write("package " + projectNameDirectory.toLowerCase() + ";\n\n"
+			writer.write("package " + project.getSafeName().toLowerCase() + ";\n\n"
 					+ "public class ApplicationLauncher {\n"
 					+ "\tpublic static void main(String[] args) {\n"
 					+ "\t\t// TODO: Write program.\n"

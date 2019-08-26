@@ -7,7 +7,8 @@ import java.util.List;
 
 import eu.electricfrog.projectcreator.core.files.read.project.ConfigFileReader;
 import eu.electricfrog.projectcreator.core.files.write.project.ConfigFileWriter;
-import eu.electricfrog.projectcreator.core.files.write.project.languages.JavaProjectFileWriter;
+import eu.electricfrog.projectcreator.core.files.write.project.languages.csharp.CSharpProjectFileWriter;
+import eu.electricfrog.projectcreator.core.files.write.project.languages.java.JavaProjectFileWriter;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXController;
@@ -145,6 +146,9 @@ public final class SingleViewController extends JavaFXController {
 			switch(selectedLanguage.getName()) {
 				case "Java":
 					new JavaProjectFileWriter(project).write();
+					break;
+				case "C#":
+					new CSharpProjectFileWriter(project).write();
 					break;
 			}
 		}
