@@ -29,6 +29,10 @@ public class ProgrammingLanguage {
 		this.type = type;
 	}
 	
+	public ProgrammingLanguage(final String name, final String version, final String type) {
+		this(name, version, ProgrammingLanguageType.valueOf(type.toUpperCase()));
+	}
+	
 	/**
 	 * Get the name of the language.
 	 * @return Returns the language name.

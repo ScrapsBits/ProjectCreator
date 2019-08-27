@@ -95,25 +95,18 @@ public final class SingleViewController extends JavaFXController {
 	 * @param event The click event.
 	 */
 	public final void handleBtnLoadClick(final MouseEvent event) {
-		// TODO: Load project .config file selected by user.
 		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Opening project configuration.");
 		File file = fileChooser.showOpenDialog(stage);
 		if(file != null) {
 			ConfigFileReader reader = new ConfigFileReader(file);
-			reader.read();
-			Project project = reader.getProject();
+			Project project = reader.read();
 			this.txfProjectName.setText(project.getName());
 			this.txfProjectLocation.setText(project.getConfigFile());
 			
 			for(ObservableProgrammingLanguage observableLanguage : this.lsvLanguages.getItems()) {
-				for(ProgrammingLanguage language : project.getProgrammingLanguages()) {
-					if(observableLanguage.equals(language)) {
-						observableLanguage.getObservableProperty().set(true);
-					} else {
-						observableLanguage.getObservableProperty().set(false);
-					}
-				}
+				observableLanguage.getObservableProperty().set(false);
+				if(project.getProgrammingLanguages().contains(observableLanguage)) observableLanguage.getObservableProperty().set(true);
 			}
 		}
 	}

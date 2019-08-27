@@ -15,9 +15,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import eu.electricfrog.projectcreator.core.files.read.FileReader;
+import eu.electricfrog.projectcreator.core.files.read.GenericFileReader;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
-import eu.electricfrog.projectcreator.core.models.ProgrammingLanguageType;
 import eu.electricfrog.projectcreator.core.models.Project;
 
 /**
@@ -26,34 +25,29 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * @author  ScrapsBits
  * @version 1.0
  */
-public class ConfigFileReader implements FileReader {
-	private final File file;
-	private Project project;
-
-	public ConfigFileReader(File file) { this.file = file; }
-
-	@Override
-	public File getFile() { return this.file; }
-	
+public class ConfigFileReader extends GenericFileReader {
 	/**
-	 * Get the project from the reader. 
-	 * @return Returns the project as it was read from the file. Returns null if the project hasn't been read yet.
+	 * Initialize a reader for the configuration file.
+	 * 
+	 * @param file The configuration file to read. This file is generally selected by the user.
 	 */
-	public Project getProject() { return this.project; }
+	public ConfigFileReader(File file) { super(file); }
 
 	@Override
-	public void read() {
+	public Project read() {
 		// Placeholder fields to use for making the Project instance later.
 		String name = null;
-		String configLocation = file.getAbsolutePath();
+		String configLocation = super.getFile().getAbsolutePath();
 		String directory = null;
+
 		List<ProgrammingLanguage> languages = new ArrayList<>();
-		// TODO: Read the selected config file and load in a project.
 		try {
 			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			documentBuilderFactory.setIgnoringElementContentWhitespace(true);
+			// TODO: Set ErrorHandler.
+			documentBuilderFactory.setValidating(true);
 			final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			final Document document = documentBuilder.parse(this.file);
+			final Document document = documentBuilder.parse(super.getFile());
 			document.getDocumentElement().normalize();
 			System.out.println("Found root node " + document.getDocumentElement().getNodeName()); // TODO: Replace with log component.
 
@@ -65,25 +59,35 @@ public class ConfigFileReader implements FileReader {
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element)node;
 					switch(element.getNodeName()) {
-						case "programming-languages":
-							final NodeList languageNodes = element.getChildNodes();
-							for(int r = 0; r < languageNodes.getLength(); r += 1) {
-								final Node languageNode = languageNodes.item(r);
-								if(languageNode.getNodeType() == Node.ELEMENT_NODE) {
-								final Element languageElement = (Element)languageNode;
-								String languageName = languageElement.getAttribute("name");
-								String languageType = languageElement.getAttribute("type");
-								String languageVersion = languageElement.getAttribute("version");
-								languages.add(new ProgrammingLanguage(languageName, languageVersion, ProgrammingLanguageType.valueOf(languageType.toUpperCase())));
-								}
-							}
+						case "programming_languages":
+							languages.addAll(this.readLanguages(element));
 							break;
 					}
 				}
 			}
-			this.project = new Project(directory, name, configLocation, languages);
-		} catch(ParserConfigurationException|SAXException|IOException e) {
+			return new Project(directory, name, configLocation, languages);
+		} catch(ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 * Read the languages from an element containing programming languages.
+	 * @param element The element containing a list of programming languages.
+	 * @return Returns a list of all found programming languages. Returns an empty list if no programming languages could be read.
+	 */
+	private List<ProgrammingLanguage> readLanguages(Element element) {
+		List<ProgrammingLanguage> languages = new ArrayList<>();
+		final NodeList languageNodes = element.getChildNodes();
+		for(int i = 0; i < languageNodes.getLength(); i += 1) {
+			final Node languageNode = languageNodes.item(i);
+			if(languageNode.getNodeType() == Node.ELEMENT_NODE) {
+				final Element languageElement = (Element)languageNode;
+				// TODO: Add "Settings" for each language, if present.
+				languages.add(new ProgrammingLanguage(languageElement.getAttribute("name"), languageElement.getAttribute("type"), languageElement.getAttribute("version")));
+			}
+		}
+		return languages;
 	}
 }

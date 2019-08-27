@@ -44,13 +44,13 @@ public class CSharpProjectFileWriter extends ProjectFileWriter {
 	public void write() {
 		// TODO: Check for write permissions
 		System.out.println("Creating C# mandatory files."); // TODO: Replace with log component.
-		File directory = new File(project.getDirectory().replaceAll("\\.config", "") + "/" + project.getSafeName() + "/CSharp");
+		File directory = new File(super.project().getDirectory().replaceAll("\\.config", "") + "/" + super.project().getSafeName() + "/CSharp");
 		directory.mkdirs();
-		String safeName = project.getSafeName().replaceAll("-", "_");
-		super.file = new File(directory.getAbsolutePath() + "/" + safeName + ".sln");
+		String safeName = super.project().getSafeName().replaceAll("-", "_");
+		super.setFile(new File(directory.getAbsolutePath() + "/" + safeName + ".sln"));
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(super.file));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(super.getFile()));
 			// TODO: Split function to methods that each write one specific file.
 			// TODO: Generate random project GUIDs
 			writer.write("\n"

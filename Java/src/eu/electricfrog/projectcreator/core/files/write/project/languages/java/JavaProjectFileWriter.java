@@ -28,17 +28,17 @@ public class JavaProjectFileWriter extends ProjectFileWriter {
 	@Override
 	public void write() {
 		System.out.println("Creating Java mandatory files."); // TODO: Replace with log component.
-		File directory = new File(project.getDirectory().replaceAll("\\.config", "") + "\\" + project.getSafeName() + "\\" + "Java");
+		File directory = new File(super.project().getDirectory().replaceAll("\\.config", "") + "\\" + super.project().getSafeName() + "\\" + "Java");
 		directory.mkdirs();
 		File srcDirectory = new File(directory.getAbsolutePath() + "/src");
 		srcDirectory.mkdir();
-		super.file = new File(srcDirectory + "/" + project.getSafeName() + ".java");
+		super.setFile(new File(srcDirectory + "/" + super.project().getSafeName() + ".java"));
 		
 		try {
 			// TODO: Check for write permissions
-			BufferedWriter writer = new BufferedWriter(new FileWriter(super.file));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(super.getFile()));
 			// TODO: Allow programmers to set their own package name(s).
-			writer.write("package " + project.getSafeName().toLowerCase() + ";\n\n"
+			writer.write("package " + super.project().getSafeName().toLowerCase() + ";\n\n"
 					+ "public class ApplicationLauncher {\n"
 					+ "\tpublic static void main(String[] args) {\n"
 					+ "\t\t// TODO: Write program.\n"

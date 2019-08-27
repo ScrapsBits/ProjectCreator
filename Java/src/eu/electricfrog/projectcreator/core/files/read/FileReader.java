@@ -10,6 +10,7 @@ import eu.electricfrog.projectcreator.core.files.FileManager;
 public interface FileReader extends FileManager {
 	/**
 	 * Read a file from the system memory.
+	 * @returns Returns an object from the read file.
 	 */
-	void read();
+	Object read();
 }
