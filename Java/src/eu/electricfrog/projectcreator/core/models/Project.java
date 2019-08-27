@@ -19,7 +19,7 @@ public class Project {
 	/**
 	 * The directory of the project's config file.
 	 */
-	private final String configFile;
+	private final String configFileDirectory;
 	/**
 	 * The language connected to this project.
 	 */
@@ -34,7 +34,7 @@ public class Project {
 	public Project(String directory, String name, String configFile, List<? extends ProgrammingLanguage> programmingLanguage) {
 		this.directory = directory;
 		this.name = name;
-		this.configFile = configFile;
+		this.configFileDirectory = configFile;
 		// TODO: NULL check.
 		this.programmingLanguages = programmingLanguage;
 	}
@@ -56,11 +56,36 @@ public class Project {
 	}
 	
 	/**
+	 * Get the name of the project in safe characters.
+	 * @return
+	 */
+	public String getSafeName() {
+		String safeName = name.trim();
+		safeName = safeName.replaceAll("\\\\", "-");
+		safeName = safeName.replaceAll(" ", "-");
+		safeName = safeName.replaceAll("/", "-");
+		safeName = safeName.replaceAll("\\s", "");
+		safeName = safeName.replaceAll("#", "Sharp");
+		// TODO: Number to text converter.
+		safeName = safeName.replaceAll("0", "Zero");
+		safeName = safeName.replaceAll("1", "One");
+		safeName = safeName.replaceAll("2", "Two");
+		safeName = safeName.replaceAll("3", "Three");
+		safeName = safeName.replaceAll("4", "Four");
+		safeName = safeName.replaceAll("5", "Five");
+		safeName = safeName.replaceAll("6", "Six");
+		safeName = safeName.replaceAll("7", "Seven");
+		safeName = safeName.replaceAll("8", "Eight");
+		safeName = safeName.replaceAll("9", "Nine");
+		return safeName;
+	}
+	
+	/**
 	 * Get the configuration file's directory.
 	 * @return Returns the location of the configuration file.
 	 */
 	public String getConfigFile() {
-		return this.configFile;
+		return this.configFileDirectory;
 	}
 	
 	/**

@@ -27,32 +27,20 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * @author  ScrapsBits
  * @version 1.0
  */
-public class ConfigFileWriter implements FileWriter {
-	/**
-	 * Resembles the file to be written for the project.
-	 */
-	private final File file;
-	/**
-	 * The project being saved to the system.
-	 */
-	private final Project project;
-
+public class ConfigFileWriter extends GenericFileWriter {
 	/**
 	 * Set the project for this file writer.
 	 * 
 	 * @param project The project to be written into a file.
 	 */
 	public ConfigFileWriter(Project project) {
-		this.project = project;
+		super(project);
 		if(project.getConfigFile().contains(".config")) {
 			this.file = new File(project.getConfigFile());
 		} else {
 			this.file = new File(project.getConfigFile() + "/.config");
 		}
 	}
-
-	@Override
-	public File getFile() { return this.file; }
 
 	@Override
 	public void write() {

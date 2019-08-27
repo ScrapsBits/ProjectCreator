@@ -138,7 +138,10 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.btnSave = super.generateButton("Save", "Save");
 		// TODO: Change into method reference.
 		controller.btnSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnSaveClick(event));
-		controller.acpComplete.getChildren().add(controller.btnSave);
+		// TODO: Change into method reference.
+		controller.btnGenerateProjects = super.generateButton("GenerateProjects", "Generate projects");
+		controller.btnGenerateProjects.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnGenerateProjectsClick(event));
+		controller.acpComplete.getChildren().addAll(controller.btnSave, controller.btnGenerateProjects);
 		System.out.println("Content on Finalize has been generated.");
 	}
 
@@ -285,6 +288,8 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		System.out.println("Positioning generated Finalize content.");
 		controller.btnSave.setLayoutX(padding);
 		controller.btnSave.setLayoutY(padding);
+		controller.btnGenerateProjects.setLayoutX(padding);
+		controller.btnGenerateProjects.setLayoutY(2 * padding + rowSize);
 		System.out.println("Generated Finalize content positioned.");
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.electricfrog.projectcreator.ApplicationLauncher;
-import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguageType;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXLauncher;
 import eu.electricfrog.projectcreator.ui.javafx.single_view.models.ObservableProgrammingLanguage;
