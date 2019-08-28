@@ -33,7 +33,7 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 	 */
 	@Override
 	public void start(final Stage stage) {
-		SingleViewController controller = (SingleViewController)super.getController();
+		final SingleViewController controller = (SingleViewController)super.getController();
 		System.out.println("Loading in user interface."); // TODO: Replace with log component.
 		controller.setStage(stage);
 		stage.setMinWidth(471);
@@ -53,7 +53,7 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 
 		// TODO: Load in various data sets and display them on the controller.
 		// TODO: Move this to a more appropriate location.
-		List<ObservableProgrammingLanguage> availableLanguages = new ArrayList<>();
+		final List<ObservableProgrammingLanguage> availableLanguages = new ArrayList<>();
 		availableLanguages.add(new ObservableProgrammingLanguage("C#", "7.3", ProgrammingLanguageType.OBJECT_ORIENTED));
 		availableLanguages.add(new ObservableProgrammingLanguage("PHP", "7.0.0", ProgrammingLanguageType.FUNCTIONAL));
 		availableLanguages.add(new ObservableProgrammingLanguage("Java", "11", ProgrammingLanguageType.OBJECT_ORIENTED));

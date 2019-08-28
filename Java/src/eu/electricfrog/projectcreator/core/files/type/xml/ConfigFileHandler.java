@@ -4,16 +4,18 @@ import java.io.File;
 
 /**
  * Handle the .config file.
- * @author ScrapsBits
+ * 
+ * @author  ScrapsBits
  * @version 1.1
  */
 public class ConfigFileHandler extends XmlFileHandler {
-	
+
 	/**
 	 * Receive a .config file.
+	 * 
 	 * @param file The configuration file of a certain project.
 	 */
-	public ConfigFileHandler(File file) {
+	public ConfigFileHandler(final File file) {
 		super(file);
 		if(!file.getAbsolutePath().endsWith(".config")) throw new IllegalArgumentException("The provided file is not a config file.");
 	}

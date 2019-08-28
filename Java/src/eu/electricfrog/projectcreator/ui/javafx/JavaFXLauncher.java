@@ -17,14 +17,14 @@ public abstract class JavaFXLauncher extends Application {
 
 	/**
 	 * Initialize the launcher and use the provided controller.
-	 * 
+	 *
 	 * @param controller The controller used by the application.
 	 */
 	public JavaFXLauncher(final JavaFXController controller) { this.controller = controller; }
 
 	/**
 	 * Get the controller used by the application.
-	 * 
+	 *
 	 * @return Returns the controller used by the application.
 	 */
 	protected final JavaFXController getController() { return this.controller; }

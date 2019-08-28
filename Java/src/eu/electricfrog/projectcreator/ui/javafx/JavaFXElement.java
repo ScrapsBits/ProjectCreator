@@ -2,7 +2,7 @@ package eu.electricfrog.projectcreator.ui.javafx;
 
 /**
  * JavaFX elements with a prefix used in the ID creation for these elements.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */
@@ -17,14 +17,14 @@ public enum JavaFXElement {
 
 	/**
 	 * Initiate an enum value with a prefix.
-	 * 
+	 *
 	 * @param prefix The prefix used by the element represented by the enumeration value.
 	 */
 	private JavaFXElement(final String prefix) { this.prefix = prefix; }
 
 	/**
 	 * Get the prefix of this element.
-	 * 
+	 *
 	 * @return Return the element prefix.
 	 */
 	public final String getPrefix() { return this.prefix; }

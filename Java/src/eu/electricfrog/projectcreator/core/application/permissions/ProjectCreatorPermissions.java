@@ -9,7 +9,7 @@ import eu.electricfrog.projectcreator.core.application.boot.BootMode;
 
 /**
  * Keep track of all permissions linked to certain boot modes.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */

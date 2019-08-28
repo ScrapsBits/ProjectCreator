@@ -9,7 +9,7 @@ import eu.electricfrog.projectcreator.core.application.permissions.ProjectCreato
 
 /**
  * Keep track of various aspects related to the ProjectCreator application.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */
@@ -30,7 +30,7 @@ public class ProjectCreatorManager implements ApplicationManager {
 
 	/**
 	 * Handle the received arguments and initialize the core of the application.
-	 * 
+	 *
 	 * @param args Console arguments provided with the application being executed.
 	 */
 	public ProjectCreatorManager(final String[] args) {

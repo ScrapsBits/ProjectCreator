@@ -14,35 +14,34 @@ import eu.electricfrog.projectcreator.core.files.type.FileHandler;
 
 /**
  * Handle XML files.
- * @author ScrapsBits
+ * 
+ * @author  ScrapsBits
  * @version 1.1
  */
 public abstract class XmlFileHandler extends FileHandler {
-	public XmlFileHandler(File file) {
-		super(file);
-	}
-	
+	public XmlFileHandler(final File file) { super(file); }
+
 	// TODO: Turn buildDocument into static functions.
 	/**
 	 * Build the XML document reader/writer.
-	 * @return Returns a Document object containing elements from the XML file.
+	 * 
+	 * @return                              Returns a Document object containing elements from the XML file.
 	 * @throws ParserConfigurationException Thrown if a DocumentBuildercannot be created which satisfies the configuration requested.
-	 * @throws SAXException Thrown if any parse errors occur.
-	 * @throws IOException Thrown if any IO errors occur.
+	 * @throws SAXException                 Thrown if any parse errors occur.
+	 * @throws IOException                  Thrown if any IO errors occur.
 	 */
-	public final Document buildDocument() throws ParserConfigurationException, SAXException, IOException {
-		return this.buildDocument(false);
-	}
+	public final Document buildDocument() throws ParserConfigurationException, SAXException, IOException { return this.buildDocument(false); }
 
 	/**
 	 * Build the XML document reader/writer.
-	 * @param validating If true, set the XML file to validate based on the .dtd file reference included in the XML file.
-	 * @return Returns a Document object containing elements from the XML file.
+	 * 
+	 * @param  validating                   If true, set the XML file to validate based on the .dtd file reference included in the XML file.
+	 * @return                              Returns a Document object containing elements from the XML file.
 	 * @throws ParserConfigurationException Thrown if a DocumentBuildercannot be created which satisfies the configuration requested.
-	 * @throws SAXException Thrown if any parse errors occur.
-	 * @throws IOException Thrown if any IO errors occur.
+	 * @throws SAXException                 Thrown if any parse errors occur.
+	 * @throws IOException                  Thrown if any IO errors occur.
 	 */
-	public final Document buildDocument(boolean validating) throws ParserConfigurationException, SAXException, IOException {
+	public final Document buildDocument(final boolean validating) throws ParserConfigurationException, SAXException, IOException {
 		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setIgnoringElementContentWhitespace(true);
 		// TODO: Set ErrorHandler.

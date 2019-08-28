@@ -21,51 +21,48 @@ import eu.electricfrog.projectcreator.core.models.Project;
 
 /**
  * A reader class to read an XML file into a project.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */
 public final class ConfigFileReader extends GenericFileReader {
 	/**
 	 * Initialize a reader for the configuration file.
-	 * 
+	 *
 	 * @param file The configuration file to read. This file is generally selected by the user.
 	 */
-	public ConfigFileReader(File file) { super(file); }
+	public ConfigFileReader(final File file) { super(file); }
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @return Returns a project read from the reader's file. Returns null if the project could not be read properly.
 	 */
 	@Override
-	public final Project read() {
-		// Placeholder fields to use for making the Project instance later.
-		String name = null;
-		String configLocation = super.getFile().getAbsolutePath();
-		String directory = null;
-
-		List<ProgrammingLanguage> languages = new ArrayList<>();
+	public Project read() {
 		try {
-			XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
-			Document document = fileHandler.buildDocument(true);
+			final XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
+			final Document document = fileHandler.buildDocument(true);
 			System.out.println("Found root node " + document.getDocumentElement().getNodeName()); // TODO: Replace with log component.
 
-			name = document.getDocumentElement().getAttribute("name");
+			final String name = document.getDocumentElement().getAttribute("name");
 
 			final NodeList nodes = document.getDocumentElement().getChildNodes();
+			List<ProgrammingLanguage> languages = null;
 			for(int i = 0; i < nodes.getLength(); i += 1) {
 				final Node node = nodes.item(i);
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
-					Element element = (Element)node;
+					final Element element = (Element)node;
 					switch(element.getNodeName()) {
 						// TODO: Replace hard-coded values with more flexible values.
 						case "programming_languages":
+							languages = new ArrayList<>();
 							languages.addAll(this.readLanguages(element));
 							break;
 					}
 				}
 			}
-			return new Project(directory, name, configLocation, languages);
+			return new Project(null, name, super.getFile().getAbsolutePath(), languages);
 		} catch(ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
@@ -74,11 +71,12 @@ public final class ConfigFileReader extends GenericFileReader {
 
 	/**
 	 * Read the languages from an element containing programming languages.
-	 * @param element The element containing a list of programming languages.
-	 * @return Returns a list of all found programming languages. Returns an empty list if no programming languages could be read.
+	 * 
+	 * @param  element The element containing a list of programming languages.
+	 * @return         Returns a list of all found programming languages. Returns an empty list if no programming languages could be read.
 	 */
-	private final List<ProgrammingLanguage> readLanguages(Element element) {
-		List<ProgrammingLanguage> languages = new ArrayList<>();
+	private List<ProgrammingLanguage> readLanguages(final Element element) {
+		final List<ProgrammingLanguage> languages = new ArrayList<>();
 		final NodeList languageNodes = element.getChildNodes();
 		for(int i = 0; i < languageNodes.getLength(); i += 1) {
 			final Node languageNode = languageNodes.item(i);

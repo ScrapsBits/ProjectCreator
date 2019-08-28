@@ -2,7 +2,8 @@ package eu.electricfrog.projectcreator.core.models;
 
 /**
  * A language used for programming.
- * @author ScrapsBits
+ * 
+ * @author  ScrapsBits
  * @version 1.0
  */
 public class ProgrammingLanguage {
@@ -18,9 +19,10 @@ public class ProgrammingLanguage {
 	 * The type of language this is.
 	 */
 	private final ProgrammingLanguageType type;
-	
+
 	/**
 	 * Initialize a new language.
+	 * 
 	 * @param name
 	 */
 	public ProgrammingLanguage(final String name, final String version, final ProgrammingLanguageType type) {
@@ -28,56 +30,50 @@ public class ProgrammingLanguage {
 		this.version = version;
 		this.type = type;
 	}
-	
-	public ProgrammingLanguage(final String name, final String version, final String type) {
-		this(name, version, ProgrammingLanguageType.valueOf(type.toUpperCase()));
-	}
-	
-	/**
-	 * Get the name of the language.
-	 * @return Returns the language name.
-	 */
-	public final String getName() {
-		return this.name;
-	}
-	
-	/**
-	 * Get the version of this programming language.
-	 * @return Returns the version of the language.
-	 */
-	public final String getVersion() {
-		return this.version;
-	}
-	
-	/**
-	 * Returns a string representation of this language. In this case, that means it returns the language name.
-	 * @return Returns the name of the language.
-	 */
+
+	public ProgrammingLanguage(final String name, final String version, final String type) { this(name, version, ProgrammingLanguageType.valueOf(type.toUpperCase())); }
+
 	@Override
-	public final String toString() {
-		return this.getName() + " (" + this.getVersion() + ")";
-	}
-	
-	/**
-	 * Get the type of this language.
-	 * @return Returns an enum value representing the type of this language.
-	 */
-	public final ProgrammingLanguageType getType() {
-		return this.type;
-	}
-	
-	@Override
-	public final boolean equals(Object obj) {
+	public final boolean equals(final Object obj) {
 		if(obj instanceof ProgrammingLanguage) {
-			ProgrammingLanguage programmingLanguage = (ProgrammingLanguage)obj;
+			final ProgrammingLanguage programmingLanguage = (ProgrammingLanguage)obj;
 			return this.name.contentEquals(programmingLanguage.name) && this.version.contentEquals(programmingLanguage.version);
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Get the name of the language.
+	 * 
+	 * @return Returns the language name.
+	 */
+	public final String getName() { return this.name; }
+
+	/**
+	 * Get the type of this language.
+	 * 
+	 * @return Returns an enum value representing the type of this language.
+	 */
+	public final ProgrammingLanguageType getType() { return this.type; }
+
+	/**
+	 * Get the version of this programming language.
+	 * 
+	 * @return Returns the version of the language.
+	 */
+	public final String getVersion() { return this.version; }
+
 	@Override
 	public final int hashCode() {
-		String nameWithVersion = this.name + this.version;
+		final String nameWithVersion = this.name + this.version;
 		return nameWithVersion.hashCode();
 	}
+
+	/**
+	 * Returns a string representation of this language. In this case, that means it returns the language name.
+	 * 
+	 * @return Returns the name of the language.
+	 */
+	@Override
+	public final String toString() { return this.getName() + " (" + this.getVersion() + ")"; }
 }

@@ -30,7 +30,7 @@ public abstract class JavaFXController extends GenericController {
 
 	/**
 	 * Get the JavaFX user interface stage.
-	 * 
+	 *
 	 * @return Returns the stage reference of the JavaFX application.
 	 */
 	public final Stage getStage() { return this.stage; }
@@ -42,7 +42,7 @@ public abstract class JavaFXController extends GenericController {
 
 	/**
 	 * Set the stage used by the controller.
-	 * 
+	 *
 	 * @param stage The JavaFX stage.
 	 */
 	public final void setStage(final Stage stage) {

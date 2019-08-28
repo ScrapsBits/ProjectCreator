@@ -27,31 +27,30 @@ import eu.electricfrog.projectcreator.core.models.Project;
 
 /**
  * A writer class to write an XML file for a project.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */
-public final class ConfigFileWriter extends GenericFileWriter {
+public final class ConfigFileWriter extends ProjectFileWriter {
 	/**
 	 * Set the project for this file writer.
-	 * 
+	 *
 	 * @param project The project to be written into a file.
 	 */
-	public ConfigFileWriter(Project project) {
+	public ConfigFileWriter(final Project project) {
 		super(project);
-		if(project.getConfigFile().contains(".config")) {
+		if(project.getConfigFile().contains(".config"))
 			super.setFile(new File(project.getConfigFile()));
-		} else {
+		else
 			super.setFile(new File(project.getConfigFile() + "/.config"));
-		}
 	}
 
 	@Override
-	public final void write() {
+	public void write() {
 		System.out.println("Writing .config file for project " + this.project().toString() + "."); // TODO: Replace with log component.
 		try {
 			if(ApplicationLauncher.manager().permissions().hasPermission(Permission.FILE_WRITE)) {
-				XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
+				final XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
 				final Document document = fileHandler.buildDocument(true);
 
 				final Element root = document.createElement("project");
@@ -61,7 +60,7 @@ public final class ConfigFileWriter extends GenericFileWriter {
 				if(this.project().getProgrammingLanguages().size() > 0) {
 					final Element programmingLanguages = document.createElement("programming_languages");
 					root.appendChild(programmingLanguages);
-					for(ProgrammingLanguage programmingLanguage : this.project().getProgrammingLanguages()) {
+					for(final ProgrammingLanguage programmingLanguage : this.project().getProgrammingLanguages()) {
 						final Element language = document.createElement("programming_language");
 						language.setAttribute("name", programmingLanguage.getName());
 						language.setAttribute("version", programmingLanguage.getVersion());
@@ -75,9 +74,10 @@ public final class ConfigFileWriter extends GenericFileWriter {
 				transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-				DOMImplementation domImplementation = document.getImplementation();
+				final DOMImplementation domImplementation = document.getImplementation();
 				// TODO: Replace hardcoded path with online file.
-				DocumentType docType = domImplementation.createDocumentType("doctype", "-//Project//DTD Project V1.0//EN", FileManager.getApplicationDataDirectory() + "/resources/config.dtd");
+				final DocumentType docType = domImplementation.createDocumentType("doctype", "-//Project//DTD Project V1.0//EN",
+						FileManager.getApplicationDataDirectory() + "/resources/config.dtd");
 				transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, docType.getPublicId());
 				transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, docType.getSystemId());
 				final DOMSource domSource = new DOMSource(document);
@@ -85,18 +85,15 @@ public final class ConfigFileWriter extends GenericFileWriter {
 				transformer.transform(domSource, streamResult);
 
 				System.out.println("File written at " + this.project().getConfigFile() + "."); // TODO: Replace with log component.
-			} else {
-				// TODO: Add "No permission" exception.
+			} else // TODO: Add "No permission" exception.
 				System.out.println("No permission to write files."); // TODO: Replace with log component.
-				// TODO: Throw exception.
-			}
-			// TODO: Catch exceptions when the file cannot be written.
+			// TODO: Throw exception.
 		} catch(ParserConfigurationException | TransformerException e) {
 			e.printStackTrace();
-		} catch(SAXException e) {
+		} catch(final SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch(IOException e) {
+		} catch(final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

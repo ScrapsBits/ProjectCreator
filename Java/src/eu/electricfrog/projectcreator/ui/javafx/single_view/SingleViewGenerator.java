@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Generator class to create the elements displayed on the SingleViewController.
- * 
+ *
  * @author  ScrapsBits
  * @version 1.0
  */
@@ -31,7 +31,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 
 	/**
 	 * Provide a controller of type SingleViewController to the element generator.
-	 * 
+	 *
 	 * @param controller The SingleViewController used by the user interface.
 	 */
 	protected SingleViewGenerator(final SingleViewController controller) {
@@ -85,6 +85,22 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	}
 
 	/**
+	 * Generate content to be displayed on the tab "Finalize".
+	 */
+	private final void generateFinalizeTabContent() {
+		final SingleViewController controller = (SingleViewController)super.controller;
+		System.out.println("Generating content on Finalize.");
+		controller.btnSave = super.generateButton("Save", "Save");
+		// TODO: Change into method reference.
+		controller.btnSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnSaveClick(event));
+		// TODO: Change into method reference.
+		controller.btnGenerateProjects = super.generateButton("GenerateProjects", "Generate projects");
+		controller.btnGenerateProjects.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnGenerateProjectsClick(event));
+		controller.acpComplete.getChildren().addAll(controller.btnSave, controller.btnGenerateProjects);
+		System.out.println("Content on Finalize has been generated.");
+	}
+
+	/**
 	 * Generate content to be displayed on the tab "Programming".
 	 */
 	private final void generateProgrammingTabContent() {
@@ -93,14 +109,14 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lblProgrammingLanguages = super.generateLabel("AvailableLanguages", "Available languages:");
 		controller.lsvLanguages = super.generateListView("Languages");
 		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((observableLanguage) -> observableLanguage.getObservableProperty()));
-//		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((language) -> {
-//			// TODO: Replace with observable ProgrammingLanguage.
-//			BooleanProperty observable = new SimpleBooleanProperty();
-//			observable.addListener((obj, oldValue, newValue) -> {
-//				System.out.println(obj.getValue());
-//			});
-//			return observable;
-//		}));
+		// controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((language) -> {
+		// // TODO: Replace with observable ProgrammingLanguage.
+		// BooleanProperty observable = new SimpleBooleanProperty();
+		// observable.addListener((obj, oldValue, newValue) -> {
+		// System.out.println(obj.getValue());
+		// });
+		// return observable;
+		// }));
 		// TODO: Change into method reference.
 		controller.acpProgramming.getChildren().addAll(controller.lblProgrammingLanguages, controller.lsvLanguages);
 		System.out.println("Content on Programming has been generated.");
@@ -127,22 +143,6 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.acpProject.getChildren().addAll(controller.lblProjectName, controller.lblProjectLocation, controller.txfProjectName, controller.txfProjectLocation, controller.btnDirectory,
 				controller.lblProjectDate, controller.btnLoad);
 		System.out.println("Content on Project has been generated.");
-	}
-
-	/**
-	 * Generate content to be displayed on the tab "Finalize".
-	 */
-	private final void generateFinalizeTabContent() {
-		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Finalize.");
-		controller.btnSave = super.generateButton("Save", "Save");
-		// TODO: Change into method reference.
-		controller.btnSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnSaveClick(event));
-		// TODO: Change into method reference.
-		controller.btnGenerateProjects = super.generateButton("GenerateProjects", "Generate projects");
-		controller.btnGenerateProjects.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnGenerateProjectsClick(event));
-		controller.acpComplete.getChildren().addAll(controller.btnSave, controller.btnGenerateProjects);
-		System.out.println("Content on Finalize has been generated.");
 	}
 
 	/**
@@ -237,6 +237,19 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	}
 
 	/**
+	 * Position the elements displayed on the Finalize tab.
+	 */
+	private final void positionFinalizeTabContent() {
+		final SingleViewController controller = (SingleViewController)super.controller;
+		System.out.println("Positioning generated Finalize content.");
+		controller.btnSave.setLayoutX(this.padding);
+		controller.btnSave.setLayoutY(this.padding);
+		controller.btnGenerateProjects.setLayoutX(this.padding);
+		controller.btnGenerateProjects.setLayoutY(2 * this.padding + this.rowSize);
+		System.out.println("Generated Finalize content positioned.");
+	}
+
+	/**
 	 * Position the elements displayed on the Programming tab.
 	 */
 	private final void positionProgrammingTabContent() {
@@ -278,18 +291,5 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lblProjectLocation.setLayoutY(controller.txfProjectLocation.getLayoutY() + .5 * controller.txfProjectLocation.getHeight() - .5 * controller.lblProjectLocation.getHeight());
 		controller.lblProjectDate.setVisible(false);
 		System.out.println("Generated Project content positioned.");
-	}
-
-	/**
-	 * Position the elements displayed on the Finalize tab.
-	 */
-	private final void positionFinalizeTabContent() {
-		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Finalize content.");
-		controller.btnSave.setLayoutX(padding);
-		controller.btnSave.setLayoutY(padding);
-		controller.btnGenerateProjects.setLayoutX(padding);
-		controller.btnGenerateProjects.setLayoutY(2 * padding + rowSize);
-		System.out.println("Generated Finalize content positioned.");
 	}
 }

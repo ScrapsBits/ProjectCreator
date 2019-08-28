@@ -37,7 +37,7 @@ public abstract class JavaFXGenerator {
 
 	/**
 	 * Initialize the JavaFX generator with the provided controller.
-	 * 
+	 *
 	 * @param controller The controller used by the JavaFX application.
 	 */
 	protected JavaFXGenerator(final JavaFXController controller) { this.controller = controller; }

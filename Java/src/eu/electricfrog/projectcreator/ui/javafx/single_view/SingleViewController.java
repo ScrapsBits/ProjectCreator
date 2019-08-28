@@ -90,69 +90,65 @@ public final class SingleViewController extends JavaFXController {
 	}
 
 	/**
-	 * Load in a file keeping track of the config location.
-	 * 
+	 * Fill the list of available languages.
+	 *
+	 * @param languages A list of languages available to making projects for.
+	 */
+	public void fillAvailableLanguages(final List<ObservableProgrammingLanguage> languages) { this.lsvLanguages.getItems().addAll(languages); }
+
+	/**
+	 * Create the files and folders for the selected programming languages.
+	 *
 	 * @param event The click event.
 	 */
-	public final void handleBtnLoadClick(final MouseEvent event) {
-		final FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Opening project configuration.");
-		File file = fileChooser.showOpenDialog(stage);
-		if(file != null) {
-			ConfigFileReader reader = new ConfigFileReader(file);
-			Project project = reader.read();
-			this.txfProjectName.setText(project.getName());
-			this.txfProjectLocation.setText(project.getConfigFile());
-			
-			for(ObservableProgrammingLanguage observableLanguage : this.lsvLanguages.getItems()) {
-				observableLanguage.getObservableProperty().set(false);
-				if(project.getProgrammingLanguages().contains(observableLanguage)) observableLanguage.getObservableProperty().set(true);
-			}
+	public void handleBtnGenerateProjectsClick(final MouseEvent event) {
+		final List<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
+		for(final ObservableProgrammingLanguage programmingLanguage : this.lsvLanguages.getItems()) if(programmingLanguage.isChecked()) programmingLanguages.add(programmingLanguage);
+		final Project project = new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), programmingLanguages);
+		for(final ProgrammingLanguage selectedLanguage : project.getProgrammingLanguages()) switch(selectedLanguage.getName()) {
+			case "Java":
+				new JavaProjectFileWriter(project).write();
+				break;
+			case "C#":
+				new CSharpProjectFileWriter(project).write();
+				break;
 		}
 	}
 
 	/**
-	 * Save the project configuration to the system.
-	 * 
+	 * Load in a file keeping track of the config location.
+	 *
 	 * @param event The click event.
 	 */
-	public final void handleBtnSaveClick(final MouseEvent event) {
-		List<ObservableProgrammingLanguage> observableLanguages = new ArrayList<>();
-		for(ObservableProgrammingLanguage language : this.lsvLanguages.getItems()) {
-			if(language.isChecked()) observableLanguages.add(language);
-		}
-		Project project = new Project(null, this.txfProjectName.getText(), this.txfProjectLocation.getText(), observableLanguages);
-		new ConfigFileWriter(project).write();
-	}
-	
-	/**
-	 * Create the files and folders for the selected programming languages.
-	 * @param event The click event.
-	 */
-	public final void handleBtnGenerateProjectsClick(final MouseEvent event) {
-		List<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
-		for(ObservableProgrammingLanguage programmingLanguage : this.lsvLanguages.getItems()) {
-			if(programmingLanguage.isChecked()) programmingLanguages.add(programmingLanguage);
-		}
-		Project project = new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), programmingLanguages);
-		for(ProgrammingLanguage selectedLanguage : project.getProgrammingLanguages()) {
-			switch(selectedLanguage.getName()) {
-				case "Java":
-					new JavaProjectFileWriter(project).write();
-					break;
-				case "C#":
-					new CSharpProjectFileWriter(project).write();
-					break;
+	public void handleBtnLoadClick(final MouseEvent event) {
+		final FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Opening project configuration.");
+		final File file = fileChooser.showOpenDialog(this.stage);
+		if(file != null) {
+			final ConfigFileReader reader = new ConfigFileReader(file);
+			final Project project = reader.read();
+			if(project != null) {
+				this.txfProjectName.setText(project.getName());
+				this.txfProjectLocation.setText(project.getConfigFile());
+
+				for(final ObservableProgrammingLanguage observableLanguage : this.lsvLanguages.getItems()) {
+					observableLanguage.getObservableProperty().set(false);
+					if(project.getProgrammingLanguages().contains(observableLanguage)) observableLanguage.getObservableProperty().set(true);
+				}
+			} else {
+				this.txfProjectName.setText("");
+				this.txfProjectLocation.setText("");
+				for(final ObservableProgrammingLanguage language : this.lsvLanguages.getItems()) language.getObservableProperty().set(false);
 			}
 		}
 	}
 
 	/**
 	 * Select a directory to store the project config file.
-	 * 
+	 *
 	 * @param event The click event.
 	 */
-	public final void handleBtnLocationClick(final MouseEvent event) {
+	public void handleBtnLocationClick(final MouseEvent event) {
 		final Button btn = (Button)event.getSource();
 		final DirectoryChooser chooser = new DirectoryChooser();
 		final File directory = chooser.showDialog(btn.getScene().getWindow());
@@ -165,14 +161,17 @@ public final class SingleViewController extends JavaFXController {
 	}
 
 	/**
-	 * Fill the list of available languages.
-	 * 
-	 * @param languages A list of languages available to making projects for.
+	 * Save the project configuration to the system.
+	 *
+	 * @param event The click event.
 	 */
-	public void fillAvailableLanguages(List<ObservableProgrammingLanguage> languages) {
-		this.lsvLanguages.getItems().addAll(languages);
+	public void handleBtnSaveClick(final MouseEvent event) {
+		final List<ObservableProgrammingLanguage> observableLanguages = new ArrayList<>();
+		for(final ObservableProgrammingLanguage language : this.lsvLanguages.getItems()) if(language.isChecked()) observableLanguages.add(language);
+		final Project project = new Project(null, this.txfProjectName.getText(), this.txfProjectLocation.getText(), observableLanguages);
+		new ConfigFileWriter(project).write();
 	}
-	
+
 	@Override
 	public void initialize() {
 		super.generator = new SingleViewGenerator(this);

@@ -7,39 +7,39 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Extend the ProgrammingLanguage model to allow the user interface to mark it as checked.
- * @author ScrapsBits
+ * 
+ * @author  ScrapsBits
  * @version 1.0
  */
 public class ObservableProgrammingLanguage extends ProgrammingLanguage {
 	/**
 	 * Keep track of the observable property.
 	 */
-	private BooleanProperty isChecked = new SimpleBooleanProperty();
+	private final BooleanProperty isChecked = new SimpleBooleanProperty();
 
 	/**
 	 * Initialize the ProgrammingLanguage object and set the checkmark for this object to false.
-	 * @param name The name of the programming language.
+	 * 
+	 * @param name    The name of the programming language.
 	 * @param version The programming language version.
-	 * @param type The type of language this is.
+	 * @param type    The type of language this is.
 	 */
-	public ObservableProgrammingLanguage(String name, String version, ProgrammingLanguageType type) {
+	public ObservableProgrammingLanguage(final String name, final String version, final ProgrammingLanguageType type) {
 		super(name, version, type);
-		isChecked.set(false);
+		this.isChecked.set(false);
 	}
-	
-	/**
-	 * Read if the language is checked.
-	 * @return Returns true if the language has been checked. Returns false if it has not been checked.
-	 */
-	public final boolean isChecked() {
-		return this.isChecked.get();
-	}
-	
+
 	/**
 	 * Get the reference to the boolean property.
+	 * 
 	 * @return Returns a reference to the boolean property.
 	 */
-	public final BooleanProperty getObservableProperty() {
-		return this.isChecked;
-	}
+	public final BooleanProperty getObservableProperty() { return this.isChecked; }
+
+	/**
+	 * Read if the language is checked.
+	 * 
+	 * @return Returns true if the language has been checked. Returns false if it has not been checked.
+	 */
+	public final boolean isChecked() { return this.isChecked.get(); }
 }
