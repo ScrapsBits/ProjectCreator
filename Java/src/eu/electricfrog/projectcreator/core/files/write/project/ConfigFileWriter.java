@@ -1,9 +1,8 @@
 package eu.electricfrog.projectcreator.core.files.write.project;
 
 import java.io.File;
+import java.io.IOException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -16,10 +15,13 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import eu.electricfrog.projectcreator.ApplicationLauncher;
-import eu.electricfrog.projectcreator.core.application.boot.BootMode;
+import eu.electricfrog.projectcreator.core.application.permissions.Permission;
 import eu.electricfrog.projectcreator.core.files.FileManager;
+import eu.electricfrog.projectcreator.core.files.type.xml.ConfigFileHandler;
+import eu.electricfrog.projectcreator.core.files.type.xml.XmlFileHandler;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 
@@ -29,7 +31,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * @author  ScrapsBits
  * @version 1.0
  */
-public class ConfigFileWriter extends GenericFileWriter {
+public final class ConfigFileWriter extends GenericFileWriter {
 	/**
 	 * Set the project for this file writer.
 	 * 
@@ -45,17 +47,12 @@ public class ConfigFileWriter extends GenericFileWriter {
 	}
 
 	@Override
-	public void write() {
+	public final void write() {
 		System.out.println("Writing .config file for project " + this.project().toString() + "."); // TODO: Replace with log component.
 		try {
-			// TODO: Check for writing permissions.
-			boolean hasPermission = false;
-			if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) { hasPermission = true; }
-			if(hasPermission) {
-				final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-				documentBuilderFactory.setValidating(true);
-				final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-				final Document document = documentBuilder.newDocument();
+			if(ApplicationLauncher.manager().permissions().hasPermission(Permission.FILE_WRITE)) {
+				XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
+				final Document document = fileHandler.buildDocument(true);
 
 				final Element root = document.createElement("project");
 				root.setAttribute("name", this.project().getName());
@@ -89,11 +86,18 @@ public class ConfigFileWriter extends GenericFileWriter {
 
 				System.out.println("File written at " + this.project().getConfigFile() + "."); // TODO: Replace with log component.
 			} else {
+				// TODO: Add "No permission" exception.
 				System.out.println("No permission to write files."); // TODO: Replace with log component.
 				// TODO: Throw exception.
 			}
 			// TODO: Catch exceptions when the file cannot be written.
 		} catch(ParserConfigurationException | TransformerException e) {
+			e.printStackTrace();
+		} catch(SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

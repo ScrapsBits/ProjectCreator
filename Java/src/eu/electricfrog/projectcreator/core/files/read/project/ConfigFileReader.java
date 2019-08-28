@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
@@ -16,6 +14,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import eu.electricfrog.projectcreator.core.files.read.GenericFileReader;
+import eu.electricfrog.projectcreator.core.files.type.xml.ConfigFileHandler;
+import eu.electricfrog.projectcreator.core.files.type.xml.XmlFileHandler;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 
@@ -25,7 +25,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * @author  ScrapsBits
  * @version 1.0
  */
-public class ConfigFileReader extends GenericFileReader {
+public final class ConfigFileReader extends GenericFileReader {
 	/**
 	 * Initialize a reader for the configuration file.
 	 * 
@@ -33,8 +33,12 @@ public class ConfigFileReader extends GenericFileReader {
 	 */
 	public ConfigFileReader(File file) { super(file); }
 
+	/**
+	 * {@inheritDoc}
+	 * @return Returns a project read from the reader's file. Returns null if the project could not be read properly.
+	 */
 	@Override
-	public Project read() {
+	public final Project read() {
 		// Placeholder fields to use for making the Project instance later.
 		String name = null;
 		String configLocation = super.getFile().getAbsolutePath();
@@ -42,13 +46,8 @@ public class ConfigFileReader extends GenericFileReader {
 
 		List<ProgrammingLanguage> languages = new ArrayList<>();
 		try {
-			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			documentBuilderFactory.setIgnoringElementContentWhitespace(true);
-			// TODO: Set ErrorHandler.
-			documentBuilderFactory.setValidating(true);
-			final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			final Document document = documentBuilder.parse(super.getFile());
-			document.getDocumentElement().normalize();
+			XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
+			Document document = fileHandler.buildDocument(true);
 			System.out.println("Found root node " + document.getDocumentElement().getNodeName()); // TODO: Replace with log component.
 
 			name = document.getDocumentElement().getAttribute("name");
@@ -59,6 +58,7 @@ public class ConfigFileReader extends GenericFileReader {
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element)node;
 					switch(element.getNodeName()) {
+						// TODO: Replace hard-coded values with more flexible values.
 						case "programming_languages":
 							languages.addAll(this.readLanguages(element));
 							break;
@@ -77,7 +77,7 @@ public class ConfigFileReader extends GenericFileReader {
 	 * @param element The element containing a list of programming languages.
 	 * @return Returns a list of all found programming languages. Returns an empty list if no programming languages could be read.
 	 */
-	private List<ProgrammingLanguage> readLanguages(Element element) {
+	private final List<ProgrammingLanguage> readLanguages(Element element) {
 		List<ProgrammingLanguage> languages = new ArrayList<>();
 		final NodeList languageNodes = element.getChildNodes();
 		for(int i = 0; i < languageNodes.getLength(); i += 1) {
