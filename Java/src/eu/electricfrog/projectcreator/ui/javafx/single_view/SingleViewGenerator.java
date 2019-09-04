@@ -2,12 +2,19 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view;
 
 import eu.electricfrog.projectcreator.ApplicationLauncher;
 import eu.electricfrog.projectcreator.core.application.boot.BootMode;
+import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
+import eu.electricfrog.projectcreator.ui.javafx.JavaFXElement;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXGenerator;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Generator class to create the elements displayed on the SingleViewController.
@@ -16,19 +23,6 @@ import javafx.scene.input.MouseEvent;
  * @version 1.0
  */
 public class SingleViewGenerator extends JavaFXGenerator {
-	/**
-	 * Define the size of each column in the user interface.
-	 */
-	private final double columnSize = 74;
-	/**
-	 * Define the size of each row in the user interface.
-	 */
-	private final double rowSize = 24;
-	/**
-	 * Labels jump in a little bit to improve alignment visuals.
-	 */
-	private final double labelJump = 6;
-
 	/**
 	 * Provide a controller of type SingleViewController to the element generator.
 	 *
@@ -47,8 +41,8 @@ public class SingleViewGenerator extends JavaFXGenerator {
 
 		this.generateTabMenu();
 		this.generateProjectTabContent();
-		// TODO: Remove DEVELOPMENT boot mode check.
 		this.generateProgrammingTabContent();
+		// TODO: Remove DEVELOPMENT boot mode check.
 		if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) {
 			this.generateDocumentationTabContent();
 			this.generateDiagramsTabContent();
@@ -65,11 +59,11 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateDiagramsTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Diagrams.");
+		System.out.println("Generating content on Diagrams."); // TODO: Replace with log component.
 		controller.lblDiagramTypes = super.generateLabel("DiagramTypes", "Diagram types: ");
 		controller.lsvDiagrams = super.generateListView("DiagramTypes");
 		controller.acpDiagrams.getChildren().addAll(controller.lblDiagramTypes, controller.lsvDiagrams);
-		System.out.println("Content on Diagrams has been generated.");
+		System.out.println("Content on Diagrams has been generated."); // TODO: Replace with log component.
 	}
 
 	/**
@@ -77,11 +71,11 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateDocumentationTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Documentation.");
+		System.out.println("Generating content on Documentation."); // TODO: Replace with log component.
 		controller.lblDocumentationTypes = super.generateLabel("DocumentationTypes", "Documentation types: ");
 		controller.lsvDocumentation = super.generateListView("DocTypes");
 		controller.acpDocumentation.getChildren().addAll(controller.lblDocumentationTypes, controller.lsvDocumentation);
-		System.out.println("Content on Documentation has been generated.");
+		System.out.println("Content on Documentation has been generated."); // TODO: Replace with log component.
 	}
 
 	/**
@@ -89,15 +83,43 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateFinalizeTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Finalize.");
+		System.out.println("Generating content on Finalize."); // TODO: Replace with log component.
+		controller.scpLanguages = super.generateScrollPane("Languages");
+		controller.scpLanguages.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		controller.acpLanguages = super.generateAnchorPane("Languages");
+		controller.scpLanguages.setContent(controller.acpLanguages);
+
 		controller.btnSave = super.generateButton("Save", "Save");
 		// TODO: Change into method reference.
 		controller.btnSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnSaveClick(event));
 		// TODO: Change into method reference.
 		controller.btnGenerateProjects = super.generateButton("GenerateProjects", "Generate projects");
 		controller.btnGenerateProjects.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnGenerateProjectsClick(event));
-		controller.acpComplete.getChildren().addAll(controller.btnSave, controller.btnGenerateProjects);
-		System.out.println("Content on Finalize has been generated.");
+		controller.acpComplete.getChildren().addAll(controller.btnSave, controller.btnGenerateProjects, controller.scpLanguages);
+		System.out.println("Content on Finalize has been generated."); // TODO: Replace with log component.
+	}
+
+	public final void generateSelectedLanguagePane(ProgrammingLanguage language) {
+		System.out.println("Generating settings for language " + language.getName());
+		final SingleViewController controller = (SingleViewController)super.controller;
+		// TODO: Check if this item already exists.
+		controller.acpLanguages.getChildren().removeIf((child) -> child.getId().contentEquals(JavaFXElement.ANCHORPANE.getPrefix() + language.toCharString()));
+		AnchorPane languagePane = super.generateAnchorPane(language.toCharString());
+		Label languageName = super.generateLabel(language.toCharString(), language.getName());
+		Button languageSettings = super.generateButton(language.toCharString(), "Settings");
+		languageSettings.setUserData(language);
+		switch(language.getName()) {
+			case "C#":
+				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnCSharpSettingsClick(event));
+				break;
+			case "Java":
+				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnJavaSettingsClick(event));
+				break;
+			case "PHP":
+				break;
+		}
+		languagePane.getChildren().addAll(languageName, languageSettings);
+		controller.acpLanguages.getChildren().add(languagePane);
 	}
 
 	/**
@@ -105,21 +127,13 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateProgrammingTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Programming.");
+		System.out.println("Generating content on Programming."); // TODO: Replace with log component.
 		controller.lblProgrammingLanguages = super.generateLabel("AvailableLanguages", "Available languages:");
 		controller.lsvLanguages = super.generateListView("Languages");
 		controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((observableLanguage) -> observableLanguage.getObservableProperty()));
-		// controller.lsvLanguages.setCellFactory(CheckBoxListCell.forListView((language) -> {
-		// // TODO: Replace with observable ProgrammingLanguage.
-		// BooleanProperty observable = new SimpleBooleanProperty();
-		// observable.addListener((obj, oldValue, newValue) -> {
-		// System.out.println(obj.getValue());
-		// });
-		// return observable;
-		// }));
 		// TODO: Change into method reference.
 		controller.acpProgramming.getChildren().addAll(controller.lblProgrammingLanguages, controller.lsvLanguages);
-		System.out.println("Content on Programming has been generated.");
+		System.out.println("Content on Programming has been generated."); // TODO: Replace with log component.
 	}
 
 	/**
@@ -127,7 +141,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateProjectTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating content on Project.");
+		System.out.println("Generating content on Project."); // TODO: Replace with log component.
 		controller.lblProjectName = super.generateLabel("ProjectName", "Name: ");
 		controller.lblProjectLocation = super.generateLabel("ProjectLocation", "Location: ");
 		controller.lblProjectDate = super.generateLabel("ProjectDate", "");
@@ -142,7 +156,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 
 		controller.acpProject.getChildren().addAll(controller.lblProjectName, controller.lblProjectLocation, controller.txfProjectName, controller.txfProjectLocation, controller.btnDirectory,
 				controller.lblProjectDate, controller.btnLoad);
-		System.out.println("Content on Project has been generated.");
+		System.out.println("Content on Project has been generated."); // TODO: Replace with log component.
 	}
 
 	/**
@@ -150,7 +164,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void generateTabMenu() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Generating Tabs.");
+		System.out.println("Generating Tabs."); // TODO: Replace with log component.
 		controller.tbpMenu = super.generateTabPane("Menu");
 		controller.tbpMenu.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		controller.tbpMenu.setTabMinWidth(45);
@@ -180,7 +194,8 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		else
 			controller.tbpMenu.getTabs().addAll(tabProject, tabProgramming, tabComplete);
 		controller.stpScene.getChildren().add(controller.tbpMenu);
-		System.out.println("Tabs generated.");
+		controller.tbpMenu.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> controller.listenTabChange(observable, oldTab, newTab));
+		System.out.println("Tabs generated."); // TODO: Replace with log component.
 	}
 
 	@Override
@@ -200,6 +215,11 @@ public class SingleViewGenerator extends JavaFXGenerator {
 			// Additional sources
 		}
 		this.positionFinalizeTabContent();
+
+		// if(controller.tbpMenu.getSelectionModel().getSelectedItem().getText().contentEquals("Complete")) {
+		System.out.println("Positioning settings objects.");
+		this.positionProgrammingLanguagesSettings();
+		// }
 	}
 
 	/**
@@ -207,7 +227,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void positionDiagramsTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Diagrams content.");
+		System.out.println("Positioning Diagrams content."); // TODO: Replace with log component.
 		controller.lblDiagramTypes.setLayoutX(this.padding + this.labelJump);
 		controller.lblDiagramTypes.setLayoutY(this.padding);
 		controller.lsvDiagrams.setLayoutX(this.padding);
@@ -216,7 +236,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lsvDiagrams.setPrefHeight(controller.acpDiagrams.getHeight() - 2 * this.padding - this.rowSize);
 		controller.lsvDiagrams.setMaxWidth(this.columnSize * 2);
 		controller.lsvDiagrams.setMaxHeight(controller.acpDiagrams.getHeight() - 2 * this.padding - this.rowSize);
-		System.out.println("Generated Diagrams content positioned.");
+		System.out.println("Diagrams content positioned."); // TODO: Replace with log component.
 	}
 
 	/**
@@ -224,7 +244,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void positionDocumentationTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Documentation content.");
+		System.out.println("Positioning Documentation content.");
 		controller.lblDocumentationTypes.setLayoutX(this.padding + this.labelJump);
 		controller.lblDocumentationTypes.setLayoutY(this.padding);
 		controller.lsvDocumentation.setLayoutX(this.padding);
@@ -233,7 +253,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lsvDocumentation.setPrefHeight(controller.acpDocumentation.getHeight() - 2 * this.padding - this.rowSize);
 		controller.lsvDocumentation.setMaxWidth(this.columnSize * 2);
 		controller.lsvDocumentation.setMaxHeight(controller.acpDocumentation.getHeight() - 2 * this.padding - this.rowSize);
-		System.out.println("Generated Documentation content positioned.");
+		System.out.println("Documentation content positioned.");
 	}
 
 	/**
@@ -241,12 +261,18 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void positionFinalizeTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Finalize content.");
+		System.out.println("Positioning Finalize content.");
+		controller.scpLanguages.setPrefWidth(.5 * controller.acpComplete.getWidth() - this.padding);
+		controller.scpLanguages.setPrefHeight(201);
+		controller.scpLanguages.setLayoutX(this.padding);
+		controller.scpLanguages.setLayoutY(this.padding);
+		controller.acpLanguages.setMinWidth(controller.scpLanguages.getViewportBounds().getWidth());
+		controller.acpLanguages.setPrefWidth(controller.scpLanguages.getViewportBounds().getWidth());
 		controller.btnSave.setLayoutX(this.padding);
-		controller.btnSave.setLayoutY(this.padding);
-		controller.btnGenerateProjects.setLayoutX(this.padding);
-		controller.btnGenerateProjects.setLayoutY(2 * this.padding + this.rowSize);
-		System.out.println("Generated Finalize content positioned.");
+		controller.btnSave.setLayoutY(controller.acpComplete.getHeight() - this.padding - controller.btnSave.getHeight());
+		controller.btnGenerateProjects.setLayoutX(2 * this.padding + controller.btnSave.getWidth());
+		controller.btnGenerateProjects.setLayoutY(controller.acpComplete.getHeight() - this.padding - controller.btnGenerateProjects.getHeight());
+		System.out.println("Finalize content positioned.");
 	}
 
 	/**
@@ -254,7 +280,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void positionProgrammingTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Programming content.");
+		System.out.println("Positioning Programming content.");
 		controller.lblProgrammingLanguages.setLayoutX(this.padding + this.labelJump);
 		controller.lblProgrammingLanguages.setLayoutY(this.padding);
 
@@ -265,7 +291,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lsvLanguages.setMaxWidth(this.columnSize * 2);
 		controller.lsvLanguages.setMaxHeight(controller.acpProgramming.getHeight() - 2 * this.padding - this.rowSize);
 
-		System.out.println("Generated Programming content positioned.");
+		System.out.println("Programming content positioned.");
 	}
 
 	/**
@@ -273,7 +299,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	 */
 	private final void positionProjectTabContent() {
 		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("Positioning generated Project content.");
+		System.out.println("Positioning Project content.");
 		controller.txfProjectName.setLayoutX(this.padding + this.columnSize);
 		controller.txfProjectName.setLayoutY(this.padding + 0 * this.rowSize);
 		controller.txfProjectName.setPrefWidth(controller.acpProject.getWidth() - this.columnSize - 2 * super.padding);
@@ -290,6 +316,31 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lblProjectLocation.setLayoutX(controller.txfProjectLocation.getLayoutX() - controller.lblProjectLocation.getWidth() - this.padding);
 		controller.lblProjectLocation.setLayoutY(controller.txfProjectLocation.getLayoutY() + .5 * controller.txfProjectLocation.getHeight() - .5 * controller.lblProjectLocation.getHeight());
 		controller.lblProjectDate.setVisible(false);
-		System.out.println("Generated Project content positioned.");
+		System.out.println("Project content positioned.");
+	}
+
+	/**
+	 * Position the dynamically generated elements in the scpProgrammingLanguage node.
+	 */
+	public final void positionProgrammingLanguagesSettings() {
+		final SingleViewController controller = (SingleViewController)super.controller;
+		System.out.println("There are " + controller.acpLanguages.getChildren().size() + " items.");
+		for(Node childNode : controller.acpLanguages.getChildren()) {
+			if(childNode instanceof AnchorPane) {
+				childNode.setLayoutY(controller.acpLanguages.getChildren().indexOf(childNode) * 1.5 * rowSize);
+				for(Node e : ((AnchorPane)childNode).getChildren()) {
+					System.out.println("Moving node " + e.getId());
+					if(e instanceof Label) {
+						e.setLayoutX(this.padding);
+						e.setLayoutY(this.padding);
+					}
+					if(e instanceof Button) {
+						Button btnNode = (Button)e;
+						btnNode.setLayoutX(controller.acpLanguages.getWidth() - this.padding - btnNode.getWidth());
+						btnNode.setLayoutY(this.padding);
+					}
+				}
+			}
+		}
 	}
 }

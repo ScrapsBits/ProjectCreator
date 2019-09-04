@@ -57,6 +57,9 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 		availableLanguages.add(new ObservableProgrammingLanguage("C#", "7.3", ProgrammingLanguageType.OBJECT_ORIENTED));
 		availableLanguages.add(new ObservableProgrammingLanguage("PHP", "7.0.0", ProgrammingLanguageType.FUNCTIONAL));
 		availableLanguages.add(new ObservableProgrammingLanguage("Java", "11", ProgrammingLanguageType.OBJECT_ORIENTED));
+		for(ObservableProgrammingLanguage checkableLanguage : availableLanguages) {
+			checkableLanguage.getObservableProperty().addListener((one, two, three) -> controller.onLanguageCheck(checkableLanguage));
+		}
 		controller.fillAvailableLanguages(availableLanguages);
 	}
 }

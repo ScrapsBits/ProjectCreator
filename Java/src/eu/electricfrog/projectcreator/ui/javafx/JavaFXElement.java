@@ -8,7 +8,7 @@ package eu.electricfrog.projectcreator.ui.javafx;
  */
 public enum JavaFXElement {
 	ANCHORPANE("acp"), BORDERPANE("bdr"), BUTTON("btn"), CHECKBOX("chb"), CHECKMENUITEM("cmi"), LABEL("lbl"), MENU("mnu"), MENUBAR("mnb"), MENUITEM("mni"), RADIOBUTTON("rbt"),
-	RADIOMENU("rmn"), RADIOMENUITEM("rmi"), STACKPANE("stp"), TAB("tab"), TABPANE("tbp"), TEXTFIELD("txf"), LISTVIEW("ltv"), CHECKBOXLISTCELL("clc"), CHOICEBOX("chb");
+	RADIOMENU("rmn"), RADIOMENUITEM("rmi"), STACKPANE("stp"), TAB("tab"), TABPANE("tbp"), TEXTFIELD("txf"), LISTVIEW("ltv"), CHECKBOXLISTCELL("clc"), CHOICEBOX("chb"), SCROLLPANE("scp");
 
 	/**
 	 * The prefix for this JavaFX element.

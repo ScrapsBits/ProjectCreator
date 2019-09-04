@@ -83,7 +83,7 @@ public final class ConfigFileReader extends GenericFileReader {
 			if(languageNode.getNodeType() == Node.ELEMENT_NODE) {
 				final Element languageElement = (Element)languageNode;
 				// TODO: Add "Settings" for each language, if present.
-				languages.add(new ProgrammingLanguage(languageElement.getAttribute("name"), languageElement.getAttribute("type"), languageElement.getAttribute("version")));
+				languages.add(new ProgrammingLanguage(languageElement.getAttribute("name"), languageElement.getAttribute("version"), languageElement.getAttribute("type")));
 			}
 		}
 		return languages;

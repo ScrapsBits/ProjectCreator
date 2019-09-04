@@ -12,10 +12,16 @@ import eu.electricfrog.projectcreator.core.files.write.project.languages.java.Ja
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.core.models.Project;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXController;
+import eu.electricfrog.projectcreator.ui.javafx.JavaFXElement;
+import eu.electricfrog.projectcreator.ui.javafx.single_view.language.csharp.CSharpController;
+import eu.electricfrog.projectcreator.ui.javafx.single_view.language.java.JavaController;
 import eu.electricfrog.projectcreator.ui.javafx.single_view.models.ObservableProgrammingLanguage;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -23,15 +29,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Define controls and actions for the SingleView user interface.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @version 1.1
  */
 public final class SingleViewController extends JavaFXController {
-	// TODO: Position all elements here for "injection" purposes. This allows the controller to apply changes to the elements that need changing.
 	/**
 	 * The scene StackPane is the root element for the JavaFX user interface.
 	 */
@@ -44,6 +51,10 @@ public final class SingleViewController extends JavaFXController {
 	 * The AnchorPane elements are the root elements for the various tabs.
 	 */
 	AnchorPane acpProject, acpProgramming, acpDocumentation, acpDiagrams, acpAdditionalSources, acpComplete;
+	/**
+	 * An AnchorPane containing elements for all selected languages. Needs "live" updating.
+	 */
+	AnchorPane acpLanguages;
 	/**
 	 * Labels to explain what is displayed on the Projects tab.
 	 */
@@ -80,6 +91,11 @@ public final class SingleViewController extends JavaFXController {
 	 * Keeps the supported diagram file types.
 	 */
 	ListView<String> lsvDiagrams;
+	/**
+	 * Show all languages selected in a scroll pane.
+	 */
+	ScrollPane scpLanguages;
+	// TODO: Create "card" object for programming languages.
 
 	/**
 	 * Perform processes upon start-up.
@@ -113,6 +129,60 @@ public final class SingleViewController extends JavaFXController {
 				new CSharpProjectFileWriter(project).write();
 				break;
 		}
+	}
+
+	/**
+	 * Open the C# settings User Interface.
+	 * 
+	 * @param event The click event.
+	 */
+	public final void handleBtnCSharpSettingsClick(final MouseEvent event) {
+		CSharpController controller = new CSharpController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
+		System.out.println("Loading in C# user interface.");
+		Stage stage = new Stage();
+		controller.setStage(stage);
+		stage.setWidth(386);
+		stage.setHeight(284);
+		stage.setResizable(false);
+		System.out.println("Loaded user interface successfully.");
+
+		controller.initialize();
+		controller.fillDefaults(new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), this.getCheckedLanguages()));
+
+		System.out.println("Displaying C# user interface.");
+		stage.setTitle("C# Settings");
+		stage.initStyle(StageStyle.UTILITY);
+		stage.sizeToScene();
+		stage.setOnShown((showEvent) -> controller.update());
+		stage.showAndWait();
+		System.out.println("User interface displayed.");
+	}
+
+	/**
+	 * Open the Java settings User Interface.
+	 * 
+	 * @param event The click event.
+	 */
+	public final void handleBtnJavaSettingsClick(final MouseEvent event) {
+		JavaController controller = new JavaController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
+		System.out.println("Loading in Java user interface.");
+		Stage stage = new Stage();
+		controller.setStage(stage);
+		stage.setWidth(386);
+		stage.setHeight(284);
+		stage.setResizable(false);
+		System.out.println("Loaded user interface successfully.");
+
+		controller.initialize();
+		controller.fillDefaults(new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), this.getCheckedLanguages()));
+
+		System.out.println("Displaying Java user interface.");
+		stage.setTitle("Java Settings");
+		stage.initStyle(StageStyle.UTILITY);
+		stage.sizeToScene();
+		stage.setOnShown((showEvent) -> controller.update());
+		stage.showAndWait();
+		System.out.println("User interface displayed.");
 	}
 
 	/**
@@ -180,6 +250,39 @@ public final class SingleViewController extends JavaFXController {
 		super.generator.generate();
 		System.out.println("User interface generated."); // TODO: Replace with log component.
 	}
+
+	/**
+	 * Triggered when the selected tab changes.
+	 * 
+	 * @param ov          The observed object, which is of type Tab.
+	 * @param oldSelected The previously selected tab.
+	 * @param newSelected The newly selected tab, which is being displayed immediately after this triggers.
+	 */
+	public void listenTabChange(ObservableValue<? extends Tab> ov, Tab oldSelected, Tab newSelected) {
+		SingleViewGenerator generator = (SingleViewGenerator)super.generator;
+		if(newSelected.getText().contentEquals("Complete")) {
+			// TODO: Display all selected languages with a settings button for that language. Allows tweaking.
+			System.out.println("Displaying selected languages.");
+			// generator.generateSelectedLanguagesScrollPaneContent();
+			generator.positionProgrammingLanguagesSettings();
+		}
+	}
+
+	public final void onLanguageCheck(ObservableProgrammingLanguage language) {
+		System.out.println("Item has been toggled!");
+		if(language.isChecked()) {
+			((SingleViewGenerator)super.generator).generateSelectedLanguagePane(language);
+		} else {
+			this.acpLanguages.getChildren().removeIf((anchorPane) -> anchorPane.getId().contentEquals(JavaFXElement.ANCHORPANE.getPrefix() + language.toCharString()));
+		}
+	}
+
+	/**
+	 * Get all languages that are checked on the User Interface.
+	 * 
+	 * @return Returns a list of all programming languages that are checked.
+	 */
+	public List<? extends ProgrammingLanguage> getCheckedLanguages() { return this.lsvLanguages.getItems().filtered((language) -> language.isChecked()); }
 
 	@Override
 	public void update() {

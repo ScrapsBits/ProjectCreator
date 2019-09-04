@@ -70,10 +70,16 @@ public class ProgrammingLanguage {
 	}
 
 	/**
-	 * Returns a string representation of this language. In this case, that means it returns the language name.
+	 * Returns a string representation of this language.
 	 * 
 	 * @return Returns the name of the language.
 	 */
 	@Override
 	public final String toString() { return this.getName() + " (" + this.getVersion() + ")"; }
+	
+	/**
+	 * Returns a string representation of this language exclusively in letters.
+	 * @return Returns the name of the language in letters.
+	 */
+	public final String toCharString() { return this.getName().replaceAll("#", "Sharp"); }
 }

@@ -14,7 +14,7 @@ public class ProjectCreatorData implements ApplicationData {
 	/**
 	 * The current version number of the application.
 	 */
-	private final String version = "1.0";
+	private final String version = "1.1";
 	/**
 	 * The copyright owner of the application.
 	 */

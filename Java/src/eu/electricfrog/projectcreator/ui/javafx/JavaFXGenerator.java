@@ -10,10 +10,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +36,18 @@ public abstract class JavaFXGenerator {
 	 * Define the padding distance between the border and an element, and between two elements.
 	 */
 	protected final double padding = 7.2;
+	/**
+	 * Define the size of each column in the user interface.
+	 */
+	protected final double columnSize = 74;
+	/**
+	 * Define the size of each row in the user interface.
+	 */
+	protected final double rowSize = 24;
+	/**
+	 * Labels jump in a little bit to improve alignment visuals.
+	 */
+	protected final double labelJump = 6;
 
 	/**
 	 * Initialize the JavaFX generator with the provided controller.
@@ -64,6 +78,16 @@ public abstract class JavaFXGenerator {
 		button.setId(JavaFXElement.BUTTON.getPrefix() + id);
 		button.setText(text);
 		return button;
+	}
+	
+	protected final ScrollPane generateScrollPane(final String id) {
+		final ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setId(JavaFXElement.SCROLLPANE.getPrefix() + id);
+		scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(false);
+		return scrollPane;
 	}
 
 	protected final CheckBox generateCheckBox(final String id, final String text, final boolean isChecked) {
@@ -104,7 +128,7 @@ public abstract class JavaFXGenerator {
 
 	protected final <T> ListView<T> generateListView(final String id) {
 		final ListView<T> listView = new ListView<>();
-		listView.setId(JavaFXElement.LISTVIEW.getPrefix());
+		listView.setId(JavaFXElement.LISTVIEW.getPrefix() + id);
 		return listView;
 	}
 
@@ -149,7 +173,7 @@ public abstract class JavaFXGenerator {
 
 	protected final Tab generateTab(final String id, final String text) {
 		final Tab tab = new Tab();
-		tab.setId(JavaFXElement.TAB.getPrefix());
+		tab.setId(JavaFXElement.TAB.getPrefix() + id);
 		tab.setText(text);
 		return tab;
 	}
