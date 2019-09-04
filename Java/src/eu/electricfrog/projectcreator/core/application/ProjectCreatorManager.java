@@ -4,6 +4,7 @@ import eu.electricfrog.projectcreator.core.application.boot.ApplicationBoot;
 import eu.electricfrog.projectcreator.core.application.boot.ProjectCreatorBoot;
 import eu.electricfrog.projectcreator.core.application.data.ApplicationData;
 import eu.electricfrog.projectcreator.core.application.data.ProjectCreatorData;
+import eu.electricfrog.projectcreator.core.application.data.system.SystemData;
 import eu.electricfrog.projectcreator.core.application.permissions.ApplicationPermissions;
 import eu.electricfrog.projectcreator.core.application.permissions.ProjectCreatorPermissions;
 
@@ -27,6 +28,10 @@ public class ProjectCreatorManager implements ApplicationManager {
 	 * References the permissions manager of the application.
 	 */
 	private final ApplicationPermissions appPermissions;
+	/**
+	 * References the system data class.
+	 */
+	private final SystemData systemData;
 
 	/**
 	 * Handle the received arguments and initialize the core of the application.
@@ -39,6 +44,7 @@ public class ProjectCreatorManager implements ApplicationManager {
 		this.appBoot = new ProjectCreatorBoot(ProjectCreatorBoot.DEFAULT_BOOT_MODE);
 		this.appData = new ProjectCreatorData();
 		this.appPermissions = new ProjectCreatorPermissions();
+		this.systemData = new SystemData();
 	}
 
 	@Override
@@ -49,5 +55,8 @@ public class ProjectCreatorManager implements ApplicationManager {
 
 	@Override
 	public ApplicationPermissions permissions() { return this.appPermissions; }
+
+	@Override
+	public SystemData systemData() { return this.systemData; }
 
 }

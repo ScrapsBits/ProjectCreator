@@ -2,6 +2,7 @@ package eu.electricfrog.projectcreator.core.application;
 
 import eu.electricfrog.projectcreator.core.application.boot.ApplicationBoot;
 import eu.electricfrog.projectcreator.core.application.data.ApplicationData;
+import eu.electricfrog.projectcreator.core.application.data.system.SystemData;
 import eu.electricfrog.projectcreator.core.application.permissions.ApplicationPermissions;
 
 /**
@@ -39,4 +40,10 @@ public interface ApplicationManager {
 	 * @return Returns the permissions manager.
 	 */
 	ApplicationPermissions permissions();
+	
+	/**
+	 * Get information of the system the application is running on.
+	 * @return Returns an object keeping track of system information.
+	 */
+	SystemData systemData();
 }
