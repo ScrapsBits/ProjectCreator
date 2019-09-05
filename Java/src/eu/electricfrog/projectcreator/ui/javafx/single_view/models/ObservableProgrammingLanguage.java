@@ -7,9 +7,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Extend the ProgrammingLanguage model to allow the user interface to mark it as checked.
- * 
+ *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public class ObservableProgrammingLanguage extends ProgrammingLanguage {
@@ -20,7 +20,7 @@ public class ObservableProgrammingLanguage extends ProgrammingLanguage {
 
 	/**
 	 * Initialize the ProgrammingLanguage object and set the checkmark for this object to false.
-	 * 
+	 *
 	 * @param name    The name of the programming language.
 	 * @param version The programming language version.
 	 * @param type    The type of language this is.
@@ -32,14 +32,14 @@ public class ObservableProgrammingLanguage extends ProgrammingLanguage {
 
 	/**
 	 * Get the reference to the boolean property.
-	 * 
+	 *
 	 * @return Returns a reference to the boolean property.
 	 */
 	public final BooleanProperty getObservableProperty() { return this.isChecked; }
 
 	/**
 	 * Read if the language is checked.
-	 * 
+	 *
 	 * @return Returns true if the language has been checked. Returns false if it has not been checked.
 	 */
 	public final boolean isChecked() { return this.isChecked.get(); }

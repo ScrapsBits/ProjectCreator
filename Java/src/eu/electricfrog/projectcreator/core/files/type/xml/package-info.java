@@ -1,6 +1,6 @@
 /**
  * Maintain the handling of XML files.
- * 
+ *
  * @since   1.1
  * @author  ScrapsBits
  * @version 1.1

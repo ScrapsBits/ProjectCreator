@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
  * Generator class to create the elements displayed on the SingleViewController.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.1
  */
 public class SingleViewGenerator extends JavaFXGenerator {
@@ -100,29 +100,6 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		System.out.println("Content on Finalize has been generated."); // TODO: Replace with log component.
 	}
 
-	public final void generateSelectedLanguagePane(ProgrammingLanguage language) {
-		System.out.println("Generating settings for language " + language.getName());
-		final SingleViewController controller = (SingleViewController)super.controller;
-		// TODO: Check if this item already exists.
-		controller.acpLanguages.getChildren().removeIf((child) -> child.getId().contentEquals(JavaFXElement.ANCHORPANE.getPrefix() + language.toCharString()));
-		AnchorPane languagePane = super.generateAnchorPane(language.toCharString());
-		Label languageName = super.generateLabel(language.toCharString(), language.getName());
-		Button languageSettings = super.generateButton(language.toCharString(), "Settings");
-		languageSettings.setUserData(language);
-		switch(language.getName()) {
-			case "C#":
-				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnCSharpSettingsClick(event));
-				break;
-			case "Java":
-				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnJavaSettingsClick(event));
-				break;
-			case "PHP":
-				break;
-		}
-		languagePane.getChildren().addAll(languageName, languageSettings);
-		controller.acpLanguages.getChildren().add(languagePane);
-	}
-
 	/**
 	 * Generate content to be displayed on the tab "Programming".
 	 */
@@ -158,6 +135,29 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.acpProject.getChildren().addAll(controller.lblProjectName, controller.lblProjectLocation, controller.txfProjectName, controller.txfProjectLocation, controller.btnDirectory,
 				controller.lblProjectDate, controller.btnLoad);
 		System.out.println("Content on Project has been generated."); // TODO: Replace with log component.
+	}
+
+	public final void generateSelectedLanguagePane(final ProgrammingLanguage language) {
+		System.out.println("Generating settings for language " + language.getName());
+		final SingleViewController controller = (SingleViewController)super.controller;
+		// TODO: Check if this item already exists.
+		controller.acpLanguages.getChildren().removeIf((child) -> child.getId().contentEquals(JavaFXElement.ANCHORPANE.getPrefix() + language.toCharString()));
+		final AnchorPane languagePane = super.generateAnchorPane(language.toCharString());
+		final Label languageName = super.generateLabel(language.toCharString(), language.getName());
+		final Button languageSettings = super.generateButton(language.toCharString(), "Settings");
+		languageSettings.setUserData(language);
+		switch(language.getName()) {
+			case "C#":
+				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnCSharpSettingsClick(event));
+				break;
+			case "Java":
+				languageSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> controller.handleBtnJavaSettingsClick(event));
+				break;
+			case "PHP":
+				break;
+		}
+		languagePane.getChildren().addAll(languageName, languageSettings);
+		controller.acpLanguages.getChildren().add(languagePane);
 	}
 
 	/**
@@ -277,6 +277,29 @@ public class SingleViewGenerator extends JavaFXGenerator {
 	}
 
 	/**
+	 * Position the dynamically generated elements in the scpProgrammingLanguage node.
+	 */
+	public final void positionProgrammingLanguagesSettings() {
+		final SingleViewController controller = (SingleViewController)super.controller;
+		System.out.println("There are " + controller.acpLanguages.getChildren().size() + " items.");
+		for(final Node childNode : controller.acpLanguages.getChildren()) if(childNode instanceof AnchorPane) {
+			childNode.setLayoutY(controller.acpLanguages.getChildren().indexOf(childNode) * 1.5 * this.rowSize);
+			for(final Node e : ((AnchorPane)childNode).getChildren()) {
+				System.out.println("Moving node " + e.getId());
+				if(e instanceof Label) {
+					e.setLayoutX(this.padding);
+					e.setLayoutY(this.padding);
+				}
+				if(e instanceof Button) {
+					final Button btnNode = (Button)e;
+					btnNode.setLayoutX(controller.acpLanguages.getWidth() - this.padding - btnNode.getWidth());
+					btnNode.setLayoutY(this.padding);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Position the elements displayed on the Programming tab.
 	 */
 	private final void positionProgrammingTabContent() {
@@ -318,30 +341,5 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		controller.lblProjectLocation.setLayoutY(controller.txfProjectLocation.getLayoutY() + .5 * controller.txfProjectLocation.getHeight() - .5 * controller.lblProjectLocation.getHeight());
 		controller.lblProjectDate.setVisible(false);
 		System.out.println("Project content positioned.");
-	}
-
-	/**
-	 * Position the dynamically generated elements in the scpProgrammingLanguage node.
-	 */
-	public final void positionProgrammingLanguagesSettings() {
-		final SingleViewController controller = (SingleViewController)super.controller;
-		System.out.println("There are " + controller.acpLanguages.getChildren().size() + " items.");
-		for(Node childNode : controller.acpLanguages.getChildren()) {
-			if(childNode instanceof AnchorPane) {
-				childNode.setLayoutY(controller.acpLanguages.getChildren().indexOf(childNode) * 1.5 * rowSize);
-				for(Node e : ((AnchorPane)childNode).getChildren()) {
-					System.out.println("Moving node " + e.getId());
-					if(e instanceof Label) {
-						e.setLayoutX(this.padding);
-						e.setLayoutY(this.padding);
-					}
-					if(e instanceof Button) {
-						Button btnNode = (Button)e;
-						btnNode.setLayoutX(controller.acpLanguages.getWidth() - this.padding - btnNode.getWidth());
-						btnNode.setLayoutY(this.padding);
-					}
-				}
-			}
-		}
 	}
 }

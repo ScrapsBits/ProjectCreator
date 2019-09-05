@@ -4,10 +4,10 @@ package eu.electricfrog.projectcreator.core.application.permissions;
  * Keep track of the permissions given to the current ApplicationBoot.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
-public interface ApplicationPermissions {
+public interface Permissions {
 	/**
 	 * Get an array of all permissions with the application's boot mode.
 	 *

@@ -4,9 +4,9 @@ import eu.electricfrog.projectcreator.core.models.Project;
 
 /**
  * Write new files related to the given project.
- * 
+ *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public abstract class ProjectFileWriter extends GenericFileWriter {
@@ -17,7 +17,7 @@ public abstract class ProjectFileWriter extends GenericFileWriter {
 
 	/**
 	 * Keep track of the project written by the writer.
-	 * 
+	 *
 	 * @param project The project to write.
 	 */
 	public ProjectFileWriter(final Project project) { super(); }

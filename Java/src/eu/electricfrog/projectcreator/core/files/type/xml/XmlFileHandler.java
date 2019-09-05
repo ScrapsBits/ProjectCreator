@@ -14,9 +14,9 @@ import eu.electricfrog.projectcreator.core.files.type.FileHandler;
 
 /**
  * Handle XML files.
- * 
+ *
  * @author  ScrapsBits
- * @since 1.1
+ * @since   1.1
  * @version 1.1
  */
 public abstract class XmlFileHandler extends FileHandler {
@@ -25,7 +25,7 @@ public abstract class XmlFileHandler extends FileHandler {
 	// TODO: Turn buildDocument into static functions.
 	/**
 	 * Build the XML document reader/writer.
-	 * 
+	 *
 	 * @return                              Returns a Document object containing elements from the XML file.
 	 * @throws ParserConfigurationException Thrown if a DocumentBuildercannot be created which satisfies the configuration requested.
 	 * @throws SAXException                 Thrown if any parse errors occur.
@@ -35,7 +35,7 @@ public abstract class XmlFileHandler extends FileHandler {
 
 	/**
 	 * Build the XML document reader/writer.
-	 * 
+	 *
 	 * @param  validating                   If true, set the XML file to validate based on the .dtd file reference included in the XML file.
 	 * @return                              Returns a Document object containing elements from the XML file.
 	 * @throws ParserConfigurationException Thrown if a DocumentBuildercannot be created which satisfies the configuration requested.

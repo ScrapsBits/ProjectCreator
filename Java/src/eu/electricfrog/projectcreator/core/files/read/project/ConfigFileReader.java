@@ -23,7 +23,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * A reader class to read an XML file into a project.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.1
  */
 public final class ConfigFileReader extends GenericFileReader {
@@ -36,7 +36,7 @@ public final class ConfigFileReader extends GenericFileReader {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @return Returns a project read from the reader's file. Returns null if the project could not be read properly.
 	 */
 	@Override
@@ -72,7 +72,7 @@ public final class ConfigFileReader extends GenericFileReader {
 
 	/**
 	 * Read the languages from an element containing programming languages.
-	 * 
+	 *
 	 * @param  element The element containing a list of programming languages.
 	 * @return         Returns a list of all found programming languages. Returns an empty list if no programming languages could be read.
 	 */

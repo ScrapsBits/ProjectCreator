@@ -11,10 +11,10 @@ import eu.electricfrog.projectcreator.core.application.boot.BootMode;
  * Keep track of all permissions linked to certain boot modes.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
-public class ProjectCreatorPermissions implements ApplicationPermissions {
+public class ProjectCreatorPermissions implements Permissions {
 	/**
 	 * For each boot mode, keep track of their permissions in a fast-accessible set.
 	 */

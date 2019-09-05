@@ -6,7 +6,7 @@ import java.io.File;
  * Generic functionality for any file reader.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public abstract class GenericFileReader implements FileReader {
@@ -17,7 +17,7 @@ public abstract class GenericFileReader implements FileReader {
 
 	/**
 	 * Initialize a new FileReader instance.
-	 * 
+	 *
 	 * @param file The file read by this reader.
 	 */
 	protected GenericFileReader(final File file) { this.file = file; }

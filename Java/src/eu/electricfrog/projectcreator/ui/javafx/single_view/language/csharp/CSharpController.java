@@ -10,8 +10,9 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * The controller handling actions from the User Interface for the settings of the C# language.
- * @author ScrapsBits
- * @since 1.1
+ *
+ * @author  ScrapsBits
+ * @since   1.1
  * @version 1.1
  */
 public final class CSharpController extends LanguageController {
@@ -34,16 +35,23 @@ public final class CSharpController extends LanguageController {
 
 	/**
 	 * Load in the settings provided with the C# language.
+	 *
 	 * @param language The C# language object reference.
 	 */
-	public CSharpController(ProgrammingLanguage language) {
+	public CSharpController(final ProgrammingLanguage language) {
 		super(language);
 		if(!language.getName().contentEquals("C#")) throw new IllegalArgumentException("The provided language is not a C# language.");
 		System.out.println("Start-up processes performed."); // TODO: Replace with log component.
 	}
 
+	public void fillDefaults(final Project project) {
+		this.txfName.setText(project.getName());
+		this.txfDirectory.setText(project.getDirectory());
+		this.txfSolution.setText(project.getSafeName());
+	}
+
 	@Override
-	public final void initialize() {
+	public void initialize() {
 		super.generator = new CSharpGenerator(this);
 
 		System.out.println("Generating user interface."); // TODO: Replace with log component.
@@ -52,16 +60,10 @@ public final class CSharpController extends LanguageController {
 	}
 
 	@Override
-	public final void update() { 
+	public void update() {
 		System.out.println("Updating user interface."); // TODO: Replace with log component.
 		// TODO: Update stuff?
 		super.generator.position();
 		System.out.println("User interface updated."); // TODO: Replace with log component.
-	}
-	
-	public final void fillDefaults(Project project) {
-		this.txfName.setText(project.getName());
-		this.txfDirectory.setText(project.getDirectory());
-		this.txfSolution.setText(project.getSafeName());
 	}
 }

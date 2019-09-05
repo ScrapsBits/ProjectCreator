@@ -4,16 +4,16 @@ import java.io.File;
 
 /**
  * Handle the .config file.
- * 
+ *
  * @author  ScrapsBits
- * @since 1.1
+ * @since   1.1
  * @version 1.1
  */
 public class ConfigFileHandler extends XmlFileHandler {
 
 	/**
 	 * Receive a .config file.
-	 * 
+	 *
 	 * @param file The configuration file of a certain project.
 	 */
 	public ConfigFileHandler(final File file) {

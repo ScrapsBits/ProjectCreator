@@ -4,10 +4,10 @@ package eu.electricfrog.projectcreator.core.application.data;
  * Keep track of standard application data.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
-public interface ApplicationData {
+public interface Data {
 	/**
 	 * Get the person who owns this application's copyright.
 	 *

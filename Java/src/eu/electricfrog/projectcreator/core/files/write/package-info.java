@@ -1,6 +1,6 @@
 /**
  * Write files to memory.
- * 
+ *
  * @since   1.0
  * @author  ScrapsBits
  * @version 1.0

@@ -36,7 +36,7 @@ import javafx.stage.StageStyle;
  * Define controls and actions for the SingleView user interface.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.1
  */
 public final class SingleViewController extends JavaFXController {
@@ -114,33 +114,21 @@ public final class SingleViewController extends JavaFXController {
 	public void fillAvailableLanguages(final List<ObservableProgrammingLanguage> languages) { this.lsvLanguages.getItems().addAll(languages); }
 
 	/**
-	 * Create the files and folders for the selected programming languages.
+	 * Get all languages that are checked on the User Interface.
 	 *
-	 * @param event The click event.
+	 * @return Returns a list of all programming languages that are checked.
 	 */
-	public void handleBtnGenerateProjectsClick(final MouseEvent event) {
-		final List<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
-		for(final ObservableProgrammingLanguage programmingLanguage : this.lsvLanguages.getItems()) if(programmingLanguage.isChecked()) programmingLanguages.add(programmingLanguage);
-		final Project project = new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), programmingLanguages);
-		for(final ProgrammingLanguage selectedLanguage : project.getProgrammingLanguages()) switch(selectedLanguage.getName()) {
-			case "Java":
-				new JavaProjectFileWriter(project).write();
-				break;
-			case "C#":
-				new CSharpProjectFileWriter(project).write();
-				break;
-		}
-	}
+	public List<? extends ProgrammingLanguage> getCheckedLanguages() { return this.lsvLanguages.getItems().filtered((language) -> language.isChecked()); }
 
 	/**
 	 * Open the C# settings User Interface.
-	 * 
+	 *
 	 * @param event The click event.
 	 */
-	public final void handleBtnCSharpSettingsClick(final MouseEvent event) {
-		CSharpController controller = new CSharpController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
+	public void handleBtnCSharpSettingsClick(final MouseEvent event) {
+		final CSharpController controller = new CSharpController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
 		System.out.println("Loading in C# user interface.");
-		Stage stage = new Stage();
+		final Stage stage = new Stage();
 		controller.setStage(stage);
 		stage.setWidth(386);
 		stage.setHeight(284);
@@ -160,14 +148,33 @@ public final class SingleViewController extends JavaFXController {
 	}
 
 	/**
-	 * Open the Java settings User Interface.
-	 * 
+	 * Create the files and folders for the selected programming languages.
+	 *
 	 * @param event The click event.
 	 */
-	public final void handleBtnJavaSettingsClick(final MouseEvent event) {
-		JavaController controller = new JavaController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
+	public void handleBtnGenerateProjectsClick(final MouseEvent event) {
+		final List<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
+		for(final ObservableProgrammingLanguage programmingLanguage : this.lsvLanguages.getItems()) if(programmingLanguage.isChecked()) programmingLanguages.add(programmingLanguage);
+		final Project project = new Project(this.txfProjectLocation.getText(), this.txfProjectName.getText(), this.txfProjectLocation.getText(), programmingLanguages);
+		for(final ProgrammingLanguage selectedLanguage : project.getProgrammingLanguages()) switch(selectedLanguage.getName()) {
+			case "Java":
+				new JavaProjectFileWriter(project).write();
+				break;
+			case "C#":
+				new CSharpProjectFileWriter(project).write();
+				break;
+		}
+	}
+
+	/**
+	 * Open the Java settings User Interface.
+	 *
+	 * @param event The click event.
+	 */
+	public void handleBtnJavaSettingsClick(final MouseEvent event) {
+		final JavaController controller = new JavaController((ProgrammingLanguage)((Button)event.getSource()).getUserData());
 		System.out.println("Loading in Java user interface.");
-		Stage stage = new Stage();
+		final Stage stage = new Stage();
 		controller.setStage(stage);
 		stage.setWidth(386);
 		stage.setHeight(284);
@@ -254,13 +261,13 @@ public final class SingleViewController extends JavaFXController {
 
 	/**
 	 * Triggered when the selected tab changes.
-	 * 
+	 *
 	 * @param ov          The observed object, which is of type Tab.
 	 * @param oldSelected The previously selected tab.
 	 * @param newSelected The newly selected tab, which is being displayed immediately after this triggers.
 	 */
-	public void listenTabChange(ObservableValue<? extends Tab> ov, Tab oldSelected, Tab newSelected) {
-		SingleViewGenerator generator = (SingleViewGenerator)super.generator;
+	public void listenTabChange(final ObservableValue<? extends Tab> ov, final Tab oldSelected, final Tab newSelected) {
+		final SingleViewGenerator generator = (SingleViewGenerator)super.generator;
 		if(newSelected.getText().contentEquals("Complete")) {
 			// TODO: Display all selected languages with a settings button for that language. Allows tweaking.
 			System.out.println("Displaying selected languages.");
@@ -269,21 +276,13 @@ public final class SingleViewController extends JavaFXController {
 		}
 	}
 
-	public final void onLanguageCheck(ObservableProgrammingLanguage language) {
+	public void onLanguageCheck(final ObservableProgrammingLanguage language) {
 		System.out.println("Item has been toggled!");
-		if(language.isChecked()) {
+		if(language.isChecked())
 			((SingleViewGenerator)super.generator).generateSelectedLanguagePane(language);
-		} else {
+		else
 			this.acpLanguages.getChildren().removeIf((anchorPane) -> anchorPane.getId().contentEquals(JavaFXElement.ANCHORPANE.getPrefix() + language.toCharString()));
-		}
 	}
-
-	/**
-	 * Get all languages that are checked on the User Interface.
-	 * 
-	 * @return Returns a list of all programming languages that are checked.
-	 */
-	public List<? extends ProgrammingLanguage> getCheckedLanguages() { return this.lsvLanguages.getItems().filtered((language) -> language.isChecked()); }
 
 	@Override
 	public void update() {

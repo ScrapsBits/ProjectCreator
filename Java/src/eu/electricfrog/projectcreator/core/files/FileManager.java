@@ -9,7 +9,7 @@ import eu.electricfrog.projectcreator.core.device.Device;;
  * The file manager enforces specific file related methods.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.1
  */
 public interface FileManager {
@@ -23,7 +23,7 @@ public interface FileManager {
 		System.out.println("Locating application data location..."); // TODO: Replace with log component.
 		String directory;
 		// TODO: Check for explicit OS version (major version).
-		String upperOS = Device.getOS().toUpperCase();
+		final String upperOS = Device.getOS().toUpperCase();
 		if(upperOS.contains("WIN"))
 			directory = System.getenv("AppData");
 		else {

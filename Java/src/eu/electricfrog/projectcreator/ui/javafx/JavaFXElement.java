@@ -4,7 +4,7 @@ package eu.electricfrog.projectcreator.ui.javafx;
  * JavaFX elements with a prefix used in the ID creation for these elements.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public enum JavaFXElement {

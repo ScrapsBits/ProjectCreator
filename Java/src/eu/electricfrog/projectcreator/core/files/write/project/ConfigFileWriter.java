@@ -29,7 +29,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * A writer class to write an XML file for a project.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public final class ConfigFileWriter extends ProjectFileWriter {

@@ -2,9 +2,9 @@ package eu.electricfrog.projectcreator.core.models;
 
 /**
  * A language used for programming.
- * 
+ *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public class ProgrammingLanguage {
@@ -23,7 +23,7 @@ public class ProgrammingLanguage {
 
 	/**
 	 * Initialize a new language.
-	 * 
+	 *
 	 * @param name
 	 */
 	public ProgrammingLanguage(final String name, final String version, final ProgrammingLanguageType type) {
@@ -45,21 +45,21 @@ public class ProgrammingLanguage {
 
 	/**
 	 * Get the name of the language.
-	 * 
+	 *
 	 * @return Returns the language name.
 	 */
 	public final String getName() { return this.name; }
 
 	/**
 	 * Get the type of this language.
-	 * 
+	 *
 	 * @return Returns an enum value representing the type of this language.
 	 */
 	public final ProgrammingLanguageType getType() { return this.type; }
 
 	/**
 	 * Get the version of this programming language.
-	 * 
+	 *
 	 * @return Returns the version of the language.
 	 */
 	public final String getVersion() { return this.version; }
@@ -71,16 +71,17 @@ public class ProgrammingLanguage {
 	}
 
 	/**
+	 * Returns a string representation of this language exclusively in letters.
+	 *
+	 * @return Returns the name of the language in letters.
+	 */
+	public final String toCharString() { return this.getName().replaceAll("#", "Sharp"); }
+
+	/**
 	 * Returns a string representation of this language.
-	 * 
+	 *
 	 * @return Returns the name of the language.
 	 */
 	@Override
 	public final String toString() { return this.getName() + " (" + this.getVersion() + ")"; }
-	
-	/**
-	 * Returns a string representation of this language exclusively in letters.
-	 * @return Returns the name of the language in letters.
-	 */
-	public final String toCharString() { return this.getName().replaceAll("#", "Sharp"); }
 }

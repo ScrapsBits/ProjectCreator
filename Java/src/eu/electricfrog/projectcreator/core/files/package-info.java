@@ -1,6 +1,6 @@
 /**
  * Manage file reading and writing.
- * 
+ *
  * @since   1.0
  * @author  ScrapsBits
  * @version 1.1

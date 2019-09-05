@@ -8,7 +8,7 @@ import eu.electricfrog.projectcreator.core.files.write.FileWriter;
  * Generic functionality for any file writer.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 abstract class GenericFileWriter implements FileWriter {
@@ -29,7 +29,7 @@ abstract class GenericFileWriter implements FileWriter {
 
 	/**
 	 * Set the file of the file writer.
-	 * 
+	 *
 	 * @param file The file to be written.
 	 */
 	protected final void setFile(final File file) { this.file = file; }

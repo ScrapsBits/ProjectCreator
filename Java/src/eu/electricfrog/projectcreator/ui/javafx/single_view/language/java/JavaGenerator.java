@@ -5,17 +5,19 @@ import javafx.scene.Scene;
 
 /**
  * Generate all elements to be displayed on the Java user interface.
- * @author ScrapsBits
- * @since 1.1
+ *
+ * @author  ScrapsBits
+ * @since   1.1
  * @version 1.1
  */
 public class JavaGenerator extends JavaFXGenerator {
 
 	/**
 	 * Link a controller the a user interface to define its actions.
+	 *
 	 * @param controller The controller linked to the user interface.
 	 */
-	protected JavaGenerator(JavaController controller) {
+	protected JavaGenerator(final JavaController controller) {
 		super(controller);
 		controller.acpScene = super.generateAnchorPane("Scene");
 		controller.getStage().setScene(new Scene(controller.acpScene));
@@ -26,16 +28,16 @@ public class JavaGenerator extends JavaFXGenerator {
 		final JavaController controller = (JavaController)super.controller;
 		controller.acpScene.setPrefWidth(controller.getStage().getWidth());
 		controller.acpScene.setPrefHeight(controller.getStage().getHeight());
-		
+
 		controller.lblName = super.generateLabel("Name", "Name: ");
 		controller.lblDirectory = super.generateLabel("Directory", "Directory: ");
 		controller.lblPackage = super.generateLabel("Package", "Package name: ");
 		controller.acpScene.getChildren().addAll(controller.lblName, controller.lblDirectory, controller.lblPackage);
-		
+
 		controller.btnSave = super.generateButton("Save", "Save");
 		controller.btnDirectory = super.generateButton("Directory", "Directory");
 		controller.acpScene.getChildren().addAll(controller.btnSave, controller.btnDirectory);
-		
+
 		controller.txfName = super.generateTextField("Name", "My New Project", "");
 		controller.txfDirectory = super.generateTextField("Directory", "", "");
 		controller.txfPackage = super.generateTextField("Package", "mynewproject", "");
@@ -48,9 +50,9 @@ public class JavaGenerator extends JavaFXGenerator {
 		final JavaController controller = (JavaController)super.controller;
 
 		controller.btnDirectory.setLayoutX(controller.acpScene.getWidth() - this.padding - controller.btnDirectory.getWidth());
-		controller.btnDirectory.setLayoutY(2 * this.padding + rowSize);
+		controller.btnDirectory.setLayoutY(2 * this.padding + this.rowSize);
 
-		double prefWidth = controller.acpScene.getWidth() * .7;
+		final double prefWidth = controller.acpScene.getWidth() * .7;
 		controller.txfName.setPrefWidth(prefWidth);
 		controller.txfName.setLayoutX(controller.acpScene.getWidth() - this.padding - prefWidth);
 		controller.txfName.setLayoutY(this.padding);
@@ -60,13 +62,13 @@ public class JavaGenerator extends JavaFXGenerator {
 		controller.txfPackage.setPrefWidth(prefWidth);
 		controller.txfPackage.setLayoutX(controller.acpScene.getWidth() - this.padding - prefWidth);
 		controller.txfPackage.setLayoutY(3 * this.padding + 2 * this.rowSize);
-		
+
 		controller.lblName.setLayoutX(controller.txfName.getLayoutX() - this.padding - controller.lblName.getWidth());
 		controller.lblName.setLayoutY(controller.txfName.getLayoutY() + .5 * controller.txfName.getHeight() - .5 * controller.lblName.getHeight());
 		controller.lblDirectory.setLayoutX(controller.txfDirectory.getLayoutX() - this.padding - controller.lblDirectory.getWidth());
 		controller.lblDirectory.setLayoutY(controller.txfDirectory.getLayoutY() + .5 * controller.txfDirectory.getHeight() - .5 * controller.lblDirectory.getHeight());
 		controller.lblPackage.setLayoutX(controller.txfPackage.getLayoutX() - this.padding - controller.lblPackage.getWidth());
 		controller.lblPackage.setLayoutY(controller.txfPackage.getLayoutY() + .5 * controller.txfPackage.getHeight() - .5 * controller.lblPackage.getHeight());
-	 }
+	}
 
 }

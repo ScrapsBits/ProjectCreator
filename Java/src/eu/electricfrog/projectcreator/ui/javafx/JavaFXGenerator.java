@@ -11,11 +11,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -25,7 +25,7 @@ import javafx.scene.layout.StackPane;
  * Generate JavaFX elements.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public abstract class JavaFXGenerator {
@@ -79,16 +79,6 @@ public abstract class JavaFXGenerator {
 		button.setId(JavaFXElement.BUTTON.getPrefix() + id);
 		button.setText(text);
 		return button;
-	}
-	
-	protected final ScrollPane generateScrollPane(final String id) {
-		final ScrollPane scrollPane = new ScrollPane();
-		scrollPane.setId(JavaFXElement.SCROLLPANE.getPrefix() + id);
-		scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-		scrollPane.setFitToWidth(true);
-		scrollPane.setFitToHeight(false);
-		return scrollPane;
 	}
 
 	protected final CheckBox generateCheckBox(final String id, final String text, final boolean isChecked) {
@@ -164,6 +154,16 @@ public abstract class JavaFXGenerator {
 		radioMenuItem.setId(JavaFXElement.RADIOMENUITEM.getPrefix() + id);
 		radioMenuItem.setText(text);
 		return radioMenuItem;
+	}
+
+	protected final ScrollPane generateScrollPane(final String id) {
+		final ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setId(JavaFXElement.SCROLLPANE.getPrefix() + id);
+		scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(false);
+		return scrollPane;
 	}
 
 	protected final StackPane generateStackPane(final String id) {

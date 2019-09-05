@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * Launch a JavaFX application with the SingleView user interface.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.1
  */
 public final class SingleViewLauncher extends JavaFXLauncher {
@@ -57,9 +57,8 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 		availableLanguages.add(new ObservableProgrammingLanguage("C#", "7.3", ProgrammingLanguageType.OBJECT_ORIENTED));
 		availableLanguages.add(new ObservableProgrammingLanguage("PHP", "7.0.0", ProgrammingLanguageType.FUNCTIONAL));
 		availableLanguages.add(new ObservableProgrammingLanguage("Java", "11", ProgrammingLanguageType.OBJECT_ORIENTED));
-		for(ObservableProgrammingLanguage checkableLanguage : availableLanguages) {
+		for(final ObservableProgrammingLanguage checkableLanguage : availableLanguages)
 			checkableLanguage.getObservableProperty().addListener((one, two, three) -> controller.onLanguageCheck(checkableLanguage));
-		}
 		controller.fillAvailableLanguages(availableLanguages);
 	}
 }

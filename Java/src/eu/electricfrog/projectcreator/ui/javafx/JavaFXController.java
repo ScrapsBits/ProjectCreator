@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  * Define values that are important exclusively to JavaFX user interfaces.
  *
  * @author  ScrapsBits
- * @since 1.0
+ * @since   1.0
  * @version 1.0
  */
 public abstract class JavaFXController extends GenericController {
