@@ -2,13 +2,15 @@ package eu.electricfrog.projectcreator.core.files;
 
 import java.io.File;
 
-import eu.electricfrog.projectcreator.ApplicationLauncher;
+import eu.electricfrog.projectcreator.core.application.Application;
+import eu.electricfrog.projectcreator.core.device.Device;;
 
 /**
  * The file manager enforces specific file related methods.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @since 1.0
+ * @version 1.1
  */
 public interface FileManager {
 	/**
@@ -21,14 +23,14 @@ public interface FileManager {
 		System.out.println("Locating application data location..."); // TODO: Replace with log component.
 		String directory;
 		// TODO: Check for explicit OS version (major version).
-		String upperOS = ApplicationLauncher.manager().systemData().getOS().toUpperCase();
+		String upperOS = Device.getOS().toUpperCase();
 		if(upperOS.contains("WIN"))
 			directory = System.getenv("AppData");
 		else {
 			directory = System.getProperty("user.home");
 			if(upperOS.contains("MAC")) directory += "/Library/Application Support";
 		}
-		directory += "\\" + ApplicationLauncher.manager().data().getName();
+		directory += "\\" + Application.getName();
 		final File appDataDirectory = new File(directory);
 		System.out.println("Located application data location at: " + appDataDirectory.getAbsolutePath() + "."); // TODO: Replace with log component.
 		if(!appDataDirectory.isDirectory()) appDataDirectory.mkdir();

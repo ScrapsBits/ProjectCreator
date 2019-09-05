@@ -3,25 +3,25 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.electricfrog.projectcreator.ApplicationLauncher;
+import eu.electricfrog.projectcreator.core.application.Application;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguageType;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXLauncher;
 import eu.electricfrog.projectcreator.ui.javafx.single_view.models.ObservableProgrammingLanguage;
-import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
  * Launch a JavaFX application with the SingleView user interface.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @since 1.0
+ * @version 1.1
  */
 public final class SingleViewLauncher extends JavaFXLauncher {
 
 	/**
 	 * Launch the SingleViewLauncher user interface for the application. This function starts a new thread for the JavaFX user interface, which may run separately from any other thread.
 	 */
-	public static void launch() { Application.launch(); }
+	public static void launch() { javafx.application.Application.launch(); }
 
 	/**
 	 * Initialize the user interface and link it to a new instance of the SingleViewController.
@@ -45,7 +45,7 @@ public final class SingleViewLauncher extends JavaFXLauncher {
 		controller.initialize(); // Generate elements onto the user interface.
 
 		System.out.println("Displaying user interface."); // TODO: Replace with log component
-		stage.setTitle(ApplicationLauncher.manager().data().getName());
+		stage.setTitle(Application.getName());
 		stage.sizeToScene();
 		stage.show();
 		stage.centerOnScreen();

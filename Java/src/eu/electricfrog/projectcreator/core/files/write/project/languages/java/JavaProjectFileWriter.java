@@ -12,6 +12,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * Write a directory and all necessary files required for a Java project.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class JavaProjectFileWriter extends ProjectFileWriter {

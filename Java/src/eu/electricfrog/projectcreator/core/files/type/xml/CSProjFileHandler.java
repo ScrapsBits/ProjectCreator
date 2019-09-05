@@ -6,6 +6,7 @@ import java.io.File;
  * Handle the CSProj file.
  *
  * @author  ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public class CSProjFileHandler extends XmlFileHandler {

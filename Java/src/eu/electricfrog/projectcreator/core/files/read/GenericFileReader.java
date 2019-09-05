@@ -6,6 +6,7 @@ import java.io.File;
  * Generic functionality for any file reader.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public abstract class GenericFileReader implements FileReader {

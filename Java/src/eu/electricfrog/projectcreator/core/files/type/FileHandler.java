@@ -6,6 +6,7 @@ import java.io.File;
  * Generic functionality to handle files reading and writing.
  *
  * @author  ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public abstract class FileHandler {

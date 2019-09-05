@@ -7,6 +7,7 @@ import java.util.List;
  * Resemble a programming project.
  * 
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class Project {

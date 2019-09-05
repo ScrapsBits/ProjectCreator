@@ -1,6 +1,6 @@
 package eu.electricfrog.projectcreator.ui.javafx.single_view;
 
-import eu.electricfrog.projectcreator.ApplicationLauncher;
+import eu.electricfrog.projectcreator.core.application.Application;
 import eu.electricfrog.projectcreator.core.application.boot.BootMode;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXElement;
@@ -20,7 +20,8 @@ import javafx.scene.layout.AnchorPane;
  * Generator class to create the elements displayed on the SingleViewController.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @since 1.0
+ * @version 1.1
  */
 public class SingleViewGenerator extends JavaFXGenerator {
 	/**
@@ -43,7 +44,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		this.generateProjectTabContent();
 		this.generateProgrammingTabContent();
 		// TODO: Remove DEVELOPMENT boot mode check.
-		if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) {
+		if(Application.bootMode().equals(BootMode.DEVELOPMENT)) {
 			this.generateDocumentationTabContent();
 			this.generateDiagramsTabContent();
 			// Additional sources
@@ -178,7 +179,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		final Tab tabProgramming = super.generateTab("Programming", "Programming");
 		tabProgramming.setContent(controller.acpProgramming = super.generateAnchorPane("Programming"));
 		// TODO: Remove DEVELOPMENT boot mode check.
-		if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) {
+		if(Application.bootMode().equals(BootMode.DEVELOPMENT)) {
 			tabDocumentation = super.generateTab("Documentation", "Documentation");
 			tabDocumentation.setContent(controller.acpDocumentation = super.generateAnchorPane("Documentation"));
 			tabDiagrams = super.generateTab("Diagrams", "Diagrams");
@@ -189,7 +190,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		final Tab tabComplete = super.generateTab("Finish", "Complete");
 		tabComplete.setContent(controller.acpComplete = super.generateAnchorPane("Complete"));
 
-		if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) // Additional sources
+		if(Application.bootMode().equals(BootMode.DEVELOPMENT)) // Additional sources
 			controller.tbpMenu.getTabs().addAll(tabProject, tabProgramming, tabDocumentation, tabDiagrams, tabAdditionalSources, tabComplete);
 		else
 			controller.tbpMenu.getTabs().addAll(tabProject, tabProgramming, tabComplete);
@@ -209,7 +210,7 @@ public class SingleViewGenerator extends JavaFXGenerator {
 		this.positionProjectTabContent();
 		this.positionProgrammingTabContent();
 		// TODO: Remove DEVELOPMENT boot mode check.
-		if(ApplicationLauncher.manager().boot().getBootMode().equals(BootMode.DEVELOPMENT)) {
+		if(Application.bootMode().equals(BootMode.DEVELOPMENT)) {
 			this.positionDocumentationTabContent();
 			this.positionDiagramsTabContent();
 			// Additional sources

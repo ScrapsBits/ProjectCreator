@@ -4,6 +4,7 @@ package eu.electricfrog.projectcreator.ui;
  * Define values that are important for all user interfaces.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public abstract class GenericController {

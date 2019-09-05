@@ -36,6 +36,7 @@ import javafx.stage.StageStyle;
  * Define controls and actions for the SingleView user interface.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.1
  */
 public final class SingleViewController extends JavaFXController {

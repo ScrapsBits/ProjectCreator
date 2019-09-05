@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import eu.electricfrog.projectcreator.ApplicationLauncher;
+import eu.electricfrog.projectcreator.core.application.Application;
 import eu.electricfrog.projectcreator.core.application.boot.BootMode;
 
 /**
  * Keep track of all permissions linked to certain boot modes.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class ProjectCreatorPermissions implements ApplicationPermissions {
@@ -62,13 +63,13 @@ public class ProjectCreatorPermissions implements ApplicationPermissions {
 	public final Permission[] getPermissions() {
 		// TODO: Empty permissions check.
 		// TODO: If the BootMode isn't set in the constructor, throw an exception.
-		final BootMode bootMode = ApplicationLauncher.manager().boot().getBootMode();
+		final BootMode bootMode = Application.bootMode();
 		return Arrays.copyOf(this.permissionSet.get(bootMode).toArray(), this.permissionSet.get(bootMode).size(), Permission[].class);
 	}
 
 	@Override
 	public final boolean hasPermission(final Permission permission) {
-		for(final Permission perm : this.permissionSet.get(ApplicationLauncher.manager().boot().getBootMode())) if(perm.equals(permission)) return true;
+		for(final Permission perm : this.permissionSet.get(Application.bootMode())) if(perm.equals(permission)) return true;
 		return false;
 	}
 }

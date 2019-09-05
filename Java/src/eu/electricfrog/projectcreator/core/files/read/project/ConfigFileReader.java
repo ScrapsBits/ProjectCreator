@@ -23,7 +23,8 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * A reader class to read an XML file into a project.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @since 1.0
+ * @version 1.1
  */
 public final class ConfigFileReader extends GenericFileReader {
 	/**

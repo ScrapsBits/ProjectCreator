@@ -17,7 +17,7 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import eu.electricfrog.projectcreator.ApplicationLauncher;
+import eu.electricfrog.projectcreator.core.application.Application;
 import eu.electricfrog.projectcreator.core.application.permissions.Permission;
 import eu.electricfrog.projectcreator.core.files.FileManager;
 import eu.electricfrog.projectcreator.core.files.type.xml.ConfigFileHandler;
@@ -29,6 +29,7 @@ import eu.electricfrog.projectcreator.core.models.Project;
  * A writer class to write an XML file for a project.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public final class ConfigFileWriter extends ProjectFileWriter {
@@ -49,7 +50,7 @@ public final class ConfigFileWriter extends ProjectFileWriter {
 	public void write() {
 		System.out.println("Writing .config file for project " + this.project().toString() + "."); // TODO: Replace with log component.
 		try {
-			if(ApplicationLauncher.manager().permissions().hasPermission(Permission.FILE_WRITE)) {
+			if(Application.hasPermission(Permission.FILE_WRITE)) {
 				final XmlFileHandler fileHandler = new ConfigFileHandler(super.getFile());
 				final Document document = fileHandler.buildDocument(true);
 

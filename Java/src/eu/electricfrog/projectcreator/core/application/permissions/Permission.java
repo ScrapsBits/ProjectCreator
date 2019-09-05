@@ -4,6 +4,7 @@ package eu.electricfrog.projectcreator.core.application.permissions;
  * Defines a permission for the application. This does not necessarily match the system permissions.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public enum Permission {

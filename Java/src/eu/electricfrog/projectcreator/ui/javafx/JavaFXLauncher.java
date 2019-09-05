@@ -6,6 +6,7 @@ import javafx.application.Application;
  * Launch a JavaFX application.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public abstract class JavaFXLauncher extends Application {

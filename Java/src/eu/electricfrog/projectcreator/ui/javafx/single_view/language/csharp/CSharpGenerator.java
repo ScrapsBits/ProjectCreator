@@ -3,8 +3,18 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view.language.csharp;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXGenerator;
 import javafx.scene.Scene;
 
+/**
+ * Generate elements to be displayed on the CSharp user interface.
+ * @author ScrapsBits
+ * @since 1.1
+ * @version 1.1
+ */
 public class CSharpGenerator extends JavaFXGenerator {
 
+	/**
+	 * Create a generator that links actions to the provided controller.
+	 * @param controller The controller to be linked to the user interface.
+	 */
 	protected CSharpGenerator(CSharpController controller) {
 		super(controller);
 		controller.acpScene = super.generateAnchorPane("Scene");
@@ -58,5 +68,4 @@ public class CSharpGenerator extends JavaFXGenerator {
 		controller.lblSolution.setLayoutX(controller.txfSolution.getLayoutX() - this.padding - controller.lblSolution.getWidth());
 		controller.lblSolution.setLayoutY(controller.txfSolution.getLayoutY() + .5 * controller.txfSolution.getHeight() - .5 * controller.lblSolution.getHeight());
 	 }
-
 }

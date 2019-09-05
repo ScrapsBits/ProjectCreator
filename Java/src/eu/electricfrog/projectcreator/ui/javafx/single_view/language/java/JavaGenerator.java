@@ -3,8 +3,18 @@ package eu.electricfrog.projectcreator.ui.javafx.single_view.language.java;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXGenerator;
 import javafx.scene.Scene;
 
+/**
+ * Generate all elements to be displayed on the Java user interface.
+ * @author ScrapsBits
+ * @since 1.1
+ * @version 1.1
+ */
 public class JavaGenerator extends JavaFXGenerator {
 
+	/**
+	 * Link a controller the a user interface to define its actions.
+	 * @param controller The controller linked to the user interface.
+	 */
 	protected JavaGenerator(JavaController controller) {
 		super(controller);
 		controller.acpScene = super.generateAnchorPane("Scene");

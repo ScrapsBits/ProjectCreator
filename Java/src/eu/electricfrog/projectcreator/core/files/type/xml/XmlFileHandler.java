@@ -16,6 +16,7 @@ import eu.electricfrog.projectcreator.core.files.type.FileHandler;
  * Handle XML files.
  * 
  * @author  ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public abstract class XmlFileHandler extends FileHandler {

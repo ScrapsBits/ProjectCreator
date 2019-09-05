@@ -6,6 +6,7 @@ import eu.electricfrog.projectcreator.ui.javafx.JavaFXController;
 /**
  * A controller to display the settings of a single Programming Language.
  * @author ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public abstract class LanguageController extends JavaFXController {

@@ -4,13 +4,14 @@ package eu.electricfrog.projectcreator.core.application.boot;
  * Define the boot mode for the application.
  *
  * @author  ScrapsBits
- * @version 1.0
+ * @since   1.0
+ * @version 1.1
  */
 public class ProjectCreatorBoot implements ApplicationBoot {
 	/**
 	 * Defines the default boot mode for the application.
 	 */
-	public static final BootMode DEFAULT_BOOT_MODE = BootMode.DEVELOPMENT;
+	private final BootMode defaultBootMode = BootMode.DEVELOPMENT;
 	/**
 	 * The application launches in this set boot mode.
 	 */
@@ -29,4 +30,7 @@ public class ProjectCreatorBoot implements ApplicationBoot {
 
 	@Override
 	public BootMode getBootMode() { return this.bootMode; }
+
+	@Override
+	public BootMode getDefaultBootMode() { return defaultBootMode; }
 }

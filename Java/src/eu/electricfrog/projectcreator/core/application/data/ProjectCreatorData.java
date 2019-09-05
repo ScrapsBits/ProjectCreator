@@ -4,6 +4,7 @@ package eu.electricfrog.projectcreator.core.application.data;
  * Keep track of the ProjectCreator application data.
  *
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class ProjectCreatorData implements ApplicationData {

@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * Extend the ProgrammingLanguage model to allow the user interface to mark it as checked.
  * 
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class ObservableProgrammingLanguage extends ProgrammingLanguage {

@@ -4,6 +4,7 @@ package eu.electricfrog.projectcreator.core.models;
  * A language used for programming.
  * 
  * @author  ScrapsBits
+ * @since 1.0
  * @version 1.0
  */
 public class ProgrammingLanguage {

@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The controller handling actions from the User Interface for the settings of the C# language.
  * @author ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public final class CSharpController extends LanguageController {

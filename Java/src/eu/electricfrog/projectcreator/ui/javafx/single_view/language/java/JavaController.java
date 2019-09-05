@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The controller handling actions from the User Interface for the settings of the C# language.
  * @author ScrapsBits
+ * @since 1.1
  * @version 1.1
  */
 public final class JavaController extends LanguageController {
@@ -58,6 +59,11 @@ public final class JavaController extends LanguageController {
 		System.out.println("User interface updated."); // TODO: Replace with log component.
 	}
 	
+	/**
+	 * Fill in the default values for the various input fields.
+	 * @param project The project containing the values for the various input fields.
+	 */
+	// TODO: Replace Project with a generic language object, that holds these same values.
 	public final void fillDefaults(Project project) {
 		this.txfName.setText(project.getName());
 		this.txfDirectory.setText(project.getDirectory());
