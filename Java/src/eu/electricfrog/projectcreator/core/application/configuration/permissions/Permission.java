@@ -1,4 +1,4 @@
-package eu.electricfrog.projectcreator.core.application.permissions;
+package eu.electricfrog.projectcreator.core.application.configuration.permissions;
 
 /**
  * Defines a permission for the application. This does not necessarily match the system permissions.

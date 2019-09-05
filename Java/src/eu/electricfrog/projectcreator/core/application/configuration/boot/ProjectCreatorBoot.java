@@ -1,4 +1,4 @@
-package eu.electricfrog.projectcreator.core.application.boot;
+package eu.electricfrog.projectcreator.core.application.configuration.boot;
 
 /**
  * Define the boot mode for the application.
@@ -17,6 +17,9 @@ public class ProjectCreatorBoot implements Boot {
 	 */
 	private final BootMode bootMode;
 
+	/**
+	 * Initialize the boot mode with the default value.
+	 */
 	public ProjectCreatorBoot() { this(ProjectCreatorBoot.defaultBootMode); }
 
 	/**

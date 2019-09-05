@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import eu.electricfrog.projectcreator.core.application.Application;
-import eu.electricfrog.projectcreator.core.application.permissions.Permission;
+import eu.electricfrog.projectcreator.core.application.configuration.permissions.Permission;
 import eu.electricfrog.projectcreator.core.files.FileManager;
 import eu.electricfrog.projectcreator.core.files.type.xml.ConfigFileHandler;
 import eu.electricfrog.projectcreator.core.files.type.xml.XmlFileHandler;

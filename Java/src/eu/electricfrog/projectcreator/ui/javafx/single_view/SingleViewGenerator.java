@@ -1,7 +1,7 @@
 package eu.electricfrog.projectcreator.ui.javafx.single_view;
 
 import eu.electricfrog.projectcreator.core.application.Application;
-import eu.electricfrog.projectcreator.core.application.boot.BootMode;
+import eu.electricfrog.projectcreator.core.application.configuration.boot.BootMode;
 import eu.electricfrog.projectcreator.core.models.ProgrammingLanguage;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXElement;
 import eu.electricfrog.projectcreator.ui.javafx.JavaFXGenerator;

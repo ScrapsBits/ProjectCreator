@@ -1,4 +1,4 @@
-package eu.electricfrog.projectcreator.core.application.boot;
+package eu.electricfrog.projectcreator.core.application.configuration.boot;
 
 /**
  * Define in which way an application should start.

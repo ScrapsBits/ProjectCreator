@@ -5,4 +5,4 @@
  * @author  ScrapsBits
  * @version 1.1
  */
-package eu.electricfrog.projectcreator.core.application.boot;
+package eu.electricfrog.projectcreator.core.application.configuration.boot;

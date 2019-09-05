@@ -1,4 +1,4 @@
-package eu.electricfrog.projectcreator.core.application.permissions;
+package eu.electricfrog.projectcreator.core.application.configuration.permissions;
 
 /**
  * Keep track of the permissions given to the current ApplicationBoot.

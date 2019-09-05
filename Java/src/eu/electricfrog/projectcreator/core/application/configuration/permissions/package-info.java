@@ -5,4 +5,4 @@
  * @author  ScrapsBits
  * @version 1.0
  */
-package eu.electricfrog.projectcreator.core.application.permissions;
+package eu.electricfrog.projectcreator.core.application.configuration.permissions;

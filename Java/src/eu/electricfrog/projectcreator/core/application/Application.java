@@ -1,13 +1,11 @@
 package eu.electricfrog.projectcreator.core.application;
 
-import eu.electricfrog.projectcreator.core.application.boot.Boot;
-import eu.electricfrog.projectcreator.core.application.boot.BootMode;
-import eu.electricfrog.projectcreator.core.application.boot.ProjectCreatorBoot;
+import eu.electricfrog.projectcreator.core.application.configuration.Configuration;
+import eu.electricfrog.projectcreator.core.application.configuration.ProjectCreatorConfiguration;
+import eu.electricfrog.projectcreator.core.application.configuration.boot.BootMode;
+import eu.electricfrog.projectcreator.core.application.configuration.permissions.Permission;
 import eu.electricfrog.projectcreator.core.application.data.Data;
 import eu.electricfrog.projectcreator.core.application.data.ProjectCreatorData;
-import eu.electricfrog.projectcreator.core.application.permissions.Permissions;
-import eu.electricfrog.projectcreator.core.application.permissions.Permission;
-import eu.electricfrog.projectcreator.core.application.permissions.ProjectCreatorPermissions;
 
 /**
  * A manager class keeping track of all application related information.
@@ -21,6 +19,10 @@ public class Application {
 	 * A Singleton reference to itself.
 	 */
 	private static Application application;
+	/**
+	 * A Singleton reference to the configuration instance.
+	 */
+	private static Configuration configuration;
 
 	/**
 	 * Get the application class instance. If none exists, it creates one.
@@ -37,7 +39,7 @@ public class Application {
 	 *
 	 * @return Returns the active boot mode of the application.
 	 */
-	public static final BootMode bootMode() { return Application.application().boot().getBootMode(); }
+	public static final BootMode bootMode() { return Application.application().configuration().getBootMode(); }
 
 	/**
 	 * Get the copyright owner of the application.
@@ -58,7 +60,7 @@ public class Application {
 	 *
 	 * @return Returns an array of all permissions
 	 */
-	public static final Permission[] getPermissions() { return Application.application().permissions().getPermissions(); }
+	public static final Permission[] getPermissions() { return Application.application().configuration().getPermissions(); }
 
 	/**
 	 * Get the version number of the application.
@@ -73,7 +75,7 @@ public class Application {
 	 * @param  permission The permission tested.
 	 * @return            Returns true if the application has been granted the specified permission, otherwise false.
 	 */
-	public static final boolean hasPermission(final Permission permission) { return Application.application().permissions().hasPermission(permission); }
+	public static final boolean hasPermission(final Permission permission) { return Application.application().configuration().hasPermission(permission); }
 
 	/**
 	 * A hidden constructor, used to create a Singleton instance of this class.
@@ -81,11 +83,15 @@ public class Application {
 	private Application() {}
 
 	/**
-	 * Get an instance of the boot mode.
-	 *
-	 * @return Returns a temporary instance keeping track of the boot mode.
+	 * Get an instance of the application configuration.
+	 * @return Returns a consistent instance keeping track of application configuration.
 	 */
-	private final Boot boot() { return new ProjectCreatorBoot(BootMode.DEVELOPMENT); }
+	private final Configuration configuration() {
+		if(configuration == null) {
+			configuration = new ProjectCreatorConfiguration();
+		}
+		return configuration;
+	}
 
 	/**
 	 * Get an instance of the application data.
@@ -93,11 +99,4 @@ public class Application {
 	 * @return Returns a temporary instance keeping track of the application data.
 	 */
 	private final Data data() { return new ProjectCreatorData(); }
-
-	/**
-	 * Get an instance of the application permissions.
-	 *
-	 * @return Returns a temporary instance keeping track of the application permissions.
-	 */
-	private final Permissions permissions() { return new ProjectCreatorPermissions(); }
 }
